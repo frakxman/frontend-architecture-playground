@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ProjectPreview } from '../../models/project-preview.model';
 
 @Component({
   selector: 'app-projects-preview',
@@ -9,5 +10,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsPreviewComponent {
-
+  @Input({ required: true }) projects!: ProjectPreview[];
 }

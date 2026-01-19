@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
-import { PortfolioComponent } from './portfolio/portfolio.component';
 
 export const PORTFOLIO_ROUTES: Routes = [
   {
     path: '',
-    component: PortfolioComponent,
+    loadComponent: () =>
+      import('./portfolio-page/portfolio-page.component')
+        .then(m => m.PortfolioPageComponent),
     children: [
       {
         path: '',
