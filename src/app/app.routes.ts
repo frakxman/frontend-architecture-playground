@@ -13,9 +13,9 @@ export const routes: Routes = [
       },
       {
         path: 'portfolio',
-        loadComponent: () =>
-          import('./portfolio/portfolio/portfolio.component')
-            .then(m => m.PortfolioComponent)
+        loadChildren: () =>
+          import('./portfolio/portfolio.routes')
+            .then(m => m.PORTFOLIO_ROUTES)
       },
       {
         path: 'playground',
@@ -26,3 +26,4 @@ export const routes: Routes = [
     ]
   }
 ];
+
