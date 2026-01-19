@@ -24,24 +24,15 @@
               "src/favicon.ico",
               "src/assets"
             ],
-
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
-
-            "scripts": [],
-
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
-            },
-
-            "allowedCommonJsDependencies": []
+            "scripts": []
           },
-
           "configurations": {
             "production": {
+              "optimization": true,
+              "outputHashing": "all",
               "budgets": [
                 {
                   "type": "initial",
@@ -53,45 +44,14 @@
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
                 }
-              ],
-
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true,
-                  "inlineCritical": true
-                },
-                "fonts": true
-              },
-
-              "buildOptimizer": true,
-              "extractLicenses": true,
-              "sourceMap": false,
-              "namedChunks": false,
-              "vendorChunk": false,
-              "outputHashing": "all",
-              "serviceWorker": false
+              ]
             },
-
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-
-              "buildOptimizer": false,
-              "vendorChunk": true,
-              "namedChunks": true
-            },
-
-            "analyze": {
-              "optimization": true,
-              "sourceMap": true,
-              "namedChunks": true,
-              "vendorChunk": true,
-              "extractLicenses": false
+              "sourceMap": true
             }
           },
-
           "defaultConfiguration": "production"
         },
 
@@ -104,7 +64,7 @@
             "development": {
               "buildTarget": "frontend-architecture-playground:build:development"
             },
-            "analyze": {                      
+            "analyze": {
               "buildTarget": "frontend-architecture-playground:build:analyze"
             }
           },
