@@ -1,0 +1,117 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "dist/**/*",
+    "node_modules/**/*"
+  ],
+
+  "plugins": [
+    "@typescript-eslint",
+    "@angular-eslint",
+    "boundaries",
+    "import"
+  ],
+
+  "overrides": [
+    {
+      "files": ["*.ts"],
+
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
+      ],
+
+      "settings": {
+        "boundaries/elements": [
+          { "type": "core", "pattern": "src/app/core/*" },
+          { "type": "shared", "pattern": "src/app/shared/*" },
+          { "type": "feature", "pattern": "src/app/features/*" },
+          { "type": "layout", "pattern": "src/app/layout/*" }
+        ]
+      },
+
+      "rules": {
+        /* =========================
+           TypeScript rules
+        ========================== */
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          { "prefer": "type-imports" }
+        ],
+
+        /* =========================
+           Angular rules
+        ========================== */
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          { "suffixes": ["Component"] }
+        ],
+        "@angular-eslint/directive-class-suffix": [
+          "error",
+          { "suffixes": ["Directive"] }
+        ],
+        "@angular-eslint/no-host-metadata-property": "error",
+        "@angular-eslint/use-lifecycle-interface": "warn",
+        "@angular-eslint/prefer-on-push-component-change-detection": "warn",
+
+        /* =========================
+           Architecture boundaries
+        ========================== */
+        "boundaries/element-types": [
+          "error",
+          {
+            "default": "disallow",
+            "rules": [
+              { "from": "core", "allow": ["core"] },
+              { "from": "shared", "allow": ["shared", "core"] },
+              {
+                "from": "feature",
+                "disallow": ["feature"],
+                "allow": ["shared", "core"]
+              },
+              { "from": "layout", "allow": ["shared", "core"] }
+            ]
+          }
+        ],
+
+        /* =========================
+           Import hygiene
+        ========================== */
+        "import/no-cycle": ["error", { "maxDepth": 1 }],
+        "import/order": [
+          "error",
+          {
+            "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+            "alphabetize": { "order": "asc", "caseInsensitive": true }
+          }
+        ],
+
+        /* =========================
+           General code quality
+        ========================== */
+        "no-console": ["warn", { "allow": ["warn", "error"] }]
+      }
+    },
+
+    {
+      "files": ["*.html"],
+
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+
+      "rules": {
+        "@angular-eslint/template/accessibility-alt-text": "error",
+        "@angular-eslint/template/accessibility-elements-content": "error",
+        "@angular-eslint/template/accessibility-label-for": "error",
+        "@angular-eslint/template/no-any": "error"
+      }
+    }
+  ]
+}
