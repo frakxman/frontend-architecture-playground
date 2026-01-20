@@ -1,33 +1,40 @@
 <nav class="sidebar" aria-label="Portfolio navigation">
-  <ul>
+  <div class="sidebar-brand">
+    <span class="name">Fabián</span>
+    <span class="role">Frontend Engineer</span>
+  </div>
+
+  <ul class="sidebar-nav">
     <li>
-      <a
-        routerLink="about"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+      <a routerLink="/portfolio/about"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
         About
       </a>
     </li>
 
     <li>
-      <a routerLink="experience" routerLinkActive="active">
+      <a routerLink="/portfolio/experience"
+         routerLinkActive="active">
         Experience
       </a>
     </li>
 
     <li>
-      <a routerLink="projects" routerLinkActive="active">
+      <a routerLink="/portfolio/projects"
+         routerLinkActive="active">
         Projects
       </a>
     </li>
 
     <li>
-      <a routerLink="contact" routerLinkActive="active">
+      <a routerLink="/portfolio/contact"
+         routerLinkActive="active">
         Contact
       </a>
     </li>
   </ul>
 </nav>
+
 
 
