@@ -1,62 +1,95 @@
-.sidebar {
+:host {
+  display: block;
   height: 100%;
-  padding: var(--space-lg) var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  background: var(--color-bg-surface);
-  backdrop-filter: var(--blur-surface);
 }
 
-/* Brand */
-.sidebar-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+nav {
+  height: 100%;
+  padding: var(--space-md);
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+
+  backdrop-filter: var(--blur-glass);
+  border-right: 1px solid var(--glass-border);
 }
 
-.sidebar-brand .name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-.sidebar-brand .role {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
-
-/* Navigation */
 .sidebar-nav {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
 }
 
-.sidebar-nav a {
+.sidebar-nav li {
+  margin: 0;
+}
+
+a {
   display: block;
-  padding: 10px 12px;
+  width: 100%;
+
+  position: relative;
+  padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
-  color: var(--color-text-secondary);
-  transition: background 0.2s ease, color 0.2s ease;
+
+  color: var(--color-text-muted);
+
+  transition:
+    background var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
 }
 
-/* Hover */
-.sidebar-nav a:hover {
-  background: rgba(255, 255, 255, 0.06);
+a:hover {
+  background: var(--color-surface-strong);
+  color: var(--color-text);
 }
 
-/* Active state */
-.sidebar-nav a.active {
-  background: var(--color-accent-soft);
-  color: var(--color-text-primary);
-  font-weight: 500;
+a.active {
+  color: var(--color-text);
 }
 
-.sidebar-nav a:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+a.active::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--color-accent);
+  border-radius: 2px;
 }
+
+a:focus-visible {
+  outline: none;
+  background: var(--color-surface-strong);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: var(--space-sm);
+  }
+
+  a {
+    font-size: 0.85rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  a.active::before {
+    display: none;
+  }
+
+  a.active {
+    border-bottom: 2px solid var(--color-accent);
+  }
+}
+

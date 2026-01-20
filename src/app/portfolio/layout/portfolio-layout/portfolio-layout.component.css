@@ -27,3 +27,26 @@
   background: #0A0A0A; /* matches layout */
 }
 
+@media (max-width: 1024px) {
+  .portfolio-body {
+    flex-direction: column;
+  }
+
+  .portfolio-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border);
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-header {
+    padding: var(--space-sm);
+  }
+
+  .portfolio-content {
+    padding: var(--space-md);
+  }
+}
+
+

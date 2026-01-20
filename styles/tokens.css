@@ -1,0 +1,50 @@
+:root {
+  /* ========== Base ========== */
+  --color-bg: #0b0d10;
+
+  /* ========== Surfaces ========== */
+  --color-surface: rgba(255, 255, 255, 0.06);
+  --color-surface-strong: rgba(255, 255, 255, 0.1);
+  --color-border-soft: rgba(255, 255, 255, 0.08);
+
+  /* ========== Text ========== */
+  --color-text: #e6e6e6;
+  --color-text-muted: #9aa0a6;
+
+  /* ========== Accent ========== */
+  --color-accent: #4ade80;
+
+  /* ========== Spacing ========== */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* ========== Effects ========== */
+  --blur-glass: blur(12px);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+
+  /* ========== Glass Depth ========== */
+  --glass-bg-soft: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.2);
+
+  --glass-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --glass-shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+  /* ========== Motion ========== */
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 260ms;
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ========== Breakpoints ========== */
+  --bp-tablet: 1024px;
+  --bp-mobile: 768px;
+}

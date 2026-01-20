@@ -1,0 +1,56 @@
+.contact {
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.section-title {
+  padding: var(--space-md);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  max-width: 520px;
+  margin: 0 auto var(--space-lg);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-md);
+}
+
+.btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.primary {
+  background: var(--color-accent);
+  color: black;
+}
+
+.primary:hover {
+  opacity: 0.9;
+}
+
+.ghost {
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-text);
+}
+
+.ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn svg {
+  vertical-align: middle;
+  margin-left: 8px;
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+}
