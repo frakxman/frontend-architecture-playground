@@ -1,0 +1,9 @@
+.projects {
+  padding: var(--space-lg);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}

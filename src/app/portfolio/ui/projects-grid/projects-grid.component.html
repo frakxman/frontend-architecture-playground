@@ -1,0 +1,13 @@
+<section class="projects">
+  <h3 class="section-title">Projects</h3>
+
+  <div class="grid">
+    <app-project-card
+      *ngFor="let project of projects"
+      [title]="project.title"
+      [description]="project.description"
+      [stack]="project.stack"
+      [highlight]="project.highlight"
+    />
+  </div>
+</section>

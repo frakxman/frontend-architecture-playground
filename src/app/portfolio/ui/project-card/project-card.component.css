@@ -1,0 +1,34 @@
+.project-card {
+  padding: var(--space-md);
+  border-radius: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.description {
+  color: var(--color-text-muted);
+  margin: 8px 0;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.stack li {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.highlight {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+}
