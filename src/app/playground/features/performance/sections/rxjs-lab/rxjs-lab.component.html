@@ -1,0 +1,18 @@
+<div class="rxjs-lab">
+  <h3>RxJS Rendering Strategies</h3>
+
+  <div class="box">
+    <h4>❌ Cold Observable</h4>
+    <p>{{ cold$ | async }}</p>
+    <p>{{ cold$ | async }}</p>
+    <p>{{ cold$ | async }}</p>
+  </div>
+
+  <div class="box optimized">
+    <h4>✅ Shared Observable</h4>
+    <p>{{ shared$ | async }}</p>
+    <p>{{ shared$ | async }}</p>
+    <p>{{ shared$ | async }}</p>
+  </div>
+</div>
+

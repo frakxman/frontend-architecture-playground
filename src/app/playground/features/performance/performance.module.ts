@@ -7,15 +7,23 @@ import { PerformanceLabComponent } from "./pages/performance-lab/performance-lab
 import { BaselineListComponent } from "./sections/baseline-list/baseline-list.component";
 import { OnPushListComponent } from "./sections/onpush-list/onpush-list.component";
 import { TrackByListComponent } from "./sections/trackby-list/trackby-list.component";
+import { RxjsLabComponent } from "./sections/rxjs-lab/rxjs-lab.component";
+import { ManualSubscribeComponent } from "./sections/manual-subscribe/manual-subscribe.component";
+import { AsyncPipeComponent } from "./sections/async-pipe/async-pipe.component";
 
 @NgModule({
   declarations: [
     PerformanceLabComponent,
     BaselineListComponent,
     OnPushListComponent,
-    TrackByListComponent
+    TrackByListComponent,
+    RxjsLabComponent
   ],
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ManualSubscribeComponent,
+    AsyncPipeComponent
+  ],
   providers: [MockDataService]
 })
 export class PerformanceModule {}
