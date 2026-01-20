@@ -28,12 +28,6 @@ export const PORTFOLIO_ROUTES: Routes = [
         loadComponent: () =>
           import('./pages/projects/projects.component')
             .then(c => c.ProjectsComponent)
-      },
-      {
-        path: 'contact',
-        loadComponent: () =>
-          import('./pages/contact/contact.component')
-            .then(c => c.ContactComponent)
       }
     ]
   }
