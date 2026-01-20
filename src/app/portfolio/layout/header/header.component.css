@@ -1,0 +1,10 @@
+.header {
+  height: 64px;
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  background: var(--color-bg-surface-soft);
+  backdrop-filter: var(--blur-surface);
+  border-bottom: 1px solid var(--color-border-soft);
+  color: var(--color-text-primary);
+}

@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================
+   Design Tokens — Translucent Dark Theme
+   ========================================= */
+
+:root {
+  /* Base colors */
+  --color-bg-root: #0a0a0a;
+  --color-bg-surface: rgba(17, 19, 21, 0.82);
+  --color-bg-surface-soft: rgba(17, 19, 21, 0.65);
+
+  /* Borders & dividers */
+  --color-border-soft: rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #cfcfcf;
+  --color-text-muted: #9ca3af;
+
+  /* Accent */
+  --color-accent: #6366f1; /* Indigo */
+  --color-accent-soft: rgba(99, 102, 241, 0.15);
+
+  /* Effects */
+  --blur-surface: blur(10px);
+  --shadow-surface: 0 8px 24px rgba(0, 0, 0, 0.45);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Spacing */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+}
+
+/* =========================================
+   Base Reset & Typography
+   ========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg-root);
+  color: var(--color-text-secondary);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-sm);
+}
+
+p {
+  margin: 0 0 var(--space-sm);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+/* =========================================
+   Glass / Surface Utility
+   ========================================= */
+
+.surface {
+  background: var(--color-bg-surface);
+  backdrop-filter: var(--blur-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-surface);
+}
+
