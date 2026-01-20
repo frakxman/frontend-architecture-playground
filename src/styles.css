@@ -92,9 +92,9 @@ body::before {
   background: linear-gradient(
     -45deg,
     #0a0a0a,
-    #1a1a2e,
-    #0f3460,
-    #16213e,
+    #1a1a1a,
+    #0f0f0f,
+    #151515,
     #1a1a1a
   );
   background-size: 400% 400%;
@@ -200,11 +200,12 @@ a:hover {
    ========================================= */
 
 .surface {
-  background: var(--color-bg-surface);
-  backdrop-filter: var(--blur-surface);
-  border: 1px solid var(--color-border-soft);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-surface);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   padding: var(--space-lg);
 }
 

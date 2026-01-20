@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-performance-lab',
-  standalone: true,
-  imports: [],
   templateUrl: './performance-lab.component.html',
   styleUrl: './performance-lab.component.css'
 })

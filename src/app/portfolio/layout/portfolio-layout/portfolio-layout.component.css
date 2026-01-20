@@ -2,29 +2,40 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #0A0A0A;
+  background: transparent;
   color: #D0D0D0;
+  position: relative;
 }
 
 .portfolio-header {
   height: 64px;
-  border-bottom: 1px solid #eee;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10, 10, 10, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .portfolio-body {
   flex: 1;
   display: flex;
+  overflow: hidden;
 }
 
 .portfolio-sidebar {
   width: 240px;
-  border-right: 1px solid #eee;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10, 10, 10, 0.6);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .portfolio-content {
   flex: 1;
   padding: 24px;
-  background: #0A0A0A; /* matches layout */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(10, 10, 10, 0.3);
+  overflow-y: auto;
 }
 
 @media (max-width: 1024px) {

@@ -6,15 +6,9 @@
 nav {
   height: 100%;
   padding: var(--space-md);
-
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.02)
-  );
-
-  backdrop-filter: var(--blur-glass);
-  border-right: 1px solid var(--glass-border);
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .sidebar-nav {
