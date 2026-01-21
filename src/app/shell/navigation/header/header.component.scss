@@ -1,0 +1,111 @@
+.header {
+  background: #1a1a1a;
+  border-bottom: 2px solid #333;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1800px;
+    margin: 0 auto;
+    height: 64px;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    text-decoration: none;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  &__nav-link {
+    color: #ccc;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+      color: #fff;
+      background: #2d2d2d;
+    }
+
+    &--active {
+      color: #fff;
+      background: #007acc;
+    }
+  }
+
+  &__nav-icon {
+    font-size: 1.2rem;
+  }
+
+  &__section {
+    display: flex;
+    align-items: center;
+  }
+
+  &__section-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #28a745;
+    color: #fff;
+
+    &--playground {
+      background: #007acc;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 1rem;
+
+    &__nav {
+      gap: 1rem;
+    }
+
+    &__nav-link {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    &__section {
+      display: none;
+    }
+  }
+}

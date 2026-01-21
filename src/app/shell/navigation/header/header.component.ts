@@ -1,13 +1,35 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  isPlayground = false;
+  isPortfolio = false;
 
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Detect current route section
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.router.url)
+    ).subscribe(url => {
+      this.isPlayground = url.includes('/playground');
+      this.isPortfolio = url.includes('/portfolio');
+    });
+
+    // Initial check
+    const url = this.router.url;
+    this.isPlayground = url.includes('/playground');
+    this.isPortfolio = url.includes('/portfolio');
+  }
 }
