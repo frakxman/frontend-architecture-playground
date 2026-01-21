@@ -14,6 +14,7 @@ import { filter, map } from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
   isPlayground = false;
   isPortfolio = false;
+  isScrolled = false;
 
   constructor(private router: Router) {}
 
@@ -31,5 +32,17 @@ export class HeaderComponent implements OnInit {
     const url = this.router.url;
     this.isPlayground = url.includes('/playground');
     this.isPortfolio = url.includes('/portfolio');
+
+    // Scroll effect
+    this.checkScroll();
+    window.addEventListener('scroll', this.checkScroll.bind(this));
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.checkScroll.bind(this));
+  }
+
+  checkScroll() {
+    this.isScrolled = window.scrollY > 20;
   }
 }
