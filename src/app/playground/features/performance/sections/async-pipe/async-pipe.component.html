@@ -1,5 +1,91 @@
-<div class="lab-box good">
-  <h4>✅ Async pipe</h4>
-  <p>{{ value$ | async }}</p>
-</div>
+<div class="demo-container">
+  <div class="demo-header">
+    <h2>✅ Async Pipe - The Angular Way</h2>
+    <span class="render-badge render-badge-success" *ngIf="isActive">✓ Active</span>
+    <span class="render-badge" *ngIf="!isActive">Inactive</span>
+  </div>
 
+  <div class="demo-explanation">
+    <h3>Why is this better?</h3>
+    <p>
+      The <strong>async pipe</strong> automatically subscribes to observables and
+      <strong>automatically unsubscribes</strong> when the component is destroyed.
+      No manual cleanup needed!
+    </p>
+
+    <h3>Benefits:</h3>
+    <ul>
+      <li>✅ Automatic subscription management</li>
+      <li>✅ Automatic unsubscription (no memory leaks)</li>
+      <li>✅ Less boilerplate code</li>
+      <li>✅ Works with OnPush change detection</li>
+      <li>✅ Cleaner, more maintainable code</li>
+      <li>✅ Follows Angular best practices</li>
+    </ul>
+
+    <div class="code-example code-good">
+      <code>
+        <span class="comment">// ✅ Best practice:</span>
+        <br>value$ = this.dataService.stream$;
+        <br><br>
+        <span class="comment">// In template:</span>
+        <br>&lt;div&gt;{{'{{ value$ | async }'}}&lt;/div&gt;
+        <br><br>
+        <span class="comment">// That's it! No ngOnDestroy needed 🎉</span>
+      </code>
+    </div>
+  </div>
+
+  <div class="demo-display" *ngIf="isActive">
+    <div class="value-display">
+      <span class="label">Current Value:</span>
+      <span class="value">{{ value$ | async }}</span>
+    </div>
+    <div class="info">
+      <p>🎯 The async pipe handles everything automatically!</p>
+      <p>No manual subscribe/unsubscribe needed.</p>
+    </div>
+  </div>
+
+  <div class="demo-display demo-display-inactive" *ngIf="!isActive">
+    <p class="inactive-message">Click "Activate" to start streaming data</p>
+  </div>
+
+  <div class="demo-actions">
+    <button class="btn btn-success" (click)="activate()" [disabled]="isActive">
+      ✅ Activate Async Pipe
+    </button>
+    <button class="btn btn-secondary" (click)="deactivate()" [disabled]="!isActive">
+      Deactivate
+    </button>
+  </div>
+
+  <div class="demo-tip demo-success">
+    💡 <strong>Best Practice:</strong> Always prefer async pipe over manual subscriptions.
+    It's safer, cleaner, and follows Angular conventions!
+  </div>
+
+  <div class="comparison">
+    <h3>Quick Comparison:</h3>
+    <div class="comparison-grid">
+      <div class="comparison-item bad">
+        <h4>❌ Manual Subscribe</h4>
+        <ul>
+          <li>~15 lines of code</li>
+          <li>Easy to introduce bugs</li>
+          <li>Memory leak risk</li>
+          <li>More maintenance</li>
+        </ul>
+      </div>
+      <div class="comparison-item good">
+        <h4>✅ Async Pipe</h4>
+        <ul>
+          <li>~2 lines of code</li>
+          <li>Bulletproof</li>
+          <li>Zero memory leaks</li>
+          <li>Self-maintaining</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

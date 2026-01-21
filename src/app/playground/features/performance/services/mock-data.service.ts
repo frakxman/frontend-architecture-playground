@@ -4,7 +4,7 @@ import { interval, map, shareReplay } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class MockDataService {
 
-  generateItems(count = 5000) {
+  generateItems(count = 50) {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
       name: `Item #${i}`,

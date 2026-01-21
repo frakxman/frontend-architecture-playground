@@ -1,7 +1,29 @@
 <div class="playground-container">
   <nav class="playground-nav">
-    <a routerLink="performance-lab" routerLinkActive="active">Performance Lab</a>
-    <!-- Future nav items -->
+    <h3 class="nav-title">Performance Lab</h3>
+
+    <div class="nav-section">
+      <h4 class="section-title">Change Detection</h4>
+      <a routerLink="performance-lab/baseline" routerLinkActive="active" class="nav-item">
+        📊 Baseline List
+      </a>
+      <a routerLink="performance-lab/onpush" routerLinkActive="active" class="nav-item">
+        ⚡ OnPush Strategy
+      </a>
+      <a routerLink="performance-lab/trackby" routerLinkActive="active" class="nav-item">
+        🔍 TrackBy Function
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <h4 class="section-title">RxJS Performance</h4>
+      <a routerLink="performance-lab/manual-subscribe" routerLinkActive="active" class="nav-item">
+        ❌ Manual Subscribe
+      </a>
+      <a routerLink="performance-lab/async-pipe" routerLinkActive="active" class="nav-item">
+        ✅ Async Pipe
+      </a>
+    </div>
   </nav>
 
   <main class="playground-content">

@@ -1,5 +1,57 @@
-<button (click)="shuffle()">Trigger Change</button>
+<div class="demo-container">
+  <div class="demo-header">
+    <h2>📊 Baseline - Default Change Detection</h2>
+    <span class="render-badge">Renders: {{ renderCount }}</span>
+  </div>
 
-<div *ngFor="let item of items">
-  {{ item.name }}
+  <div class="demo-explanation">
+    <h3>What is this?</h3>
+    <p>
+      This uses Angular's <strong>default change detection strategy</strong>.
+      Every time any event occurs in the application, Angular checks this entire
+      component tree for changes.
+    </p>
+
+    <h3>Why is it inefficient?</h3>
+    <ul>
+      <li>Checks every property on every change detection cycle</li>
+      <li>Re-renders even when data hasn't changed</li>
+      <li>Performance degrades with larger component trees</li>
+      <li>Not optimized for immutable data patterns</li>
+    </ul>
+
+    <div class="code-example">
+      <code>
+        &#64;Component({{'{'}}
+          <br>&nbsp;&nbsp;selector: 'app-baseline-list',
+          <br>&nbsp;&nbsp;// No changeDetection strategy = Default
+        <br>{{'}}'}}
+      </code>
+    </div>
+  </div>
+
+  <div class="demo-actions">
+    <button class="btn btn-primary" (click)="loadItems()" [disabled]="isListVisible">
+      Load 1000 Items
+    </button>
+    <button class="btn btn-secondary" (click)="triggerChange()" [disabled]="!isListVisible">
+      Trigger Change Detection
+    </button>
+    <button class="btn btn-danger" (click)="reset()" [disabled]="!isListVisible">
+      Reset
+    </button>
+  </div>
+
+  <div class="demo-content" *ngIf="isListVisible">
+    <div class="item-list">
+      <div class="item" *ngFor="let item of items.slice(0, 50)">
+        {{ item.name }} - {{ item.value.toFixed(3) }}
+      </div>
+      <p class="item-count">Showing 50 of {{ items.length }} items</p>
+    </div>
+  </div>
+
+  <div class="demo-tip">
+    💡 <strong>Tip:</strong> Watch the render count increase rapidly with every interaction!
+  </div>
 </div>

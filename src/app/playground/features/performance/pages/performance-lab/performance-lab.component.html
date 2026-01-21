@@ -2,20 +2,7 @@
   <h1>Angular Performance Lab</h1>
   <p class="lab-description">Compare different Angular performance optimization techniques</p>
 
-  <section class="lab-section">
-    <h2>🔄 Change Detection Strategies</h2>
-    <div class="demo-grid">
-      <app-baseline-list></app-baseline-list>
-      <app-onpush-list></app-onpush-list>
-      <app-trackby-list></app-trackby-list>
-    </div>
-  </section>
-
-  <section class="lab-section">
-    <h2>📡 RxJS Performance</h2>
-    <div class="demo-grid">
-      <app-manual-subscribe></app-manual-subscribe>
-      <app-async-pipe></app-async-pipe>
-    </div>
-  </section>
+  <div class="lab-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

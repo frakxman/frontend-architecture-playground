@@ -1,15 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { MockDataService } from '../../services/mock-data.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-rxjs-lab',
   templateUrl: './rxjs-lab.component.html',
-  styleUrls: ['./rxjs-lab.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./rxjs-lab.component.css']
 })
 export class RxjsLabComponent {
-  cold$ = this.data.coldStream$;
-  shared$ = this.data.sharedStream$;
-
-  constructor(private data: MockDataService) {}
 }

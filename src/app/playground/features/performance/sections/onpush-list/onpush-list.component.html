@@ -1,5 +1,65 @@
-<button (click)="shuffle()">Trigger Change</button>
+<div class="demo-container">
+  <div class="demo-header">
+    <h2>⚡ OnPush - Optimized Change Detection</h2>
+    <span class="render-badge render-badge-success">Renders: {{ renderCount }}</span>
+  </div>
 
-<div *ngFor="let item of items">
-  {{ item.name }}
+  <div class="demo-explanation">
+    <h3>What is this?</h3>
+    <p>
+      Uses <strong>OnPush change detection strategy</strong>. Angular only checks
+      this component when:
+    </p>
+    <ul>
+      <li>Input references change (immutable pattern)</li>
+      <li>Events originate from the component</li>
+      <li>Observables emit (with async pipe)</li>
+      <li>Manual <code>markForCheck()</code> is called</li>
+    </ul>
+
+    <h3>Why is it better?</h3>
+    <ul>
+      <li>Drastically reduces change detection cycles</li>
+      <li>Encourages immutable data patterns</li>
+      <li>Scales better with large applications</li>
+      <li>Predictable performance characteristics</li>
+    </ul>
+
+    <div class="code-example">
+      <code>
+        &#64;Component({{'{'}}
+        <br>&nbsp;&nbsp;selector: 'app-onpush-list',
+        <br>&nbsp;&nbsp;<span class="highlight">changeDetection: ChangeDetectionStrategy.OnPush</span>
+        <br>{{'}}'}}
+      </code>
+    </div>
+  </div>
+
+  <div class="demo-actions">
+    <button class="btn btn-primary" (click)="loadItems()" [disabled]="isListVisible">
+      Load 1000 Items
+    </button>
+    <button class="btn btn-warning" (click)="triggerChangeWrong()" [disabled]="!isListVisible">
+      ❌ Mutate (Won't Work)
+    </button>
+    <button class="btn btn-success" (click)="triggerChangeCorrect()" [disabled]="!isListVisible">
+      ✅ New Reference (Works)
+    </button>
+    <button class="btn btn-danger" (click)="reset()" [disabled]="!isListVisible">
+      Reset
+    </button>
+  </div>
+
+  <div class="demo-content" *ngIf="isListVisible">
+    <div class="item-list">
+      <div class="item" *ngFor="let item of items.slice(0, 50)">
+        {{ item.name }} - {{ item.value.toFixed(3) }}
+      </div>
+      <p class="item-count">Showing 50 of {{ items.length }} items</p>
+    </div>
+  </div>
+
+  <div class="demo-tip">
+    💡 <strong>Tip:</strong> Notice how the render count stays much lower compared to Baseline!
+  </div>
 </div>

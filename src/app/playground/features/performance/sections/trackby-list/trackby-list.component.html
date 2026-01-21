@@ -1,6 +1,67 @@
-<button (click)="shuffle()">Trigger Change</button>
+<div class="demo-container">
+  <div class="demo-header">
+    <h2>🔍 TrackBy - Efficient List Rendering</h2>
+    <div class="badges">
+      <span class="render-badge">Renders: {{ renderCount }}</span>
+      <span class="render-badge render-badge-info">Updates: {{ domUpdateCount }}</span>
+    </div>
+  </div>
 
-<div *ngFor="let item of items; trackBy: trackById">
-  {{ item.name }}
+  <div class="demo-explanation">
+    <h3>What is this?</h3>
+    <p>
+      The <strong>trackBy function</strong> helps Angular identify which items in a list
+      have changed, been added, or been removed. Without it, Angular recreates the entire
+      DOM for the list on every change.
+    </p>
+
+    <h3>Why is it important?</h3>
+    <ul>
+      <li>Prevents unnecessary DOM recreation</li>
+      <li>Preserves component state in list items</li>
+      <li>Dramatically improves performance for large lists</li>
+      <li>Reduces memory churn and garbage collection</li>
+    </ul>
+
+    <div class="code-example">
+      <code>
+        <span class="comment">// Without trackBy (slow):</span>
+        <br>&lt;div *ngFor="let item of items"&gt;
+        <br><br>
+        <span class="comment">// With trackBy (fast):</span>
+        <br>&lt;div *ngFor="let item of items; <span class="highlight">trackBy: trackByFn</span>"&gt;
+        <br><br>
+        <span class="comment">// Track function:</span>
+        <br>trackByFn(index: number, item: any) {{'{'}}
+        <br>&nbsp;&nbsp;return item.id; <span class="comment">// unique identifier</span>
+        <br>{{'}'}}
+      </code>
+    </div>
+  </div>
+
+  <div class="demo-actions">
+    <button class="btn btn-primary" (click)="loadItems()" [disabled]="isListVisible">
+      Load 1000 Items
+    </button>
+    <button class="btn btn-secondary" (click)="shuffleItems()" [disabled]="!isListVisible">
+      🔀 Shuffle & Update
+    </button>
+    <button class="btn btn-danger" (click)="reset()" [disabled]="!isListVisible">
+      Reset
+    </button>
+  </div>
+
+  <div class="demo-content" *ngIf="isListVisible">
+    <div class="item-list">
+      <div class="item" *ngFor="let item of items.slice(0, 50); trackBy: trackByFn">
+        {{ item.name }} - {{ item.value.toFixed(3) }}
+      </div>
+      <p class="item-count">Showing 50 of {{ items.length }} items (with trackBy)</p>
+    </div>
+  </div>
+
+  <div class="demo-tip">
+    💡 <strong>Tip:</strong> Try shuffling multiple times. Notice how Angular only updates
+    changed items instead of recreating the entire list!
+  </div>
 </div>
-
