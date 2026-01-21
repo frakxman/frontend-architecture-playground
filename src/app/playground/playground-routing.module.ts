@@ -9,11 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'performance',
+        redirectTo: 'performance-lab',
         pathMatch: 'full'
       },
       {
-        path: 'performance',
+        path: 'performance-lab',
         loadChildren: () =>
           import('./features/performance/performance.module')
             .then(m => m.PerformanceModule)
@@ -21,6 +21,7 @@ const routes: Routes = [
     ]
   }
 ];
+
 
 
 @NgModule({

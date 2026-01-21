@@ -4,7 +4,6 @@ import { MockDataService } from '../../services/mock-data.service';
 
 @Component({
   selector: 'app-manual-subscribe',
-  standalone: true,
   templateUrl: './manual-subscribe.component.html',
   styleUrls: ['./manual-subscribe.component.css'],
 })

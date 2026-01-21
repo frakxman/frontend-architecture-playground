@@ -1,23 +1,21 @@
-<h1>Angular Performance Lab</h1>
+<div class="lab-container">
+  <h1>Angular Performance Lab</h1>
+  <p class="lab-description">Compare different Angular performance optimization techniques</p>
 
-<section>
-  <h2>Baseline</h2>
-  <app-baseline-list></app-baseline-list>
-</section>
+  <section class="lab-section">
+    <h2>🔄 Change Detection Strategies</h2>
+    <div class="demo-grid">
+      <app-baseline-list></app-baseline-list>
+      <app-onpush-list></app-onpush-list>
+      <app-trackby-list></app-trackby-list>
+    </div>
+  </section>
 
-<section>
-  <h2>OnPush</h2>
-  <app-onpush-list></app-onpush-list>
-</section>
-
-<section>
-  <h2>trackBy</h2>
-  <app-trackby-list></app-trackby-list>
-</section>
-
-<h2>RxJS Performance Lab</h2>
-
-<section class="lab-grid">
-  <app-manual-subscribe></app-manual-subscribe>
-  <app-async-pipe></app-async-pipe>
-</section>
+  <section class="lab-section">
+    <h2>📡 RxJS Performance</h2>
+    <div class="demo-grid">
+      <app-manual-subscribe></app-manual-subscribe>
+      <app-async-pipe></app-async-pipe>
+    </div>
+  </section>
+</div>

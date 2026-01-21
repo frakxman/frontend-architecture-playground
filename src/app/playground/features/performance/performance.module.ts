@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { PerformanceRoutingModule } from "./performance-routing.module";
 
 import { MockDataService } from "./services/mock-data.service";
 
@@ -17,13 +18,18 @@ import { AsyncPipeComponent } from "./sections/async-pipe/async-pipe.component";
     BaselineListComponent,
     OnPushListComponent,
     TrackByListComponent,
-    RxjsLabComponent
+    RxjsLabComponent,
+    AsyncPipeComponent,
+    ManualSubscribeComponent,
   ],
   imports: [
     CommonModule,
-    ManualSubscribeComponent,
-    AsyncPipeComponent
+    PerformanceRoutingModule
   ],
   providers: [MockDataService]
 })
-export class PerformanceModule {}
+export class PerformanceModule {
+  constructor() {
+    console.log('🚀 PerformanceModule loaded!');
+  }
+}
