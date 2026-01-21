@@ -1,14 +1,50 @@
+/* =========================================
+   Sidebar Component - Dark Theme
+   ========================================= */
+
 :host {
   display: block;
   height: 100%;
+  width: 100%;
 }
 
-nav {
+.sidebar {
   height: 100%;
-  padding: var(--space-md);
-  background: rgba(10, 10, 10, 0.6);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  width: 100%;
+  padding: var(--space-lg);
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid var(--color-border-soft);
+  box-shadow:
+    4px 0 24px rgba(0, 0, 0, 0.3),
+    inset 1px 0 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-accent-soft),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover {
+    background: rgba(25, 25, 25, 0.9);
+
+    &::before {
+      opacity: 0.5;
+    }
+  }
 }
 
 .sidebar-nav {
@@ -27,55 +63,82 @@ nav {
 a {
   display: block;
   width: 100%;
-
   position: relative;
   padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
 
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
+  text-decoration: none;
 
-  transition:
-    background var(--motion-fast) var(--ease-standard),
-    color var(--motion-fast) var(--ease-standard);
+  background: var(--color-bg-card);
+  backdrop-filter: var(--blur-card);
+  border: 1px solid var(--color-border-soft);
+
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  &:hover {
+    color: var(--color-text-primary);
+    background: rgba(0, 255, 136, 0.08);
+    border-color: rgba(0, 255, 136, 0.15);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  &.active {
+    color: var(--color-accent);
+    background: rgba(0, 255, 136, 0.12);
+    border-color: rgba(0, 255, 136, 0.25);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      0 0 16px var(--color-accent-glow);
+  }
+
+  &.active::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--color-accent);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--color-accent-glow);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-accent),
+      0 4px 12px rgba(0, 0, 0, 0.3);
+  }
 }
 
-a:hover {
-  background: var(--color-surface-strong);
-  color: var(--color-text);
-}
-
-a.active {
-  color: var(--color-text);
-}
-
-a.active::before {
-  content: '';
-  position: absolute;
-  left: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
-  background: var(--color-accent);
-  border-radius: 2px;
-}
-
-a:focus-visible {
-  outline: none;
-  background: var(--color-surface-strong);
-  box-shadow: 0 0 0 2px var(--color-accent);
-}
+/* =========================================
+   Responsive Design
+   ========================================= */
 
 @media (max-width: 768px) {
-  nav {
-    flex-direction: row;
-    justify-content: space-around;
-    padding: var(--space-sm);
+  .sidebar {
+    padding: var(--space-md);
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-soft);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    &::before {
+      display: none;
+    }
   }
 
   a {
     font-size: 0.85rem;
     padding: var(--space-xs) var(--space-sm);
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 
   a.active::before {
@@ -84,6 +147,19 @@ a:focus-visible {
 
   a.active {
     border-bottom: 2px solid var(--color-accent);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      0 0 8px var(--color-accent-glow);
   }
 }
 
+@media (max-width: 480px) {
+  .sidebar {
+    padding: var(--space-sm);
+  }
+
+  a {
+    padding: var(--space-xs);
+    font-size: 0.8rem;
+  }
+}

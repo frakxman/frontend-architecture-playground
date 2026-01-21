@@ -1,29 +1,30 @@
 <nav class="sidebar" aria-label="Portfolio navigation">
 
+  <!-- Navigation Links -->
   <ul class="sidebar-nav">
-    <li>
+    <li class="sidebar-nav__item">
       <a routerLink="/portfolio/about"
          routerLinkActive="active"
-         [routerLinkActiveOptions]="{ exact: true }">
-        About
+         [routerLinkActiveOptions]="{ exact: true }"
+         class="sidebar-nav__link">
+        <span class="sidebar-nav__text">About</span>
       </a>
     </li>
 
-    <li>
+    <li class="sidebar-nav__item">
       <a routerLink="/portfolio/experience"
-         routerLinkActive="active">
-        Experience
+         routerLinkActive="active"
+         class="sidebar-nav__link">
+        <span class="sidebar-nav__text">Experience</span>
       </a>
     </li>
 
-    <li>
+    <li class="sidebar-nav__item">
       <a routerLink="/portfolio/projects"
-         routerLinkActive="active">
-        Projects
+         routerLinkActive="active"
+         class="sidebar-nav__link">
+        <span class="sidebar-nav__text">Projects</span>
       </a>
     </li>
   </ul>
 </nav>
-
-
-

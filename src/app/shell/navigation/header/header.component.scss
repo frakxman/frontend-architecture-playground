@@ -1,8 +1,8 @@
 .header {
-  // Glass morphism effect
+  // Glass morphism effect - REMOVED saturate(180%)
   background: rgba(17, 19, 21, 0.2);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: blur(12px); /* REMOVED: saturate(180%) */
+  -webkit-backdrop-filter: blur(12px); /* REMOVED: saturate(180%) */
 
   // Borders with transparency
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -164,12 +164,6 @@
     box-shadow:
       0 4px 12px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
-
-    &--playground {
-      background: rgba(0, 122, 204, 0.2);
-      border: 1px solid rgba(0, 122, 204, 0.4);
-      color: #66c2ff;
-    }
   }
 }
 
