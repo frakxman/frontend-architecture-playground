@@ -8,21 +8,17 @@ const routes: Routes = [
     component: PlaygroundLayoutComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'performance-lab',
-        pathMatch: 'full'
+        path: 'concepts',
+        loadChildren: () => import('./features/concepts/concepts.module').then(m => m.ConceptsModule)
       },
       {
-        path: 'performance-lab',
-        loadChildren: () =>
-          import('./features/performance/performance.module')
-            .then(m => m.PerformanceModule)
-      }
+        path: 'performance',
+        loadChildren: () => import('./features/performance/performance.module').then(m => m.PerformanceModule)
+      },
+      { path: '', redirectTo: 'concepts/overview', pathMatch: 'full' }
     ]
   }
 ];
-
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

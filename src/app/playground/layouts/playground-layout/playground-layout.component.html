@@ -1,32 +1,280 @@
-<div class="playground-container">
-  <nav class="playground-nav">
-    <h3 class="nav-title">Performance Lab</h3>
+<div class="dashboard">
+  <div class="playground-layout">
 
-    <div class="nav-section">
-      <h4 class="section-title">Change Detection</h4>
-      <a routerLink="performance-lab/baseline" routerLinkActive="active" class="nav-item">
-        📊 Baseline List
-      </a>
-      <a routerLink="performance-lab/onpush" routerLinkActive="active" class="nav-item">
-        ⚡ OnPush Strategy
-      </a>
-      <a routerLink="performance-lab/trackby" routerLinkActive="active" class="nav-item">
-        🔍 TrackBy Function
-      </a>
+  <!-- Sidebar Navigation -->
+  <aside class="playground-sidebar surface-card glass-panel">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">
+        <span class="sidebar-icon">🏗️</span>
+        Architecture Playground
+      </h2>
+      <p class="sidebar-subtitle">
+        Interactive exploration of Angular architectural patterns
+      </p>
     </div>
 
-    <div class="nav-section">
-      <h4 class="section-title">RxJS Performance</h4>
-      <a routerLink="performance-lab/manual-subscribe" routerLinkActive="active" class="nav-item">
-        ❌ Manual Subscribe
-      </a>
-      <a routerLink="performance-lab/async-pipe" routerLinkActive="active" class="nav-item">
-        ✅ Async Pipe
-      </a>
-    </div>
-  </nav>
+    <nav class="sidebar-nav">
+      <ul class="nav-menu">
 
+        <!-- Overview Section -->
+        <li class="nav-section">
+          <div class="nav-section__header">
+            <span class="nav-section__icon">📋</span>
+            <span class="nav-section__title">Getting Started</span>
+          </div>
+          <ul class="nav-section__items">
+            <li class="nav-item">
+              <a routerLink="/playground"
+                 routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }"
+                 class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Overview</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/architecture-concepts"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">💡</span>
+                <span class="nav-text">Architecture Concepts</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Core Labs Section -->
+        <li class="nav-section">
+          <div class="nav-section__header">
+            <span class="nav-section__icon">🔬</span>
+            <span class="nav-section__title">Core Labs</span>
+          </div>
+          <ul class="nav-section__items">
+            <li class="nav-item">
+              <a routerLink="/playground/performance-lab"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Performance Lab</span>
+                <span class="nav-badge">3 Strategies</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/state-management"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🔄</span>
+                <span class="nav-text">State Management</span>
+                <span class="nav-badge badge-new">New</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/signals-vs-observables"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">⚡</span>
+                <span class="nav-text">Signals vs Observables</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Architecture Patterns Section -->
+        <li class="nav-section">
+          <div class="nav-section__header">
+            <span class="nav-section__icon">🏛️</span>
+            <span class="nav-section__title">Architecture Patterns</span>
+          </div>
+          <ul class="nav-section__items">
+            <li class="nav-item">
+              <a routerLink="/playground/smart-dumb-components"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🎭</span>
+                <span class="nav-text">Smart/Dumb Components</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/facade-pattern"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-text">Facade Pattern</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/container-presenter"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Container/Presenter</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/feature-modules"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🧩</span>
+                <span class="nav-text">Feature Modules</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Advanced Topics Section -->
+        <li class="nav-section">
+          <div class="nav-section__header">
+            <span class="nav-section__icon">🚀</span>
+            <span class="nav-section__title">Advanced Topics</span>
+          </div>
+          <ul class="nav-section__items">
+            <li class="nav-item">
+              <a routerLink="/playground/security"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🔒</span>
+                <span class="nav-text">Security</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/accessibility"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">♿</span>
+                <span class="nav-text">Accessibility</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/testing-strategies"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🧪</span>
+                <span class="nav-text">Testing Strategies</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/bundle-optimization"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Bundle Optimization</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Comparisons Section -->
+        <li class="nav-section">
+          <div class="nav-section__header">
+            <span class="nav-section__icon">📈</span>
+            <span class="nav-section__title">Comparisons</span>
+          </div>
+          <ul class="nav-section__items">
+            <li class="nav-item">
+              <a routerLink="/playground/comparisons"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">⚖️</span>
+                <span class="nav-text">Pattern Comparisons</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/benchmarks"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-text">Performance Benchmarks</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/playground/decision-tree"
+                 routerLinkActive="active"
+                 class="nav-link">
+                <span class="nav-icon">🌳</span>
+                <span class="nav-text">Decision Tree</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <div class="lab-info">
+        <div class="lab-info__icon">🔬</div>
+        <div class="lab-info__content">
+          <div class="lab-info__title">Interactive Lab</div>
+          <div class="lab-info__desc">Toggle between implementations at runtime</div>
+        </div>
+      </div>
+      <button class="sidebar-action">
+        <span class="sidebar-action__icon">🚀</span>
+        <span>Run All Demos</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
   <main class="playground-content">
-    <router-outlet></router-outlet>
+
+    <!-- Content Header -->
+    <header class="content-header surface-card glass-panel" *ngIf="showHeader">
+      <div class="content-header__main">
+        <h1 class="content-title">{{ currentTitle }}</h1>
+        <p class="content-subtitle">{{ currentSubtitle }}</p>
+      </div>
+      <div class="content-header__actions">
+        <button class="header-action" (click)="toggleImplementation()">
+          <span class="header-action__icon">🔄</span>
+          <span>Switch Implementation</span>
+        </button>
+        <button class="header-action header-action--primary" (click)="resetDemo()">
+          <span class="header-action__icon">🔄</span>
+          <span>Reset Demo</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Router Outlet for Dynamic Content -->
+    <div class="content-router">
+      <router-outlet />
+    </div>
+
+    <!-- Dynamic Content Area (for topic-specific content) -->
+    <div class="dynamic-content" *ngIf="!routerOutletActive">
+      <!-- This shows when no specific route is active (dashboard view) -->
+      <div class="dashboard-placeholder">
+        <div class="placeholder-icon">🏗️</div>
+        <h2 class="placeholder-title">Architecture Playground</h2>
+        <p class="placeholder-desc">
+          Select a topic from the sidebar to explore different Angular architectural patterns.
+          Each lab demonstrates the same feature built multiple ways.
+        </p>
+
+        <div class="placeholder-grid">
+          <div class="placeholder-card">
+            <div class="placeholder-card__icon">📊</div>
+            <h3>Performance Lab</h3>
+            <p>Compare change detection strategies</p>
+          </div>
+          <div class="placeholder-card">
+            <div class="placeholder-card__icon">🔄</div>
+            <h3>State Management</h3>
+            <p>Different approaches to state</p>
+          </div>
+          <div class="placeholder-card">
+            <div class="placeholder-card__icon">⚡</div>
+            <h3>Signals vs RxJS</h3>
+            <p>Compare reactivity models</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
+
 </div>
+
+
