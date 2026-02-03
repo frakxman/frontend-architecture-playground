@@ -15,19 +15,37 @@ export class ProjectsGridComponent {
       title: 'SaaS POS Platform',
       description: 'Multi-tenant POS system with modular frontend architecture.',
       stack: ['Angular', 'Vue', 'TypeScript', 'PostgreSQL'],
-      highlight: 'Scaled to support SaaS model'
+      highlight: 'Scaled to support SaaS model',
+      link: 'https://saas-pos-platform.example.com'
     },
     {
       title: 'E-commerce Platform',
       description: 'Fullstack e-commerce solution.',
       stack: ['Angular', 'NestJS', 'REST'],
-      highlight: 'Delivered production-ready features'
+      highlight: 'Delivered production-ready features',
+      link: 'https://e-commerce-platform.example.com'
     },
     {
       title: 'Frontend Architecture Playground',
       description: 'Architecture comparison and experimentation platform.',
       stack: ['Angular', 'Standalone', 'Modules'],
-      highlight: 'Demonstrates architectural decision-making'
+      highlight: 'Demonstrates architectural decision-making',
+      link: '/playground/concepts/overview',
+      isInternal: true
+    },
+    {
+      title: 'Amyules Landing Page',
+      description: 'Modern, responsive landing page with smooth animations and interactive elements.',
+      stack: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+      highlight: 'Clean UI/UX with engaging visual storytelling',
+      link: 'https://frakxman.github.io/Amyules/'
+    },
+    {
+      title: 'Frikerx.dev Portfolio',
+      description: 'Personal portfolio showcasing multimedia and development work.',
+      stack: ['HTML', 'CSS', 'JavaScript'],
+      highlight: 'Creative portfolio with multimedia integration',
+      link: 'https://frakxman.github.io/frikerx.dev/'
     }
   ];
 }

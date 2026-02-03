@@ -7,4 +7,20 @@
   </ul>
 
   <p class="highlight">{{ highlight }}</p>
+
+  <!-- Para links externos -->
+  <a *ngIf="link && !isInternal"
+    [href]="link"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="project-link">
+    View Project
+  </a>
+
+  <!-- Para links internos (rutas de Angular) -->
+  <a *ngIf="link && isInternal"
+    [routerLink]="link"
+    class="project-link">
+    View Project
+  </a>
 </div>
