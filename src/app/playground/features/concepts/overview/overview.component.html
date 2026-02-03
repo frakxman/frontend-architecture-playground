@@ -1,1 +1,172 @@
-<p>overview works!</p>
+<div class="overview-container">
+  <header class="overview-header">
+  <h1 class="title">Build intuition for Angular Architecture</h1>
+  <p class="subtitle">Visualize performance, state, and change detection decisions in real time
+</p>
+</header>
+
+  <section class="intro-section">
+    <p class="intro-text">
+      Welcome to the <strong>Angular Architecture Playground</strong>, an interactive environment designed to help developers explore, compare, and master key architectural patterns and performance strategies in Angular applications.
+    </p>
+  </section>
+
+  <section class="content-section" [class.expanded]="expandedSections.whatIsPlayground">
+    <div class="section-header" (click)="toggleSection('whatIsPlayground')">
+      <h2 class="section-title">
+        <span class="icon">{{ expandedSections.whatIsPlayground ? '▼' : '▶' }}</span>
+        🧠 What You'll Explore
+      </h2>
+    </div>
+
+    <div class="section-content" *ngIf="expandedSections.whatIsPlayground">
+      <p>This playground is divided into two main zones:</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">1. Getting Started</h3>
+          </div>
+          <div class="card-body">
+            <ul class="feature-list">
+              <li>
+                <strong>Overview</strong> (this section) – high-level introduction and navigation guide.
+              </li>
+              <li>
+                <strong>Architecture Concepts</strong> – foundational patterns like:
+                <ul class="nested-list">
+                  <li>Component-based architecture</li>
+                  <li>Modular design</li>
+                  <li>State management approaches</li>
+                  <li>Change detection strategies</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">2. Core Labs</h3>
+            <span class="badge">Interactive</span>
+          </div>
+          <div class="card-body">
+            <p>Hands-on labs where you can test and visualize Angular behaviors in real-time:</p>
+            <ul class="feature-list">
+              <li>
+                <strong>Performance Lab</strong> – compare rendering and change detection techniques.
+              </li>
+              <li>
+                <strong>State Management Lab</strong> – explore different state handling patterns (Signals, RxJS, Context, etc.).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" [class.expanded]="expandedSections.learningObjectives">
+    <div class="section-header" (click)="toggleSection('learningObjectives')">
+      <h2 class="section-title">
+        <span class="icon">{{ expandedSections.learningObjectives ? '▼' : '▶' }}</span>
+        🎯 Learning Objectives
+      </h2>
+    </div>
+
+    <div class="section-content" *ngIf="expandedSections.learningObjectives">
+      <p>By interacting with the demos, you will:</p>
+      <ul class="objective-list">
+        <li>Understand how different architectural choices impact performance.</li>
+        <li>See visual feedback on render counts, change detection cycles, and bundle size.</li>
+        <li>Learn to decide when to use which pattern (e.g., Signals vs. RxJS, lazy loading vs. eager modules).</li>
+        <li>Gain insight into Angular's change detection mechanism and optimization techniques.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="content-section" [class.expanded]="expandedSections.howToUse">
+    <div class="section-header" (click)="toggleSection('howToUse')">
+      <h2 class="section-title">
+        <span class="icon">{{ expandedSections.howToUse ? '▼' : '▶' }}</span>
+        🚀 How to Use This Playground
+      </h2>
+    </div>
+
+    <div class="section-content" *ngIf="expandedSections.howToUse">
+      <p>Each lab includes:</p>
+      <ul class="usage-list">
+        <li>
+          <strong>Live demos</strong> with toggle controls to switch between implementations.
+        </li>
+        <li>
+          <strong>Code snippets</strong> showing the underlying Angular code.
+        </li>
+        <li>
+          <strong>Metrics panel</strong> displaying performance data (render counts, detection cycles, etc.).
+        </li>
+        <li>
+          <strong>Reset buttons</strong> to restore the demo to its initial state.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="example-section">
+    <h2 class="example-title">📌 Example: Performance Lab</h2>
+    <div class="example-card">
+      <p>In the <strong>Performance Lab</strong>, you can toggle between:</p>
+
+      <div class="example-options">
+        <div class="option">
+          <span class="option-badge">Baseline</span>
+          <p>Default Change Detection – full tree checks on every event.</p>
+        </div>
+        <div class="option">
+          <span class="option-badge">OnPush</span>
+          <p>Targeted checks, reducing renders.</p>
+        </div>
+        <div class="option">
+          <span class="option-badge">Signals</span>
+          <p>Granular updates, minimal re-renders.</p>
+        </div>
+      </div>
+
+      <p class="example-note">
+        You'll see a real-time <strong>render counter</strong> and a visual flow diagram of change detection.
+      </p>
+    </div>
+  </section>
+
+  <section class="coming-soon-section">
+    <h2 class="coming-soon-title">🔧 Coming Soon</h2>
+    <div class="coming-soon-grid">
+      <div class="coming-soon-item">
+        <h3>Advanced State Patterns</h3>
+        <p>Global Store, Feature Stores, SSR hydration.</p>
+      </div>
+      <div class="coming-soon-item">
+        <h3>Bundle Analysis Lab</h3>
+        <p>Visualize impact of lazy loading and code splitting.</p>
+      </div>
+      <div class="coming-soon-item">
+        <h3>View Transition API</h3>
+        <p>Demos with Angular's new router support.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="overview-footer">
+    <div class="cta-box">
+      <p class="cta-text">✅ Ready to dive in?</p>
+      <div class="cta-buttons">
+        <a routerLink="../architecture-concepts" class="btn btn-primary">
+          Proceed to Architecture Concepts
+        </a>
+        <a routerLink="../../performance" class="btn btn-secondary">
+          Jump to Performance Lab
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
