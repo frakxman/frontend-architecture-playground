@@ -75,10 +75,16 @@
   }
 }
 
-@media (max-width: 768px) {
+/* Mobile-first: base = mobile. Enhance for larger screens. */
+.surface {
+  backdrop-filter: blur(6px);
+  box-shadow: none;
+}
+
+@media (min-width: 769px) {
   .surface {
-    backdrop-filter: blur(6px);
-    box-shadow: none;
+    backdrop-filter: var(--blur-glass);
+    box-shadow: var(--glass-shadow-soft);
   }
 }
 

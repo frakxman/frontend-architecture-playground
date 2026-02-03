@@ -8,10 +8,20 @@
 .app-shell__content {
   display: flex;
   flex: 1;
+  min-height: 0;
+  flex-direction: column;
 }
 
 .app-shell__main {
   flex: 1;
+  min-height: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+app-footer {
+  flex-shrink: 0;
 }

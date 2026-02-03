@@ -3,7 +3,7 @@
     <!-- Logo / Brand -->
     <div class="header__brand">
       <a routerLink="/" class="header__logo">
-        <span class="header__logo-text">Frakxman</span>
+        <span class="header__logo-text">Frakx</span>
       </a>
     </div>
 
@@ -13,16 +13,22 @@
         routerLink="/portfolio/about"
         routerLinkActive="header__nav-link--active"
         class="header__nav-link"
+        aria-label="Portfolio"
+        title="Portfolio"
       >
-        Portfolio
+        <span class="header__nav-icon" aria-hidden="true">💼</span>
+        <span class="header__nav-text">Portfolio</span>
       </a>
+
       <a
         routerLink="/playground"
         routerLinkActive="header__nav-link--active"
         class="header__nav-link"
+        aria-label="Architecture Playground"
+        title="Architecture Playground"
       >
-        <span class="header__nav-icon">🧪</span>
-        Architecture Playground
+        <span class="header__nav-icon" aria-hidden="true">🧪</span>
+        <span class="header__nav-text">Architecture Playground</span>
       </a>
     </nav>
 

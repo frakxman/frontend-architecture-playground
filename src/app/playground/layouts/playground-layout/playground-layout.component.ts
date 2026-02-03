@@ -12,7 +12,7 @@ interface NavItem {
 @Component({
   selector: 'app-playground-layout',
   templateUrl: './playground-layout.component.html',
-  styleUrls: ['./playground-layout.component.scss']
+  styleUrls: ['./playground-layout.component.css']
 })
 export class PlaygroundLayoutComponent implements OnInit {
 
@@ -21,6 +21,22 @@ export class PlaygroundLayoutComponent implements OnInit {
   currentSubtitle = 'Interactive exploration of Angular architectural patterns';
   showHeader = true;
   routerOutletActive = false;
+  mobileMenuOpen = false;
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
+  }
+
+  onNavClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (target?.closest?.('a')) {
+      this.closeMobileMenu();
+    }
+  }
 
   // Available implementations for toggling
   currentImplementation = 0;

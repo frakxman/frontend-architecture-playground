@@ -69,6 +69,13 @@ body {
   overflow-y: scroll;
 }
 
+/* Mobile-first: fluid images (no overflow) */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* Subtle Background Pattern */
 body::before {
   content: '';
@@ -179,16 +186,21 @@ a {
   backdrop-filter: blur(12px);
 }
 
-/* ---------- BUTTON COMPONENTS ---------- */
+/* ---------- BUTTON COMPONENTS (touch target min 44x44px) ---------- */
 .primary-btn,
 .secondary-btn {
-  padding: 14px 28px;
+  padding: 12px 20px;
+  min-height: 44px;
+  min-width: 44px;
   border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .primary-btn {
@@ -270,7 +282,7 @@ a {
 /* ---------- HERO SECTION ---------- */
 .hero {
   margin-bottom: var(--space-xl);
-  padding: var(--space-xl) var(--space-lg);
+  padding: var(--space-xl) 1rem;
   position: relative;
   overflow: hidden;
 
@@ -302,7 +314,8 @@ a {
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .hero-actions {
@@ -338,7 +351,7 @@ a {
 .lab-header {
   text-align: center;
   margin-bottom: var(--space-xl);
-  max-width: 800px;
+  width: 100%;
   margin-inline: auto;
 }
 
@@ -489,7 +502,9 @@ a {
 
 .content-section {
   background: var(--color-bg-root);
-  padding: var(--space-xl) 0;
+  padding: var(--space-xl) 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Performance Utilities */
@@ -602,31 +617,80 @@ a {
 }
 
 /* =========================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (Mobile-first: min-width)
    ========================================= */
 
-@media (max-width: 768px) {
-  .performance-lab {
-    padding: var(--space-lg) var(--space-md);
+/* Base = mobile: already single column, compact padding */
+.performance-lab {
+  padding: var(--space-lg) 1rem;
+}
+
+.metrics-grid,
+.comparison-grid {
+  grid-template-columns: 1fr;
+}
+
+.demo-controls {
+  flex-direction: column;
+}
+
+.demo-btn {
+  min-height: 44px;
+  min-width: 44px;
+  width: 100%;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fps-counter {
+  position: static;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 769px) {
+  .hero {
+    padding: var(--space-xl) 1.5rem;
   }
 
-  .metrics-grid,
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .content-section {
+    padding: var(--space-xl) 1.5rem;
+  }
+
+  .lab-header {
+    max-width: 800px;
+  }
+
+  .performance-lab {
+    padding: var(--space-xl) 1.5rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
   .comparison-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   }
 
   .demo-controls {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .demo-btn {
-    width: 100%;
-    text-align: center;
+    width: auto;
   }
 
   .fps-counter {
-    position: static;
-    margin-bottom: var(--space-md);
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    margin-bottom: 0;
   }
 }
 

@@ -143,12 +143,18 @@
 
 .btn {
   padding: 10px 20px;
+  min-height: 44px;
+  min-width: 44px;
   border: none;
   border-radius: 6px;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .btn:disabled {

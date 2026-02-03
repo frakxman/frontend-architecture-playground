@@ -1,5 +1,8 @@
 .project-card {
-  padding: var(--space-lg);
+  padding: var(--space-md);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(10px) saturate(180%);
@@ -7,6 +10,15 @@
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.project-card a {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .project-card:hover {

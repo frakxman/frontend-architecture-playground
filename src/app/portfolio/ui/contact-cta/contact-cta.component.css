@@ -1,6 +1,8 @@
 .contact {
-  padding: var(--space-xl);
+  padding: 1rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-title {
@@ -9,8 +11,11 @@
 
 .subtitle {
   color: var(--color-text-muted);
-  max-width: 520px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto var(--space-lg);
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .actions {
@@ -22,14 +27,19 @@
 }
 
 .btn {
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
+  padding: 12px 20px;
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .primary {
@@ -70,4 +80,15 @@
   fill: currentColor;
   width: 16px;
   height: 16px;
+}
+
+@media (min-width: 769px) {
+  .contact {
+    padding: var(--space-xl);
+  }
+
+  .subtitle {
+    max-width: 520px;
+    padding: 0;
+  }
 }

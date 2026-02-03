@@ -1,23 +1,16 @@
 .header {
-  // Glass morphism effect - REMOVED saturate(180%)
   background: rgba(17, 19, 21, 0.2);
-  backdrop-filter: blur(12px); /* REMOVED: saturate(180%) */
-  -webkit-backdrop-filter: blur(12px); /* REMOVED: saturate(180%) */
-
-  // Borders with transparency
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-  // Shadow with depth
   box-shadow:
     0 4px 24px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-  // Positioning
   position: sticky;
   top: var(--space-sm);
-  z-index: 100;
+  z-index: 1000;
   margin: var(--space-sm);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 
   &:hover {
@@ -32,10 +25,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1800px;
+    width: 100%;
     margin: 0 auto;
-    height: 64px;
-    padding: 0 var(--space-lg);
+    min-height: 56px;
+    padding: 0 1rem;
+    position: relative;
   }
 
   &__brand {
@@ -46,6 +40,10 @@
   &__logo {
     text-decoration: none;
     transition: all 0.3s ease;
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
 
     &:hover {
       transform: scale(1.05);
@@ -54,18 +52,24 @@
   }
 
   &__logo-text {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    display: inline;
+
+    &::after {
+      content: 'man';
+      display: none;
+    }
   }
 
   &__nav {
     display: flex;
-    gap: var(--space-md);
+    gap: var(--space-sm);
     align-items: center;
   }
 
@@ -73,20 +77,21 @@
     color: var(--color-text-secondary);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.95rem;
-    padding: var(--space-xs) var(--space-md);
+    font-size: 1rem;
+    padding: var(--space-xs);
+    min-height: 44px;
+    min-width: 44px;
     border-radius: var(--radius-md);
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
-
-    // Glass effect for nav items
     background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
 
     &::before {
       content: '';
@@ -129,7 +134,7 @@
       &::after {
         content: '';
         position: absolute;
-        bottom: -2px;
+        bottom: 6px;
         left: 50%;
         transform: translateX(-50%);
         width: 20px;
@@ -141,13 +146,17 @@
   }
 
   &__nav-icon {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
+    line-height: 1;
     filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.3));
   }
 
+  &__nav-text {
+    display: none;
+  }
+
   &__section {
-    display: flex;
-    align-items: center;
+    display: none;
   }
 
   &__section-badge {
@@ -156,8 +165,6 @@
     font-size: 0.85rem;
     font-weight: 600;
     color: #fff;
-
-    // Glass effect for badge
     background: rgba(40, 167, 69, 0.2);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(40, 167, 69, 0.3);
@@ -167,31 +174,78 @@
   }
 }
 
-@media (max-width: 768px) {
+/* =========================================
+   TABLET: 768px - 1024px
+   ========================================= */
+@media (min-width: 768px) and (max-width: 1024px) {
   .header {
-    margin: var(--space-xs);
-    border-radius: var(--radius-md);
-
     &__container {
-      padding: 0 var(--space-md);
+      padding: 0 1.5rem;
     }
 
-    &__nav {
-      gap: var(--space-sm);
+    &__logo-text {
+      font-size: 1.5rem;
     }
 
     &__nav-link {
-      font-size: 0.85rem;
-      padding: 0.4rem 0.8rem;
+      padding: var(--space-xs) var(--space-sm);
     }
 
-    &__section {
+    &__nav-text {
       display: none;
     }
   }
 }
 
-// Animation for header on scroll
+/* =========================================
+   DESKTOP: > 1024px
+   ========================================= */
+@media (min-width: 1025px) {
+  .header {
+    margin: var(--space-sm);
+    border-radius: var(--radius-lg);
+
+    &__container {
+      max-width: 1800px;
+      min-height: 64px;
+      padding: 0 2rem;
+    }
+
+    &__logo-text {
+      font-size: 1.75rem;
+
+      &::after {
+        display: inline;
+      }
+    }
+
+    &__nav-link {
+      padding: var(--space-xs) var(--space-md);
+      min-height: auto;
+      min-width: auto;
+      justify-content: flex-start;
+
+      &--active::after {
+        bottom: -2px;
+        left: 50%;
+        right: auto;
+        width: 20px;
+        transform: translateX(-50%);
+      }
+    }
+
+    &__nav-text {
+      display: inline;
+      font-size: 0.95rem;
+    }
+
+    &__section {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
 @keyframes header-scroll {
   from {
     backdrop-filter: blur(12px);
@@ -203,7 +257,6 @@
   }
 }
 
-// Optional: Add a scroll effect
 .scrolled {
   animation: header-scroll 0.3s forwards;
 }

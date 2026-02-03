@@ -1,12 +1,18 @@
+/* Mobile First: base = single column, smaller gap */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) {
   .grid {
-    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    padding: 0;
   }
 }
 

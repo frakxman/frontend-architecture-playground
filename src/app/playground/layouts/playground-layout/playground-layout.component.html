@@ -1,8 +1,21 @@
 <div class="dashboard">
   <div class="playground-layout">
 
-  <!-- Sidebar Navigation -->
-  <aside class="playground-sidebar surface-card glass-panel">
+  <!-- Mobile menu toggle -->
+  <button
+    type="button"
+    class="playground-hamburger"
+    (click)="toggleMobileMenu()"
+    [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+    [attr.aria-expanded]="mobileMenuOpen"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Sidebar Navigation (drawer on mobile) -->
+  <aside class="playground-sidebar surface-card glass-panel" [class.playground-sidebar--open]="mobileMenuOpen">
     <div class="sidebar-header">
       <h2 class="sidebar-title">
         <span class="sidebar-icon">🏗️</span>
@@ -13,7 +26,7 @@
       </p>
     </div>
 
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" (click)="onNavClick($event)">
       <ul class="nav-menu">
 
         <!-- Overview Section -->
@@ -215,6 +228,16 @@
       </button>
     </div>
   </aside>
+
+  <!-- Mobile overlay -->
+  <div
+    class="playground-overlay"
+    [class.playground-overlay--open]="mobileMenuOpen"
+    (click)="closeMobileMenu()"
+    role="button"
+    tabindex="-1"
+    aria-label="Close menu"
+  ></div>
 
   <!-- Main Content Area -->
   <main class="playground-content">

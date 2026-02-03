@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -35,13 +35,9 @@ export class HeaderComponent implements OnInit {
 
     // Scroll effect
     this.checkScroll();
-    window.addEventListener('scroll', this.checkScroll.bind(this));
   }
 
-  ngOnDestroy() {
-    window.removeEventListener('scroll', this.checkScroll.bind(this));
-  }
-
+  @HostListener('window:scroll')
   checkScroll() {
     this.isScrolled = window.scrollY > 20;
   }

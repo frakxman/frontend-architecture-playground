@@ -1,6 +1,8 @@
 .experience {
-  padding: var(--space-lg);
+  padding: 1rem;
   margin-bottom: var(--space-lg);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .timeline {
@@ -35,7 +37,19 @@
 }
 
 .content {
-  max-width: 700px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+  .experience {
+    padding: var(--space-lg) 1.5rem;
+  }
+
+  .content {
+    max-width: 700px;
+  }
 }
 
 .content h4 {

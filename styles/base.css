@@ -23,12 +23,21 @@ a {
   }
 }
 
-@media (max-width: 768px) {
+/* Mobile-first: base = mobile. Scale up for larger screens. */
+.section-title {
+  font-size: 1.2rem;
+}
+
+p {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 769px) {
   .section-title {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }

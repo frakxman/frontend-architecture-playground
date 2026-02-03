@@ -16,10 +16,10 @@
     0 -4px 24px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
-  // Positioning and spacing
-  padding: var(--space-md) var(--space-lg);
+  // Positioning and spacing (mobile-first: lateral padding 1rem)
+  padding: var(--space-md) 1rem;
   margin: var(--space-xl) var(--space-sm) var(--space-sm);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -90,10 +90,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1800px;
+    width: 100%;
     margin: 0 auto;
     position: relative;
     z-index: 1;
+    flex-wrap: wrap;
+    gap: var(--space-md);
   }
 
   &__left,
@@ -240,8 +242,10 @@
   }
 
   &__logo-img {
+    max-width: 100%;
     width: 28px;
-    height: 28px;
+    height: auto;
+    min-height: 24px;
     object-fit: contain;
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
@@ -300,8 +304,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   padding: var(--space-xs);
   border-radius: var(--radius-sm);
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -421,86 +428,98 @@
 }
 
 /* =========================================
-   Responsive Design
+   Responsive Design (Mobile-first: base = mobile)
    ========================================= */
 
-@media (max-width: 768px) {
+.footer {
+  margin: var(--space-lg) var(--space-xs) var(--space-xs);
+
+  &__left,
+  &__center,
+  &__right {
+    flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &__container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__text--muted {
+    font-size: 0.8rem;
+    padding: var(--space-xs);
+  }
+
+  &__tech-stack {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.6rem;
+  }
+
+  &__tech-text {
+    font-size: 0.8rem;
+  }
+
+  &__tech-logos {
+    gap: 0.5rem;
+  }
+
+  &__logo-img {
+    width: 24px;
+    height: auto;
+  }
+}
+
+@media (min-width: 769px) {
   .footer {
-    margin: var(--space-lg) var(--space-xs) var(--space-xs);
-    padding: var(--space-md);
-    border-radius: var(--radius-md);
+    margin: var(--space-xl) var(--space-sm) var(--space-sm);
+    padding: var(--space-md) 1.5rem;
+    border-radius: var(--radius-lg);
 
     &__container {
-      flex-direction: column;
-      gap: var(--space-md);
-      text-align: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      max-width: 1800px;
+      text-align: left;
     }
 
-    &__left,
-    &__center,
-    &__right {
-      flex: none;
-      width: 100%;
+    &__left {
+      flex: 1;
+      justify-content: flex-start;
+    }
+
+    &__center {
+      flex: 1;
       justify-content: center;
     }
 
     &__right {
-      margin-top: var(--space-xs);
-    }
-
-    &__text {
-      &--muted {
-        font-size: 0.8rem;
-        padding: var(--space-xs);
-      }
-    }
-
-    &__link {
-      padding: 0.5rem;
-
-      &:hover {
-        transform: translateY(-2px) scale(1.05);
-      }
+      flex: 1;
+      justify-content: flex-end;
+      margin-top: 0;
     }
 
     &__tech-stack {
-      flex-direction: column;
-      gap: 0.25rem;
-      padding: 0.6rem;
+      flex-direction: row;
     }
 
     &__tech-text {
-      font-size: 0.8rem;
-    }
-
-    &__tech-logos {
-      gap: 0.5rem;
+      font-size: 0.85rem;
     }
 
     &__logo-img {
-      width: 24px;
-      height: 24px;
-    }
-
-    &__tech-plus {
-      font-size: 0.9rem;
+      width: 28px;
     }
   }
 }
 
-// For very small screens
-@media (max-width: 480px) {
-  .footer {
-    &__tech-stack {
-      flex-direction: row; // Keep in line even on small screens
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 0.5rem;
-    }
-
-    &__tech-text {
-      margin-right: 0.25rem;
-    }
+@media (min-width: 481px) and (max-width: 768px) {
+  .footer__tech-stack {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
