@@ -1,5 +1,4 @@
 <nav class="sidebar" aria-label="Portfolio navigation">
-  <!-- Mobile Menu Toggle (icono SVG para que siempre se vea) -->
   <button class="sidebar__hamburger" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen">
     <svg class="sidebar__hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
       <line x1="3" y1="6" x2="21" y2="6"/>
@@ -8,7 +7,6 @@
     </svg>
   </button>
 
-  <!-- Navigation Links -->
   <div class="sidebar__content" [class.active]="mobileMenuOpen">
     <ul class="sidebar-nav">
       <li class="sidebar-nav__item">
@@ -41,6 +39,5 @@
     </ul>
   </div>
 
-  <!-- Mobile Overlay -->
   <div class="sidebar__overlay" [class.active]="mobileMenuOpen" (click)="closeMobileMenu()"></div>
 </nav>

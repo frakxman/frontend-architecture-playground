@@ -9,7 +9,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--color-bg-root);
+  background: transparent;
   color: var(--color-text-secondary);
   position: relative;
 }
@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--color-bg-root);
+  background: transparent;
 }
 
 /* On mobile: aside doesn't take space; hamburger/drawer are fixed in sidebar component */
@@ -53,9 +53,9 @@
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: transparent;
   overflow-y: auto;
 }
 
@@ -79,9 +79,9 @@
     min-height: 100%;
     height: auto;
     overflow: visible;
-    background: rgba(20, 20, 20, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: none;
   }

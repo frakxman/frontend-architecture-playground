@@ -695,15 +695,28 @@ a {
 }
 
 /* =========================================
-   DEBUG & OVERRIDE UTILITIES
+   CONSISTENT BACKGROUND ENFORCEMENT
    ========================================= */
 
-/* Remove in production */
-* {
-  background-color: transparent !important;
+/* Ensure consistent dark background across all routes */
+body,
+.portfolio-container,
+.content-section,
+app-root,
+router-outlet + * {
+  background: var(--color-bg-root) !important;
 }
 
-body, .container, main, section, div {
-  background-color: var(--color-bg-root) !important;
+/* Preserve the gradient pattern overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 212, 170, 0.03) 0%, transparent 50%),
+    #0a0a0a;
+  opacity: 0.6;
+  pointer-events: none;
 }
-
