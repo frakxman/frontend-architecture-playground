@@ -59,7 +59,7 @@
   overflow-y: auto;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 769px) {
   .portfolio-layout {
     min-height: 100vh;
   }
