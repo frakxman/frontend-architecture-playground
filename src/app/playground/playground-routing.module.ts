@@ -15,6 +15,14 @@ const routes: Routes = [
         path: 'performance',
         loadChildren: () => import('./features/performance/performance.module').then(m => m.PerformanceModule)
       },
+      {
+        path: 'state-management',
+        loadChildren: () => import('./features/state-management-lab/state-management-lab.module').then(m => m.StateManagementLabModule)
+      },
+      {
+        path: 'signals-vs-observables',
+        loadChildren: () => import('./features/signals-lab/signals-lab.module').then(m => m.SignalsLabModule)
+      },
       { path: '', redirectTo: 'concepts/overview', pathMatch: 'full' }
     ]
   }

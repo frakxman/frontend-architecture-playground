@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [],
+  selector: 'app-playground-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrls: ['./sidebar.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class SidebarComponent {
+export class PlaygroundSidebarComponent {
+  @Input() isOpen = false;
+  @Output() navClick = new EventEmitter<MouseEvent>();
 
+  onLinkClick(event: MouseEvent) {
+    this.navClick.emit(event);
+  }
 }
