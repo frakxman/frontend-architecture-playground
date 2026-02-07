@@ -16,14 +16,14 @@ export class ProjectsGridComponent {
       description: 'Multi-tenant POS system with modular frontend architecture.',
       stack: ['Angular', 'Vue', 'TypeScript', 'PostgreSQL'],
       highlight: 'Scaled to support SaaS model',
-      link: 'https://saas-pos-platform.example.com'
+      link: ''
     },
     {
       title: 'E-commerce Platform',
       description: 'Fullstack e-commerce solution.',
       stack: ['Angular', 'NestJS', 'REST'],
       highlight: 'Delivered production-ready features',
-      link: 'https://e-commerce-platform.example.com'
+      link: ''
     },
     {
       title: 'Frontend Architecture Playground',

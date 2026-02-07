@@ -1,172 +1,325 @@
 <div class="overview-container">
-  <header class="overview-header">
-  <h1 class="title">Build intuition for Angular Architecture</h1>
-  <p class="subtitle">Visualize performance, state, and change detection decisions in real time
-</p>
-</header>
 
-  <section class="intro-section">
-    <p class="intro-text">
-      Welcome to the <strong>Angular Architecture Playground</strong>, an interactive environment designed to help developers explore, compare, and master key architectural patterns and performance strategies in Angular applications.
-    </p>
-  </section>
-
-  <section class="content-section" [class.expanded]="expandedSections.whatIsPlayground">
-    <div class="section-header" (click)="toggleSection('whatIsPlayground')">
-      <h2 class="section-title">
-        <span class="icon">{{ expandedSections.whatIsPlayground ? '▼' : '▶' }}</span>
-        🧠 What You'll Explore
-      </h2>
-    </div>
-
-    <div class="section-content" *ngIf="expandedSections.whatIsPlayground">
-      <p>This playground is divided into two main zones:</p>
-
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">1. Getting Started</h3>
-          </div>
-          <div class="card-body">
-            <ul class="feature-list">
-              <li>
-                <strong>Overview</strong> (this section) – high-level introduction and navigation guide.
-              </li>
-              <li>
-                <strong>Architecture Concepts</strong> – foundational patterns like:
-                <ul class="nested-list">
-                  <li>Component-based architecture</li>
-                  <li>Modular design</li>
-                  <li>State management approaches</li>
-                  <li>Change detection strategies</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">2. Core Labs</h3>
-            <span class="badge">Interactive</span>
-          </div>
-          <div class="card-body">
-            <p>Hands-on labs where you can test and visualize Angular behaviors in real-time:</p>
-            <ul class="feature-list">
-              <li>
-                <strong>Performance Lab</strong> – compare rendering and change detection techniques.
-              </li>
-              <li>
-                <strong>State Management Lab</strong> – explore different state handling patterns (Signals, RxJS, Context, etc.).
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="content-section" [class.expanded]="expandedSections.learningObjectives">
-    <div class="section-header" (click)="toggleSection('learningObjectives')">
-      <h2 class="section-title">
-        <span class="icon">{{ expandedSections.learningObjectives ? '▼' : '▶' }}</span>
-        🎯 Learning Objectives
-      </h2>
-    </div>
-
-    <div class="section-content" *ngIf="expandedSections.learningObjectives">
-      <p>By interacting with the demos, you will:</p>
-      <ul class="objective-list">
-        <li>Understand how different architectural choices impact performance.</li>
-        <li>See visual feedback on render counts, change detection cycles, and bundle size.</li>
-        <li>Learn to decide when to use which pattern (e.g., Signals vs. RxJS, lazy loading vs. eager modules).</li>
-        <li>Gain insight into Angular's change detection mechanism and optimization techniques.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="content-section" [class.expanded]="expandedSections.howToUse">
-    <div class="section-header" (click)="toggleSection('howToUse')">
-      <h2 class="section-title">
-        <span class="icon">{{ expandedSections.howToUse ? '▼' : '▶' }}</span>
-        🚀 How to Use This Playground
-      </h2>
-    </div>
-
-    <div class="section-content" *ngIf="expandedSections.howToUse">
-      <p>Each lab includes:</p>
-      <ul class="usage-list">
-        <li>
-          <strong>Live demos</strong> with toggle controls to switch between implementations.
-        </li>
-        <li>
-          <strong>Code snippets</strong> showing the underlying Angular code.
-        </li>
-        <li>
-          <strong>Metrics panel</strong> displaying performance data (render counts, detection cycles, etc.).
-        </li>
-        <li>
-          <strong>Reset buttons</strong> to restore the demo to its initial state.
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="example-section">
-    <h2 class="example-title">📌 Example: Performance Lab</h2>
-    <div class="example-card">
-      <p>In the <strong>Performance Lab</strong>, you can toggle between:</p>
-
-      <div class="example-options">
-        <div class="option">
-          <span class="option-badge">Baseline</span>
-          <p>Default Change Detection – full tree checks on every event.</p>
-        </div>
-        <div class="option">
-          <span class="option-badge">OnPush</span>
-          <p>Targeted checks, reducing renders.</p>
-        </div>
-        <div class="option">
-          <span class="option-badge">Signals</span>
-          <p>Granular updates, minimal re-renders.</p>
-        </div>
-      </div>
-
-      <p class="example-note">
-        You'll see a real-time <strong>render counter</strong> and a visual flow diagram of change detection.
+  <!-- Hero Section -->
+  <section class="overview-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Angular Architecture Observatory</h1>
+      <p class="hero-subtitle">
+        Visualize performance, state, and change detection decisions in
+        <br>
+        <span class="highlight">real-time</span>
       </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-value">4</span>
+          <span class="stat-label">Interactive Labs</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">12+</span>
+          <span class="stat-label">Architecture Patterns</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">Real-time</span>
+          <span class="stat-label">Performance Metrics</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="pulse-animation"></div>
+      <div class="component-grid">
+        <div class="component" *ngFor="let i of [1,2,3,4,5,6]"
+             [style.animation-delay]="i * 0.2 + 's'">
+          C{{i}}
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="coming-soon-section">
-    <h2 class="coming-soon-title">🔧 Coming Soon</h2>
-    <div class="coming-soon-grid">
-      <div class="coming-soon-item">
-        <h3>Advanced State Patterns</h3>
-        <p>Global Store, Feature Stores, SSR hydration.</p>
+  <!-- Labs Grid -->
+  <section class="labs-section">
+    <h2 class="section-title">
+      <span class="title-icon">🔬</span>
+      Core Interactive Labs
+    </h2>
+    <p class="section-subtitle">
+      Hands-on experiments where you can see Angular's internals in action
+    </p>
+
+    <div class="labs-grid">
+
+      <!-- Lab 1: Performance -->
+      <div class="lab-card performance" routerLink="/playground/performance-lab">
+        <div class="lab-card__header">
+          <span class="lab-icon">⚡</span>
+          <span class="lab-badge">Hot</span>
+        </div>
+        <div class="lab-card__content">
+          <h3 class="lab-title">Performance Lab</h3>
+          <p class="lab-description">
+            Compare change detection strategies with real-time FPS monitoring,
+            component heat maps, and CPU usage tracking.
+          </p>
+          <div class="lab-features">
+            <span class="feature">Default vs OnPush</span>
+            <span class="feature">Zone.js vs Zoneless</span>
+            <span class="feature">Live FPS Counter</span>
+          </div>
+        </div>
+        <div class="lab-card__footer">
+          <span class="lab-metric">
+            <span class="metric-value">85%</span>
+            <span class="metric-label">Performance Gain</span>
+          </span>
+          <span class="lab-cta">Explore →</span>
+        </div>
       </div>
-      <div class="coming-soon-item">
-        <h3>Bundle Analysis Lab</h3>
-        <p>Visualize impact of lazy loading and code splitting.</p>
+
+      <!-- Lab 2: State Management -->
+      <div class="lab-card state" routerLink="/playground/state-management">
+        <div class="lab-card__header">
+          <span class="lab-icon">🔄</span>
+          <span class="lab-badge badge-new">New</span>
+        </div>
+        <div class="lab-card__content">
+          <h3 class="lab-title">State Management</h3>
+          <p class="lab-description">
+            Compare different state management patterns: Services, NgRx,
+            Signals, and Context API with visual data flow diagrams.
+          </p>
+          <div class="lab-features">
+            <span class="feature">Services + RxJS</span>
+            <span class="feature">NgRx Store</span>
+            <span class="feature">Signal State</span>
+          </div>
+        </div>
+        <div class="lab-card__footer">
+          <span class="lab-metric">
+            <span class="metric-value">3</span>
+            <span class="metric-label">Patterns Compared</span>
+          </span>
+          <span class="lab-cta">Explore →</span>
+        </div>
       </div>
-      <div class="coming-soon-item">
-        <h3>View Transition API</h3>
-        <p>Demos with Angular's new router support.</p>
+
+      <!-- Lab 3: Signals vs Observables -->
+      <div class="lab-card signals" routerLink="/playground/signals-vs-observables">
+        <div class="lab-card__header">
+          <span class="lab-icon">📡</span>
+          <span class="lab-badge">Modern</span>
+        </div>
+        <div class="lab-card__content">
+          <h3 class="lab-title">Signals vs Observables</h3>
+          <p class="lab-description">
+            Visual comparison of Angular Signals vs RxJS Observables with
+            dependency graphs and update propagation animations.
+          </p>
+          <div class="lab-features">
+            <span class="feature">Granular Updates</span>
+            <span class="feature">Dependency Graph</span>
+            <span class="feature">Memory Comparison</span>
+          </div>
+        </div>
+        <div class="lab-card__footer">
+          <span class="lab-metric">
+            <span class="metric-value">92%</span>
+            <span class="metric-label">Less Renders</span>
+          </span>
+          <span class="lab-cta">Explore →</span>
+        </div>
+      </div>
+
+      <!-- Lab 4: Hydration & SSR -->
+      <div class="lab-card hydration" routerLink="/playground/hydration">
+        <div class="lab-card__header">
+          <span class="lab-icon">🌊</span>
+          <span class="lab-badge">Production</span>
+        </div>
+        <div class="lab-card__content">
+          <h3 class="lab-title">Hydration & SSR/SSG</h3>
+          <p class="lab-description">
+            Compare CSR, SSR, and SSG strategies with Core Web Vitals tracking
+            and hydration visualization.
+          </p>
+          <div class="lab-features">
+            <span class="feature">FCP/LCP Metrics</span>
+            <span class="feature">Hydration Timeline</span>
+            <span class="feature">SEO Impact</span>
+          </div>
+        </div>
+        <div class="lab-card__footer">
+          <span class="lab-metric">
+            <span class="metric-value">0.3s</span>
+            <span class="metric-label">First Paint</span>
+          </span>
+          <span class="lab-cta">Explore →</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Architecture Concepts -->
+  <section class="concepts-section">
+    <h2 class="section-title">
+      <span class="title-icon">🏗️</span>
+      Architecture Concepts
+    </h2>
+    <p class="section-subtitle">
+      Foundational patterns and best practices for building scalable Angular applications
+    </p>
+
+    <div class="concepts-grid">
+      <div class="concept-card" routerLink="/playground/concepts/architecture-concepts">
+        <div class="concept-icon">🎭</div>
+        <h3 class="concept-title">Smart/Dumb Components</h3>
+        <p class="concept-description">
+          Separation of concerns with container and presentational components
+        </p>
+        <ul class="concept-tags">
+          <li>Reusability</li>
+          <li>Testability</li>
+          <li>Maintainability</li>
+        </ul>
+      </div>
+
+      <div class="concept-card" routerLink="/playground/concepts/facade-pattern">
+        <div class="concept-icon">🏢</div>
+        <h3 class="concept-title">Facade Pattern</h3>
+        <p class="concept-description">
+          Simplify complex subsystems with a unified interface
+        </p>
+        <ul class="concept-tags">
+          <li>Abstraction</li>
+          <li>Decoupling</li>
+          <li>Simplified API</li>
+        </ul>
+      </div>
+
+      <div class="concept-card" routerLink="/playground/concepts/feature-modules">
+        <div class="concept-icon">🧩</div>
+        <h3 class="concept-title">Feature Modules</h3>
+        <p class="concept-description">
+          Organize code by feature with lazy loading capabilities
+        </p>
+        <ul class="concept-tags">
+          <li>Lazy Loading</li>
+          <li>Code Splitting</li>
+          <li>Team Scaling</li>
+        </ul>
+      </div>
+
+      <div class="concept-card" routerLink="/playground/concepts/container-presenter">
+        <div class="concept-icon">📦</div>
+        <h3 class="concept-title">Container/Presenter</h3>
+        <p class="concept-description">
+          Stateful containers with stateless presentational components
+        </p>
+        <ul class="concept-tags">
+          <li>State Management</li>
+          <li>UI Logic Separation</li>
+          <li>Component Reuse</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <footer class="overview-footer">
-    <div class="cta-box">
-      <p class="cta-text">✅ Ready to dive in?</p>
-      <div class="cta-buttons">
-        <a routerLink="../architecture-concepts" class="btn btn-primary">
-          Proceed to Architecture Concepts
-        </a>
-        <a routerLink="../../performance" class="btn btn-secondary">
-          Jump to Performance Lab
-        </a>
+  <!-- Dashboard Preview -->
+  <section class="dashboard-preview-section">
+    <h2 class="section-title">
+      <span class="title-icon">📊</span>
+      Real-time Performance Dashboard
+    </h2>
+    <p class="section-subtitle">
+      Every lab includes live metrics to visualize the impact of architectural decisions
+    </p>
+
+    <div class="dashboard-preview">
+      <div class="dashboard-metrics">
+        <div class="metric-widget">
+          <div class="metric-header">
+            <span class="metric-icon">🎯</span>
+            <span class="metric-name">FPS</span>
+          </div>
+          <div class="metric-value">60</div>
+          <div class="metric-graph">
+            <div class="graph-bar" *ngFor="let bar of fpsBars"
+                 [style.height.%]="bar.height"
+                 [class.critical]="bar.critical">
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-widget">
+          <div class="metric-header">
+            <span class="metric-icon">⚡</span>
+            <span class="metric-name">Change Detection</span>
+          </div>
+          <div class="metric-value">42</div>
+          <div class="metric-label">checks/frame</div>
+          <div class="metric-trend trend-down">↓ 78%</div>
+        </div>
+
+        <div class="metric-widget">
+          <div class="metric-header">
+            <span class="metric-icon">🧠</span>
+            <span class="metric-name">Memory</span>
+          </div>
+          <div class="metric-value">24.3</div>
+          <div class="metric-label">MB heap</div>
+          <div class="memory-progress">
+            <div class="progress-bar" style="width: 42%"></div>
+          </div>
+        </div>
+
+        <div class="metric-widget">
+          <div class="metric-header">
+            <span class="metric-icon">🔄</span>
+            <span class="metric-name">Render Count</span>
+          </div>
+          <div class="metric-value">1,248</div>
+          <div class="metric-label">unnecessary renders</div>
+          <div class="metric-trend trend-bad">+124%</div>
+        </div>
+      </div>
+
+      <div class="dashboard-note">
+        <p>
+          <strong>💡 Insight:</strong> In the Performance Lab, you'll see how switching from Default
+          to OnPush change detection can reduce unnecessary renders by up to 95%.
+        </p>
       </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="quick-start-section">
+    <div class="quick-start-card">
+      <div class="quick-start-content">
+        <h2 class="quick-start-title">Ready to Explore?</h2>
+        <p class="quick-start-description">
+          Start with the Performance Lab to see immediate visual feedback on how
+          architectural decisions impact your application's performance.
+        </p>
+        <div class="quick-start-actions">
+          <a routerLink="/playground/performance-lab" class="btn btn-primary">
+            <span class="btn-icon">⚡</span>
+            Start with Performance Lab
+          </a>
+          <a routerLink="/playground/concepts/architecture-concepts" class="btn btn-secondary">
+            <span class="btn-icon">📚</span>
+            Learn Concepts First
+          </a>
+        </div>
+      </div>
+      <div class="quick-start-visual">
+        <div class="animation-demo">
+          <div class="component default"></div>
+          <div class="arrow">→</div>
+          <div class="component optimized"></div>
+          <div class="performance-gain">+85%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>

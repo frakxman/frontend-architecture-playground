@@ -16,14 +16,14 @@
   position: relative;
 }
 
-/* Mobile: hamburger button (derecha para no tapar logo ni perfil) */
+/* Mobile: hamburger button (AHORA A LA IZQUIERDA) */
 .sidebar__hamburger {
   display: flex;
   position: fixed;
   top: calc(64px + var(--space-md)); /* Header height + spacing */
-  right: var(--space-md);
-  left: auto;
-  z-index: 1001;
+  left: var(--space-md); /* Cambiado de right a left */
+  right: auto; /* Aseguramos que no haya right */
+  z-index: 1000; /* Aumentado de 900 a 1000 para que esté sobre el sidebar cuando está cerrado */
   background: rgba(17, 19, 21, 0.9);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -47,46 +47,63 @@
   transform: translateY(-2px);
 }
 
-/* Icono hamburger: SVG siempre visible */
+/* HAMBURGUESA CON TRES BARRAS (como Playground) */
+.sidebar__hamburger-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #ffffff; /* Icono blanco como solicitado */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animación para transformar en X (como Playground) */
+.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Quitar el icono SVG anterior */
 .sidebar__hamburger-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  color: #b4b8c1;
-  color: var(--color-text-secondary, #b4b8c1);
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.sidebar__hamburger:hover .sidebar__hamburger-icon {
-  color: var(--color-accent);
-}
-
-.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-icon {
-  transform: rotate(90deg);
+  display: none;
 }
 
 /* Mobile: drawer (off-canvas) */
 .sidebar__content {
   position: fixed;
-  top: 0;
+  top: 0; /* Cambiado de 64px a 0 para cubrir toda la pantalla */
   left: 0;
   width: min(280px, 85vw);
-  height: 100vh;
+  height: 100vh; /* Cambiado a 100vh para cubrir toda la pantalla */
   padding: var(--space-lg);
-  padding-top: 4.5rem;
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding-top: calc(64px + var(--space-lg)); /* Añadido padding top para header */
+  background: rgba(20, 20, 20, 0.95); /* Aumentada opacidad para mejor contraste */
+  backdrop-filter: blur(20px); /* Aumentado blur */
+  -webkit-backdrop-filter: blur(20px);
   border-right: none;
   border-left: 1px solid var(--color-border-soft);
   box-shadow: 8px 0 40px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 999; /* Disminuido de 900 a 999 para estar debajo del botón */
   transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
 }
 
 .sidebar__content.active {
   transform: translateX(0);
+}
+
+/* Ajustar posición del botón cuando el sidebar está abierto */
+.sidebar__content.active + .sidebar__hamburger {
+  left: calc(min(280px, 85vw) + var(--space-md)); /* Botón se mueve con el sidebar */
+  z-index: 1001; /* Aumentado para que esté sobre el sidebar abierto */
 }
 
 .sidebar__content::before {
@@ -108,7 +125,7 @@
 
 @media (max-width: 768px) {
   .sidebar__content:hover {
-    background: rgba(25, 25, 25, 0.7);
+    background: rgba(25, 25, 25, 0.9);
   }
 
   .sidebar__content:hover::before {
@@ -120,13 +137,13 @@
 .sidebar__overlay {
   display: block;
   position: fixed;
-  top: 0;
+  top: 0; /* Cambiado a 0 para cubrir toda la pantalla */
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh; /* Cambiado a 100vh */
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  z-index: 999;
+  z-index: 998; /* Debajo del sidebar y botón */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -226,6 +243,7 @@
 
   .sidebar__content {
     position: relative;
+    top: 0;
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -240,6 +258,7 @@
     box-shadow:
       4px 0 24px rgba(0, 0, 0, 0.2),
       inset 1px 0 0 rgba(255, 255, 255, 0.05);
+    z-index: auto;
   }
 
   .sidebar__content::before {
