@@ -1,12 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OverviewComponent } from './overview/overview.component';
-import { ArchitectureConceptsComponent } from './architecture-concepts/architecture-concepts.component';
+
+import { OverviewComponent } from '../concepts/overview/overview.component';
+import { ArchitectureConceptsComponent } from '../concepts/architecture-concepts/architecture-concepts.component';
 
 const routes: Routes = [
-  { path: 'overview', component: OverviewComponent },
-  { path: 'architecture-concepts', component: ArchitectureConceptsComponent },
-  { path: '', redirectTo: 'overview', pathMatch: 'full' }
+  {
+    path: '',
+    redirectTo: 'overview',
+    pathMatch: 'full'
+  },
+  {
+    path: 'overview',
+    component: OverviewComponent
+  },
+  {
+    path: 'architecture-concepts',
+    component: ArchitectureConceptsComponent
+  }
 ];
 
 @NgModule({

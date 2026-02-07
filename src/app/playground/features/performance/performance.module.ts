@@ -1,35 +1,31 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { PerformanceRoutingModule } from "./performance-routing.module";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-import { MockDataService } from "./services/mock-data.service";
+import { PerformanceRoutingModule } from './performance-routing.module';
 
-import { PerformanceLabComponent } from "./pages/performance-lab/performance-lab.component";
-import { BaselineListComponent } from "./sections/baseline-list/baseline-list.component";
-import { OnPushListComponent } from "./sections/onpush-list/onpush-list.component";
-import { TrackByListComponent } from "./sections/trackby-list/trackby-list.component";
-import { RxjsLabComponent } from "./sections/rxjs-lab/rxjs-lab.component";
-import { ManualSubscribeComponent } from "./sections/manual-subscribe/manual-subscribe.component";
-import { AsyncPipeComponent } from "./sections/async-pipe/async-pipe.component";
+import { PerformanceLabComponent } from './pages/performance-lab/performance-lab.component';
+import { AsyncPipeComponent } from './sections/async-pipe/async-pipe.component';
+import { BaselineListComponent } from './sections/baseline-list/baseline-list.component';
+import { ManualSubscribeComponent } from './sections/manual-subscribe/manual-subscribe.component';
+import { OnPushListComponent } from './sections/onpush-list/onpush-list.component';
+import { RxjsLabComponent } from './sections/rxjs-lab/rxjs-lab.component';
+import { TrackByListComponent } from './sections/trackby-list/trackby-list.component';
 
 @NgModule({
   declarations: [
     PerformanceLabComponent,
-    BaselineListComponent,
-    OnPushListComponent,
-    TrackByListComponent,
-    RxjsLabComponent,
     AsyncPipeComponent,
+    BaselineListComponent,
     ManualSubscribeComponent,
+    OnPushListComponent,
+    RxjsLabComponent,
+    TrackByListComponent
   ],
   imports: [
-    CommonModule,
+    CommonModule,  
+    RouterModule,
     PerformanceRoutingModule
-  ],
-  providers: [MockDataService]
+  ]
 })
-export class PerformanceModule {
-  constructor() {
-    console.log('🚀 PerformanceModule loaded!');
-  }
-}
+export class PerformanceModule { }

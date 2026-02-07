@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PlaygroundLayoutComponent } from './layouts/playground-layout/playground-layout.component';
+import { PlaygroundLayoutComponent } from './layout/containers/playground-layout/playground-layout.component';
 
 const routes: Routes = [
   {
