@@ -4,12 +4,12 @@ import { PerformanceLabComponent } from './pages/performance-lab/performance-lab
 
 const routes: Routes = [
   {
-    path: '',  // Ruta: /playground/performance
+    path: '',  
     component: PerformanceLabComponent
   }
 ];
 
-@NgModule({  // ← ¡ESTO FALTA!
+@NgModule({  
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

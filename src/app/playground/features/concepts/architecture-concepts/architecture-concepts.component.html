@@ -1,1 +1,207 @@
-<p>architecture-concepts works!</p>
+<div class="architecture-concepts">
+
+  <!-- Hero Section -->
+  <section class="concepts-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">🏗️ Architecture Concepts</h1>
+      <p class="hero-subtitle">
+        Foundational patterns and principles that power scalable, maintainable Angular applications
+      </p>
+      <div class="hero-badges">
+        <span class="badge">Component-Based</span>
+        <span class="badge">Modular</span>
+        <span class="badge">Reactive</span>
+        <span class="badge">Testable</span>
+        <span class="badge">Scalable</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="concepts-content">
+
+    <!-- Section 1: Core Principles -->
+    <section class="concept-section">
+      <div class="section-header">
+        <h2>📚 Core Principles</h2>
+        <p>Fundamental concepts every Angular developer should understand</p>
+      </div>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <div class="principle-icon">🧩</div>
+          <h3>Component-Based Architecture</h3>
+          <p>Angular applications are built as a tree of reusable components, each responsible for a specific piece of UI.</p>
+          <ul class="principle-list">
+            <li>Hierarchical component structure</li>
+            <li>Input/Output for component communication</li>
+            <li>Lifecycle hooks (ngOnInit, ngOnDestroy)</li>
+            <li>Content projection with ng-content</li>
+          </ul>
+        </div>
+
+        <div class="principle-card">
+          <div class="principle-icon">📦</div>
+          <h3>Modular Design</h3>
+          <p>Code is organized into modules that encapsulate related functionality.</p>
+          <ul class="principle-list">
+            <li>Feature modules for business domains</li>
+            <li>Shared modules for reusable components</li>
+            <li>Core modules for singleton services</li>
+            <li>Lazy loading for performance</li>
+          </ul>
+        </div>
+
+        <div class="principle-card">
+          <div class="principle-icon">💉</div>
+          <h3>Dependency Injection</h3>
+          <p>Angular's powerful DI system manages dependencies and promotes testability.</p>
+          <ul class="principle-list">
+            <li>Hierarchical injector tree</li>
+            <li>Service singletons and scoped instances</li>
+            <li>Constructor injection pattern</li>
+            <li>Testing with mock dependencies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Architectural Patterns -->
+    <section class="concept-section">
+      <div class="section-header">
+        <h2>🏛️ Architectural Patterns</h2>
+        <p>Proven patterns for building maintainable applications</p>
+      </div>
+
+      <div class="patterns-grid">
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <div class="pattern-icon">🎭</div>
+            <div class="pattern-meta">
+              <span class="pattern-tag">Recommended</span>
+              <span class="pattern-difficulty">Beginner</span>
+            </div>
+          </div>
+          <h3>Smart/Dumb Components</h3>
+          <p>Also known as Container/Presenter pattern. Separates logic from presentation.</p>
+          <div class="pattern-details">
+            <div class="detail">
+              <strong>Smart Components:</strong> Handle data, business logic, state
+            </div>
+            <div class="detail">
+              <strong>Dumb Components:</strong> Receive data via &#64;Input, emit events via &#64;Output
+            </div>
+          </div>
+          <div class="pattern-actions">
+            <a routerLink="/playground/performance" class="pattern-link">
+              See Implementation →
+            </a>
+          </div>
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <div class="pattern-icon">🏢</div>
+            <div class="pattern-meta">
+              <span class="pattern-tag">Advanced</span>
+              <span class="pattern-difficulty">Intermediate</span>
+            </div>
+          </div>
+          <h3>Facade Pattern</h3>
+          <p>Simplifies complex subsystems by providing a unified interface.</p>
+          <div class="pattern-details">
+            <div class="detail">
+              <strong>Use Case:</strong> Complex third-party integrations
+            </div>
+            <div class="detail">
+              <strong>Benefit:</strong> Reduces coupling between components and services
+            </div>
+          </div>
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <div class="pattern-icon">⚡</div>
+            <div class="pattern-meta">
+              <span class="pattern-tag">Modern</span>
+              <span class="pattern-difficulty">All Levels</span>
+            </div>
+          </div>
+          <h3>Reactive Architecture</h3>
+          <p>Using RxJS streams and Angular Signals for reactive data flow.</p>
+          <div class="pattern-details">
+            <div class="detail">
+              <strong>RxJS:</strong> Complex async operations, event streams
+            </div>
+            <div class="detail">
+              <strong>Signals:</strong> Simple reactive state, fine-grained reactivity
+            </div>
+          </div>
+          <div class="pattern-actions">
+            <a routerLink="/playground/signals-vs-observables" class="pattern-link">
+              Compare Approaches →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Best Practices -->
+    <section class="concept-section">
+      <div class="section-header">
+        <h2>✅ Best Practices</h2>
+        <p>Guidelines for building production-ready applications</p>
+      </div>
+
+      <div class="practices-list">
+        <div class="practice-item">
+          <div class="practice-check">✓</div>
+          <div class="practice-content">
+            <h4>Use OnPush Change Detection</h4>
+            <p>Improve performance by using ChangeDetectionStrategy.OnPush whenever possible.</p>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="practice-check">✓</div>
+          <div class="practice-content">
+            <h4>Implement Lazy Loading</h4>
+            <p>Split your application into feature modules and load them on-demand.</p>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="practice-check">✓</div>
+          <div class="practice-content">
+            <h4>Follow Single Responsibility</h4>
+            <p>Each component, service, and module should have one clear purpose.</p>
+          </div>
+        </div>
+
+        <div class="practice-item">
+          <div class="practice-check">✓</div>
+          <div class="practice-content">
+            <h4>Use Strong Typing</h4>
+            <p>Leverage TypeScript interfaces and types for better maintainability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Ready to Explore?</h2>
+        <p>Now that you understand the concepts, try them out in our interactive labs!</p>
+        <div class="cta-actions">
+          <a routerLink="/playground/performance" class="cta-button cta-primary">
+            🚀 Start with Performance Lab
+          </a>
+          <a routerLink="/playground/state-management" class="cta-button cta-secondary">
+            🔄 Explore State Management
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -48,7 +48,7 @@
     <div class="labs-grid">
 
       <!-- Lab 1: Performance -->
-      <div class="lab-card performance" routerLink="/playground/performance-lab">
+      <div class="lab-card performance" routerLink="/playground/performance">
         <div class="lab-card__header">
           <span class="lab-icon">⚡</span>
           <span class="lab-badge">Hot</span>
@@ -158,7 +158,7 @@
     </div>
   </section>
 
-  <!-- Architecture Concepts -->
+  <!-- Architecture Concepts
   <section class="concepts-section">
     <h2 class="section-title">
       <span class="title-icon">🏗️</span>
@@ -169,7 +169,7 @@
     </p>
 
     <div class="concepts-grid">
-      <div class="concept-card" routerLink="/playground/concepts/architecture-concepts">
+      <div class="concept-card" routerLink="/playground/concepts/smart-dumb-components">
         <div class="concept-icon">🎭</div>
         <h3 class="concept-title">Smart/Dumb Components</h3>
         <p class="concept-description">
@@ -219,6 +219,293 @@
           <li>UI Logic Separation</li>
           <li>Component Reuse</li>
         </ul>
+      </div>
+    </div>
+  </section>
+  -->
+
+  <!-- Architecture Patterns Section (NUEVA) -->
+  <section class="patterns-section">
+    <h2 class="section-title">
+      <span class="title-icon">🏛️</span>
+      Architecture Patterns
+    </h2>
+    <p class="section-subtitle">
+      Reusable solutions to common architectural challenges in Angular applications
+    </p>
+
+    <div class="patterns-grid">
+      <!-- Smart/Dumb Components -->
+      <div class="pattern-card" routerLink="/playground/smart-dumb-components">
+        <div class="pattern-card__header">
+          <span class="pattern-icon">🎭</span>
+          <span class="pattern-badge">Core</span>
+        </div>
+        <div class="pattern-card__content">
+          <h3 class="pattern-title">Smart/Dumb Components</h3>
+          <p class="pattern-description">
+            Separate business logic from presentation with container and presentational components
+          </p>
+          <div class="pattern-metrics">
+            <span class="metric">📊 Reusability: <strong>High</strong></span>
+            <span class="metric">🧪 Testability: <strong>High</strong></span>
+          </div>
+        </div>
+        <div class="pattern-card__footer">
+          <span class="pattern-cta">Explore Pattern →</span>
+        </div>
+      </div>
+
+      <!-- Facade Pattern -->
+      <div class="pattern-card" routerLink="/playground/facade-pattern">
+        <div class="pattern-card__header">
+          <span class="pattern-icon">🏢</span>
+          <span class="pattern-badge">Intermediate</span>
+        </div>
+        <div class="pattern-card__content">
+          <h3 class="pattern-title">Facade Pattern</h3>
+          <p class="pattern-description">
+            Simplify complex subsystems with a unified interface that hides implementation details
+          </p>
+          <div class="pattern-metrics">
+            <span class="metric">📉 Complexity: <strong>Reduced</strong></span>
+            <span class="metric">🔗 Coupling: <strong>Loose</strong></span>
+          </div>
+        </div>
+        <div class="pattern-card__footer">
+          <span class="pattern-cta">Explore Pattern →</span>
+        </div>
+      </div>
+
+      <!-- Container/Presenter -->
+      <div class="pattern-card" routerLink="/playground/container-presenter">
+        <div class="pattern-card__header">
+          <span class="pattern-icon">📦</span>
+          <span class="pattern-badge">Core</span>
+        </div>
+        <div class="pattern-card__content">
+          <h3 class="pattern-title">Container/Presenter</h3>
+          <p class="pattern-description">
+            Stateful containers manage data while stateless presenters handle UI rendering
+          </p>
+          <div class="pattern-metrics">
+            <span class="metric">🔄 State: <strong>Isolated</strong></span>
+            <span class="metric">🎨 UI: <strong>Pure</strong></span>
+          </div>
+        </div>
+        <div class="pattern-card__footer">
+          <span class="pattern-cta">Explore Pattern →</span>
+        </div>
+      </div>
+
+      <!-- Feature Modules -->
+      <div class="pattern-card" routerLink="/playground/feature-modules">
+        <div class="pattern-card__header">
+          <span class="pattern-icon">🧩</span>
+          <span class="pattern-badge">Advanced</span>
+        </div>
+        <div class="pattern-card__content">
+          <h3 class="pattern-title">Feature Modules</h3>
+          <p class="pattern-description">
+            Organize code by feature domain with lazy loading for optimal performance
+          </p>
+          <div class="pattern-metrics">
+            <span class="metric">⚡ Load Time: <strong>-40%</strong></span>
+            <span class="metric">👥 Team Scaling: <strong>Excellent</strong></span>
+          </div>
+        </div>
+        <div class="pattern-card__footer">
+          <span class="pattern-cta">Explore Pattern →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advanced Topics Section (NUEVA) -->
+  <section class="advanced-section">
+    <h2 class="section-title">
+      <span class="title-icon">🚀</span>
+      Advanced Topics
+    </h2>
+    <p class="section-subtitle">
+      Deep dive into production-grade Angular application concerns
+    </p>
+
+    <div class="topics-grid">
+      <!-- Security -->
+      <div class="topic-card" routerLink="/playground/security">
+        <div class="topic-card__header">
+          <span class="topic-icon">🔒</span>
+          <span class="topic-badge">Critical</span>
+        </div>
+        <div class="topic-card__content">
+          <h3 class="topic-title">Security</h3>
+          <p class="topic-description">
+            Authentication, authorization, XSS prevention, and secure communication patterns
+          </p>
+          <ul class="topic-features">
+            <li>JWT & OAuth2 flows</li>
+            <li>HTTP Interceptors</li>
+            <li>Route Guards</li>
+          </ul>
+        </div>
+        <div class="topic-card__footer">
+          <span class="topic-cta">Learn More →</span>
+        </div>
+      </div>
+
+      <!-- Accessibility -->
+      <div class="topic-card" routerLink="/playground/accessibility">
+        <div class="topic-card__header">
+          <span class="topic-icon">♿</span>
+          <span class="topic-badge">WCAG 2.1</span>
+        </div>
+        <div class="topic-card__content">
+          <h3 class="topic-title">Accessibility (a11y)</h3>
+          <p class="topic-description">
+            Build inclusive applications with ARIA attributes, keyboard navigation, and screen readers
+          </p>
+          <ul class="topic-features">
+            <li>Semantic HTML</li>
+            <li>Focus Management</li>
+            <li>ARIA Live Regions</li>
+          </ul>
+        </div>
+        <div class="topic-card__footer">
+          <span class="topic-cta">Learn More →</span>
+        </div>
+      </div>
+
+      <!-- Testing Strategies -->
+      <div class="topic-card" routerLink="/playground/testing-strategies">
+        <div class="topic-card__header">
+          <span class="topic-icon">🧪</span>
+          <span class="topic-badge">Best Practice</span>
+        </div>
+        <div class="topic-card__content">
+          <h3 class="topic-title">Testing Strategies</h3>
+          <p class="topic-description">
+            Unit tests, integration tests, and E2E testing patterns for Angular
+          </p>
+          <ul class="topic-features">
+            <li>Jasmine & Jest</li>
+            <li>Component Harnesses</li>
+            <li>Cypress & Playwright</li>
+          </ul>
+        </div>
+        <div class="topic-card__footer">
+          <span class="topic-cta">Learn More →</span>
+        </div>
+      </div>
+
+      <!-- Bundle Optimization -->
+      <div class="topic-card" routerLink="/playground/bundle-optimization">
+        <div class="topic-card__header">
+          <span class="topic-icon">📦</span>
+          <span class="topic-badge">Performance</span>
+        </div>
+        <div class="topic-card__content">
+          <h3 class="topic-title">Bundle Optimization</h3>
+          <p class="topic-description">
+            Reduce bundle size with tree shaking, lazy loading, and dependency optimization
+          </p>
+          <ul class="topic-features">
+            <li>Tree Shaking</li>
+            <li>Dynamic Imports</li>
+            <li>Budget Configurations</li>
+          </ul>
+        </div>
+        <div class="topic-card__footer">
+          <span class="topic-cta">Learn More →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparisons Section (NUEVA) -->
+  <section class="comparisons-section">
+    <h2 class="section-title">
+      <span class="title-icon">📈</span>
+      Pattern Comparisons & Benchmarks
+    </h2>
+    <p class="section-subtitle">
+      Make informed architectural decisions with real performance data
+    </p>
+
+    <div class="comparisons-grid">
+      <!-- Pattern Comparisons -->
+      <div class="comparison-card" routerLink="/playground/comparisons">
+        <div class="comparison-card__header">
+          <span class="comparison-icon">⚖️</span>
+          <h3 class="comparison-title">Pattern Comparisons</h3>
+        </div>
+        <div class="comparison-card__content">
+          <p>Side-by-side comparison of different architectural approaches</p>
+          <div class="comparison-bars">
+            <div class="comparison-bar">
+              <span class="bar-label">Smart/Dumb</span>
+              <div class="bar-container">
+                <div class="bar-fill" style="width: 95%"></div>
+              </div>
+              <span class="bar-value">95%</span>
+            </div>
+            <div class="comparison-bar">
+              <span class="bar-label">Facade</span>
+              <div class="bar-container">
+                <div class="bar-fill" style="width: 88%"></div>
+              </div>
+              <span class="bar-value">88%</span>
+            </div>
+            <div class="comparison-bar">
+              <span class="bar-label">Redux</span>
+              <div class="bar-container">
+                <div class="bar-fill" style="width: 92%"></div>
+              </div>
+              <span class="bar-value">92%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Benchmarks -->
+      <div class="comparison-card" routerLink="/playground/benchmarks">
+        <div class="comparison-card__header">
+          <span class="comparison-icon">🏆</span>
+          <h3 class="comparison-title">Performance Benchmarks</h3>
+        </div>
+        <div class="comparison-card__content">
+          <p>Real metrics: Change detection, memory usage, render times</p>
+          <div class="benchmark-stats">
+            <div class="benchmark-stat">
+              <span class="stat-number">60</span>
+              <span class="stat-label">FPS</span>
+            </div>
+            <div class="benchmark-stat">
+              <span class="stat-number">24ms</span>
+              <span class="stat-label">Render</span>
+            </div>
+            <div class="benchmark-stat">
+              <span class="stat-number">4.2MB</span>
+              <span class="stat-label">Heap</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decision Tree -->
+      <div class="comparison-card" routerLink="/playground/decision-tree">
+        <div class="comparison-card__header">
+          <span class="comparison-icon">🌳</span>
+          <h3 class="comparison-title">Decision Tree</h3>
+        </div>
+        <div class="comparison-card__content">
+          <p>Interactive guide to choose the right pattern for your use case</p>
+          <div class="decision-preview">
+            <span class="decision-node">Component Type?</span>
+            <span class="decision-arrow">↓</span>
+            <span class="decision-options">Smart ↔ Dumb</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -301,7 +588,7 @@
           architectural decisions impact your application's performance.
         </p>
         <div class="quick-start-actions">
-          <a routerLink="/playground/performance-lab" class="btn btn-primary">
+          <a routerLink="/playground/performance" class="btn btn-primary">
             <span class="btn-icon">⚡</span>
             Start with Performance Lab
           </a>
@@ -321,5 +608,4 @@
       </div>
     </div>
   </section>
-
 </div>
