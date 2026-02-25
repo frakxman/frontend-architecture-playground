@@ -1,31 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { PerformanceRoutingModule } from './performance-routing.module';
-
+// Pages
 import { PerformanceLabComponent } from './pages/performance-lab/performance-lab.component';
-import { AsyncPipeComponent } from './sections/async-pipe/async-pipe.component';
+
+// Components
 import { BaselineListComponent } from './sections/baseline-list/baseline-list.component';
-import { ManualSubscribeComponent } from './sections/manual-subscribe/manual-subscribe.component';
-import { OnPushListComponent } from './sections/onpush-list/onpush-list.component';
-import { RxjsLabComponent } from './sections/rxjs-lab/rxjs-lab.component';
-import { TrackByListComponent } from './sections/trackby-list/trackby-list.component';
+import { OnpushListComponent } from './sections/onpush-list/onpush-list.component';
+import { TrackbyListComponent } from './sections/trackby-list/trackby-list.component';
+import { HeatMapComponent } from './sections/heat-map/heat-map.component';
+import { FpsCounterComponent } from './sections/fps-counter/fps-counter.component';
+import { StrategyComparisonComponent } from './sections/strategy-comparison/strategy-comparison.component';
 
 @NgModule({
   declarations: [
+    // Pages
     PerformanceLabComponent,
-    AsyncPipeComponent,
+    // Components
     BaselineListComponent,
-    ManualSubscribeComponent,
-    OnPushListComponent,
-    RxjsLabComponent,
-    TrackByListComponent
+    OnpushListComponent,
+    TrackbyListComponent,
+    HeatMapComponent,
+    FpsCounterComponent,
+    StrategyComparisonComponent
   ],
   imports: [
-    CommonModule,  
+    CommonModule,
+    FormsModule,
     RouterModule,
+    // Routing
     PerformanceRoutingModule
   ]
 })
 export class PerformanceModule { }
+
+
+

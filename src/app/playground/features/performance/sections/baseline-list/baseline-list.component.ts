@@ -1,38 +1,29 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { MockDataService } from '../../services/mock-data.service';
+import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
+import { Item } from '../../models/performance.types';
 
 @Component({
   selector: 'app-baseline-list',
   templateUrl: './baseline-list.component.html',
-  styleUrls: ['./baseline-list.component.css']
+  styleUrls: ['./baseline-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class BaselineListComponent {
-  items: any[] = [];
-  renderCount = 0;
-  isListVisible = false;
+export class BaselineListComponent implements OnChanges {
+  @Input() items: Item[] = [];
 
-  constructor(
-    private mockData: MockDataService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  renderCount: number = 0;
 
-  ngDoCheck() {
-    this.renderCount++;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['items']) {
+      this.renderCount++;
+    }
   }
 
-  loadItems() {
-    this.items = this.mockData.generateItems(1000);
-    this.isListVisible = true;
+  trackByFn(index: number, item: Item): number {
+    return item.id;
   }
 
-  triggerChange() {
-    // This will trigger change detection across the entire component tree
-    this.items = [...this.items];
-  }
-
-  reset() {
-    this.items = [];
-    this.renderCount = 0;
-    this.isListVisible = false;
+  getIntensity(value: number): string {
+    const intensity = Math.floor(value * 100);
+    return `linear-gradient(90deg, rgba(0,255,136,0.2) ${intensity}%, transparent ${intensity}%)`;
   }
 }

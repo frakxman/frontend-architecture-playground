@@ -1,44 +1,53 @@
-import { Component } from '@angular/core';
-import { MockDataService } from '../../services/mock-data.service';
+// trackby-list.component.ts
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
+import { Item } from '../../models/performance.types';
 
 @Component({
   selector: 'app-trackby-list',
   templateUrl: './trackby-list.component.html',
-  styleUrls: ['./trackby-list.component.css']
+  styleUrls: ['./trackby-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TrackByListComponent {
-  items: any[] = [];
-  renderCount = 0;
-  domUpdateCount = 0;
-  isListVisible = false;
+export class TrackbyListComponent {
+  @Input() items: Item[] = [];
+  @Input() useTrackBy: boolean = false;
 
-  constructor(private mockData: MockDataService) {}
+  // Propiedades que necesita el template
+  isListVisible: boolean = false;
+  domUpdateCount: number = 0;
+  renderCount: number = 0;
 
-  ngDoCheck() {
+  // Métodos que necesita el template
+  loadItems(): void {
+    this.isListVisible = true;
+    this.domUpdateCount = 0;
     this.renderCount++;
   }
 
-  loadItems() {
-    this.items = this.mockData.generateItems(1000);
-    this.isListVisible = true;
+  shuffleItems(): void {
+    // Crear nueva referencia del array para trigger cambio
+    this.items = [...this.items].sort(() => Math.random() - 0.5);
+    this.domUpdateCount += this.useTrackBy ? 1 : this.items.length;
+    this.renderCount++;
   }
 
-  shuffleItems() {
-    // Shuffle the array to show trackBy preventing DOM recreation
-    this.items = this.items
-      .map(item => ({ ...item, value: Math.random() }))
-      .sort(() => Math.random() - 0.5);
-    this.domUpdateCount++;
-  }
-
-  trackByFn(index: number, item: any): number {
-    return item.id; // Track by unique ID instead of object reference
-  }
-
-  reset() {
-    this.items = [];
-    this.renderCount = 0;
-    this.domUpdateCount = 0;
+  reset(): void {
     this.isListVisible = false;
+    this.domUpdateCount = 0;
+    this.renderCount = 0;
+  }
+
+  // Con trackBy - solo actualiza items que cambian
+  trackByFn(index: number, item: Item): number {
+    return item.id;
+  }
+
+  // Sin trackBy - Angular usa la identidad del objeto
+  // (siempre actualiza todo)
+
+  getIntensity(value: number): string {
+    const intensity = Math.floor(value * 100);
+    return `linear-gradient(90deg, rgba(0,255,136,0.2) ${intensity}%, transparent ${intensity}%)`;
   }
 }

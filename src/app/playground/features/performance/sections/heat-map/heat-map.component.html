@@ -1,0 +1,15 @@
+<div class="heat-map">
+  <h4>🔥 Heat Map - Render Frequency</h4>
+  <div class="heat-map-container">
+    <div *ngFor="let component of components"
+         class="heat-item"
+         [style.background]="getHeatColor(component.colorIntensity)"
+         [class]="getIntensityClass(component.colorIntensity)">
+      <span class="component-name">{{component.name}}</span>
+      <span class="render-count">{{component.renderCount}}</span>
+      <div class="intensity-bar">
+        <div class="intensity-fill" [style.width.%]="component.colorIntensity"></div>
+      </div>
+    </div>
+  </div>
+</div>

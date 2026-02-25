@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AsyncPipeComponent } from './async-pipe.component';
+import { HeatMapComponentComponent } from './heat-map.component';
 
-describe('AsyncPipeComponent', () => {
-  let component: AsyncPipeComponent;
-  let fixture: ComponentFixture<AsyncPipeComponent>;
+describe('HeatMapComponentComponent', () => {
+  let component: HeatMapComponentComponent;
+  let fixture: ComponentFixture<HeatMapComponentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AsyncPipeComponent]
+      imports: [HeatMapComponentComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(AsyncPipeComponent);
+
+    fixture = TestBed.createComponent(HeatMapComponentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

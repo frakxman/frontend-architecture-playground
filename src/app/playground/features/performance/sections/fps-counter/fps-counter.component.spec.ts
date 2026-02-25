@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManualSubscribeComponent } from './manual-subscribe.component';
+import { FpsCounterComponent } from './fps-counter.component';
 
-describe('ManualSubscribeComponent', () => {
-  let component: ManualSubscribeComponent;
-  let fixture: ComponentFixture<ManualSubscribeComponent>;
+describe('FpsCounterComponent', () => {
+  let component: FpsCounterComponent;
+  let fixture: ComponentFixture<FpsCounterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ManualSubscribeComponent]
+      declarations: [FpsCounterComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ManualSubscribeComponent);
+    fixture = TestBed.createComponent(FpsCounterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

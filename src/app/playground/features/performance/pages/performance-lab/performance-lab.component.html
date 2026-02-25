@@ -1,7 +1,347 @@
-<div class="performance-lab">
-  <!-- Aquí irán los componentes de las secciones -->
-  <div class="sections-container">
-    <!-- Estos componentes se agregarán después de corregir los imports -->
-    <p>Performance lab sections will appear here...</p>
-  </div>
+<div class="performance-lab-container">
+  <!-- Header -->
+  <header class="lab-header">
+    <h1 class="lab-title">⚡ Performance Lab</h1>
+    <p class="lab-description">
+      Compare change detection strategies with real-time FPS monitoring,
+      component heat maps, and CPU usage tracking.
+    </p>
+
+    <!-- Strategy Selector -->
+    <div class="strategy-selector">
+      <button
+        class="strategy-btn"
+        [class.active]="selectedStrategy === 'default'"
+        (click)="selectStrategy('default')">
+        <span class="strategy-name">Default Strategy</span>
+        <span class="strategy-badge">Zone.js</span>
+      </button>
+      <button
+        class="strategy-btn"
+        [class.active]="selectedStrategy === 'onpush'"
+        (click)="selectStrategy('onpush')">
+        <span class="strategy-name">OnPush Strategy</span>
+        <span class="strategy-badge">Optimized</span>
+      </button>
+      <button
+        class="strategy-btn"
+        [class.active]="selectedStrategy === 'zoneless'"
+        (click)="selectStrategy('zoneless')">
+        <span class="strategy-name">Zoneless</span>
+        <span class="strategy-badge">Experimental</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Metrics Dashboard -->
+  <section class="metrics-dashboard">
+    <div class="metric-card fps">
+      <div class="metric-header">
+        <span class="metric-icon">🎯</span>
+        <h3>FPS Counter</h3>
+        <span class="metric-badge" [class.good]="fps >= 50" [class.bad]="fps < 30">
+          {{ fps >= 50 ? 'Smooth' : (fps >= 30 ? 'Okay' : 'Laggy') }}
+        </span>
+      </div>
+      <div class="metric-value">{{ fps }} <small>fps</small></div>
+      <div class="metric-graph">
+        <div class="graph-bar" *ngFor="let frame of fpsHistory"
+             [style.height.%]="(frame / 60) * 100"
+             [class.critical]="frame < 30">
+        </div>
+      </div>
+      <div class="metric-footer">
+        <span>Frame drop: {{ frameDrop }}%</span>
+        <span>Render time: {{ renderTime }}ms</span>
+      </div>
+    </div>
+
+    <div class="metric-card cpu">
+      <div class="metric-header">
+        <span class="metric-icon">⚙️</span>
+        <h3>CPU Usage</h3>
+      </div>
+      <div class="metric-value">{{ cpuUsage }}%</div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="cpuUsage"></div>
+      </div>
+      <div class="metric-footer">
+        <span>Change detections: {{ changeDetectionCount }}/s</span>
+      </div>
+    </div>
+
+    <div class="metric-card memory">
+      <div class="metric-header">
+        <span class="metric-icon">🧠</span>
+        <h3>Memory</h3>
+      </div>
+      <div class="metric-value">{{ memoryUsage }} <small>MB</small></div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="(memoryUsage / 100) * 100"></div>
+      </div>
+      <div class="metric-footer">
+        <span>Heap: {{ heapSize }} MB</span>
+      </div>
+    </div>
+
+    <div class="metric-card renders">
+      <div class="metric-header">
+        <span class="metric-icon">🔄</span>
+        <h3>Render Count</h3>
+      </div>
+      <div class="metric-value">{{ totalRenders }}</div>
+      <div class="metric-footer">
+        <span>Unnecessary: {{ unnecessaryRenders }}</span>
+        <span class="trend" [class.down]="unnecessaryRenders < 100">↓ {{ unnecessaryRendersPercent }}%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Didactic Explanation Cards -->
+  <section class="didactic-section">
+    <h2 class="section-title">📚 Understanding Change Detection</h2>
+
+    <div class="explanation-grid">
+      <!-- Default Strategy -->
+      <div class="explanation-card">
+        <div class="card-header">
+          <span class="strategy-icon default">🔄</span>
+          <h3>Default Strategy</h3>
+        </div>
+        <div class="card-content">
+          <p class="explanation">
+            <strong>¿Qué es?</strong> Angular verifica <strong>todos los componentes</strong>
+            cuando cualquier evento ocurre (click, timer, XHR). Es fácil pero puede ser ineficiente.
+          </p>
+          <div class="code-snippet">
+            <pre><span class="comment">// Cada evento dispara:</span>
+<span class="keyword">&#64;Component</span>({{ '{' }}
+  changeDetection: ChangeDetectionStrategy.<span class="default">Default</span>
+{{ '}' }})
+          </pre></div>
+          <ul class="pros-cons">
+            <li class="pro">✅ Fácil de entender</li>
+            <li class="con">❌ Puede causar renders innecesarios</li>
+            <li class="con">❌ Menos performance en listas grandes</li>
+          </ul>
+          <div class="live-example">
+            <button (click)="incrementDefault()">Incrementar (dispara cambios)</button>
+            <span>Valor: {{ defaultValue }}</span>
+            <small class="render-badge" [class.highlight]="defaultRenders > 0">
+              Renders: {{ defaultRenders }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- OnPush Strategy -->
+      <div class="explanation-card">
+        <div class="card-header">
+          <span class="strategy-icon onpush">⚡</span>
+          <h3>OnPush Strategy</h3>
+        </div>
+        <div class="card-content">
+          <p class="explanation">
+            <strong>¿Qué es?</strong> Angular solo verifica el componente cuando:
+            <strong>&#64;Input()</strong> cambia (nueva referencia), eventos del componente, o observables emiten.
+          </p>
+          <div class="code-snippet">
+            <pre><span class="comment">// Solo verifica cuando:</span>
+<span class="keyword">&#64;Component</span>({{ '{' }}
+  changeDetection: ChangeDetectionStrategy.<span class="onpush">OnPush</span>
+{{ '}' }})
+<span class="comment">// &#64;Input() cambia o eventos internos</span></pre></div>
+          <ul class="pros-cons">
+            <li class="pro">✅ Mucho más eficiente</li>
+            <li class="pro">✅ Menos renders innecesarios</li>
+            <li class="con">❌ Requiere inmutabilidad</li>
+          </ul>
+          <div class="live-example">
+            <button (click)="incrementOnPush()">Incrementar</button>
+            <span>Valor: {{ onPushValue }}</span>
+            <button (click)="updateOnPushWithNewRef()">Actualizar con nueva referencia</button>
+            <small class="render-badge" [class.highlight]="onPushRenders > 0">
+              Renders: {{ onPushRenders }}
+            </small>
+          </div>
+          <p class="tip">
+            💡 <strong>Nota:</strong> El botón "Incrementar" no actualiza la vista
+            porque muta el objeto. "Actualizar con nueva referencia" sí funciona.
+          </p>
+        </div>
+      </div>
+
+      <!-- Zoneless -->
+      <div class="explanation-card">
+        <div class="card-header">
+          <span class="strategy-icon zoneless">🚀</span>
+          <h3>Zoneless (Experimental)</h3>
+        </div>
+        <div class="card-content">
+          <p class="explanation">
+            <strong>¿Qué es?</strong> Angular 18+ permite ejecutarse <strong>sin Zone.js</strong>.
+            Tú controlas manualmente cuándo verificar cambios con <code>ChangeDetectorRef</code>.
+          </p>
+          <div class="code-snippet">
+            <pre><span class="comment">// app.config.ts</span>
+provideExperimentalZonelessChangeDetection()
+
+<span class="comment">// Componente</span>
+<span class="keyword">constructor</span>(private cdr: ChangeDetectorRef) {{ '{' }}
+
+<span class="keyword">update</span>() {{ '{' }}
+  <span class="comment">// Angular no detecta automáticamente</span>
+  this.data = nuevoValor;
+  this.cdr.<span class="zoneless">markForCheck()</span>;
+{{ '}' }}</pre></div>
+          <ul class="pros-cons">
+            <li class="pro">✅ Bundle size -25%</li>
+            <li class="pro">✅ Máximo control</li>
+            <li class="pro">✅ Mejor performance</li>
+            <li class="con">❌ Más código manual</li>
+          </ul>
+          <div class="live-example">
+            <button (click)="updateZoneless()">Actualizar (sin detectar)</button>
+            <button (click)="updateZonelessAndDetect()">Actualizar + detectar</button>
+            <span>Valor: {{ zonelessValue }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Component Comparison -->
+  <section class="comparison-section">
+    <h2 class="section-title">🔬 Live Comparison: Default vs OnPush</h2>
+
+    <div class="comparison-container">
+      <div class="comparison-column">
+        <h3>📋 Baseline List (Default)</h3>
+        <p>100 items, actualización cada 500ms</p>
+        <div class="stats">
+          <app-baseline-list [items]="(items$ | async ) || []"></app-baseline-list>
+          <span>Renders: {{ baselineRenders }}</span>
+          <span>⏱️ {{ baselineRenderTime }}ms</span>
+        </div>
+      </div>
+
+      <div class="comparison-column">
+        <h3>⚡ Optimized List (OnPush)</h3>
+        <p>100 items, actualización cada 500ms</p>
+        <app-onpush-list [items]="(items$ | async) || []"></app-onpush-list>
+        <div class="stats">
+          <span>Renders: {{ onpushRenders }}</span>
+          <span>⏱️ {{ onpushRenderTime }}ms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-insight">
+      <h4>📊 Insight:</h4>
+      <p>
+        <strong>Default Strategy:</strong> Renderiza TODOS los componentes aunque solo cambie un item.<br>
+        <strong>OnPush Strategy:</strong> Renderiza SOLO el item que cambió (si se usa trackBy y inmutabilidad).<br>
+        <span class="highlight">Diferencia: {{ performanceGain }}% menos renders</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- TrackBy Demo -->
+  <section class="trackby-section">
+    <h2 class="section-title">🔄 TrackBy: Evita renders innecesarios</h2>
+
+    <div class="trackby-container">
+      <div class="explanation-small">
+        <p>
+          <strong>Sin trackBy:</strong> Angular destruye y recrea TODOS los items del DOM cuando la lista cambia.<br>
+          <strong>Con trackBy:</strong> Angular identifica cada item por su ID y solo actualiza los que cambiaron.
+        </p>
+      </div>
+
+      <div class="trackby-demo">
+        <div class="demo-column">
+          <h4>❌ Sin trackBy</h4>
+          <app-trackby-list [items]="(items$ | async) || []" [useTrackBy]="false"></app-trackby-list>
+          <div class="demo-stats">
+            <span>DOM operations: {{ withoutTrackByOps }}</span>
+          </div>
+        </div>
+
+        <div class="demo-column">
+          <h4>✅ Con trackBy</h4>
+          <app-trackby-list [items]="(items$ | async) || []" [useTrackBy]="true"></app-trackby-list>
+          <div class="demo-stats">
+            <span>DOM operations: {{ withTrackByOps }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-explanation">
+        <pre><span class="comment">// trackBy function</span>
+trackByFn(index: number, item: Item) {{ '{' }}
+  <span class="keyword">return</span> item.id; <span class="comment">// Angular usa esto para identificar el item</span>
+{{ '}' }}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Heat Map Visualization -->
+  <section class="heatmap-section">
+    <h2 class="section-title">🔥 Component Heat Map</h2>
+    <p>Visualiza qué componentes se renderizan más frecuentemente</p>
+
+    <app-heat-map [components]="componentMetrics"></app-heat-map>
+
+    <div class="heatmap-legend">
+      <span class="legend-item low">Pocos renders</span>
+      <span class="legend-item medium">Renders moderados</span>
+      <span class="legend-item high">Muchos renders</span>
+    </div>
+  </section>
+
+  <!-- Interactive Controls -->
+  <section class="controls-section">
+    <h3>Controles del Laboratorio</h3>
+
+    <div class="control-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="autoUpdate">
+        Auto-actualizar datos (cada 500ms)
+      </label>
+
+      <label>
+        Velocidad de actualización:
+        <input type="range" min="100" max="2000" [(ngModel)]="updateInterval">
+        {{ updateInterval }}ms
+      </label>
+
+      <button (click)="resetMetrics()" class="reset-btn">
+        Reiniciar métricas
+      </button>
+
+      <button (click)="addRandomItem()" class="action-btn">
+        Añadir item aleatorio
+      </button>
+
+      <button (click)="updateRandomItem()" class="action-btn">
+        Actualizar item aleatorio
+      </button>
+    </div>
+
+    <div class="performance-score">
+      <h4>Puntuación de Performance</h4>
+      <div class="score-circle" [style.background]="performanceScoreColor">
+        <span class="score-value">{{ performanceScore }}</span>
+      </div>
+      <p>{{ performanceMessage }}</p>
+    </div>
+  </section>
+
+  <!-- Footer / Navigation -->
+  <footer class="lab-footer">
+    <p>
+      💡 <strong>Próximo:</strong>
+      <a routerLink="/playground/state-management">State Management Lab →</a>
+    </p>
+  </footer>
 </div>
