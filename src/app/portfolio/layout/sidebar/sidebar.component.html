@@ -1,11 +1,24 @@
 <nav class="sidebar" aria-label="Portfolio navigation">
-  <button class="sidebar__hamburger"
-          (click)="toggleMobileMenu()"
-          aria-label="Toggle menu"
-          [attr.aria-expanded]="mobileMenuOpen">
-    <span class="sidebar__hamburger-bar"></span>
-    <span class="sidebar__hamburger-bar"></span>
-    <span class="sidebar__hamburger-bar"></span>
+  <button
+    type="button"
+    class="sidebar__hamburger"
+    [class.sidebar__hamburger--open]="mobileMenuOpen"
+    (click)="toggleMobileMenu()"
+    aria-label="Toggle menu"
+    [attr.aria-expanded]="mobileMenuOpen"
+  >
+    <svg
+      class="sidebar__hamburger-icon"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <line class="sidebar__hamburger-line" x1="4" y1="7" x2="20" y2="7" />
+      <line class="sidebar__hamburger-line" x1="4" y1="12" x2="20" y2="12" />
+      <line class="sidebar__hamburger-line" x1="4" y1="17" x2="20" y2="17" />
+    </svg>
   </button>
 
   <div class="sidebar__content" [class.active]="mobileMenuOpen">

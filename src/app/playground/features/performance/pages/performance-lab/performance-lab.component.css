@@ -759,7 +759,20 @@
    ======================================== */
 @media (max-width: 768px) {
   .performance-lab-container {
-    padding: var(--space-sm);
+    padding: max(var(--space-sm), env(safe-area-inset-left, 0px))
+      max(var(--space-sm), env(safe-area-inset-right, 0px));
+    padding-bottom: max(var(--space-md), env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+  }
+
+  .lab-header {
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+    text-align: left;
+  }
+
+  .lab-title {
+    font-size: clamp(1.5rem, 7vw, 2.25rem);
   }
 
   .strategy-selector {
@@ -768,18 +781,53 @@
 
   .strategy-btn {
     width: 100%;
+    min-height: 44px;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .metrics-dashboard {
     grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .metric-value {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
+  .explanation-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding: 0;
   }
 
   .comparison-container {
     grid-template-columns: 1fr;
+    padding: 0;
+    gap: var(--space-md);
   }
 
   .trackby-demo {
     grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .trackby-container {
+    margin: 0;
+    padding: var(--space-md);
+  }
+
+  .live-example {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+
+  .live-example button {
+    min-height: 44px;
+    width: 100%;
+    margin-right: 0;
   }
 
   .control-group {
@@ -789,12 +837,28 @@
 
   .control-group input[type="range"] {
     width: 100%;
+    max-width: 100%;
+  }
+
+  .reset-btn,
+  .action-btn {
+    min-height: 44px;
+    width: 100%;
   }
 
   .heatmap-legend {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-sm);
+  }
+
+  .section-title {
+    padding: 0;
+    text-align: left;
+  }
+
+  .didactic-section {
+    margin-bottom: var(--space-xl);
   }
 }
 

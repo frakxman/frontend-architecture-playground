@@ -16,14 +16,14 @@
   position: relative;
 }
 
-/* Mobile: hamburger button (AHORA A LA IZQUIERDA) */
+/* Mobile: hamburger a la derecha (no tapa la foto de perfil) */
 .sidebar__hamburger {
   display: flex;
   position: fixed;
-  top: calc(64px + var(--space-md)); /* Header height + spacing */
-  left: var(--space-md); /* Cambiado de right a left */
-  right: auto; /* Aseguramos que no haya right */
-  z-index: 1000; /* Aumentado de 900 a 1000 para que esté sobre el sidebar cuando está cerrado */
+  top: calc(64px + var(--space-md));
+  right: var(--space-md);
+  left: auto;
+  z-index: 1000;
   background: rgba(17, 19, 21, 0.9);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -32,13 +32,13 @@
   min-width: 44px;
   height: 44px;
   min-height: 44px;
-  padding: 10px;
+  padding: 0;
   cursor: pointer;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  color: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .sidebar__hamburger:hover {
@@ -47,32 +47,31 @@
   transform: translateY(-2px);
 }
 
-/* HAMBURGUESA CON TRES BARRAS (como Playground) */
-.sidebar__hamburger-bar {
+.sidebar__hamburger-icon {
   display: block;
-  width: 100%;
-  height: 2px;
-  background: #ffffff; /* Icono blanco como solicitado */
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  overflow: visible;
 }
 
-/* Animación para transformar en X (como Playground) */
-.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+.sidebar__hamburger-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
-.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-bar:nth-child(2) {
+.sidebar__hamburger--open .sidebar__hamburger-line:nth-of-type(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.sidebar__hamburger--open .sidebar__hamburger-line:nth-of-type(2) {
   opacity: 0;
 }
 
-.sidebar__hamburger[aria-expanded="true"] .sidebar__hamburger-bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* Quitar el icono SVG anterior */
-.sidebar__hamburger-icon {
-  display: none;
+.sidebar__hamburger--open .sidebar__hamburger-line:nth-of-type(3) {
+  transform: translateY(-5px) rotate(-45deg);
 }
 
 /* Mobile: drawer (off-canvas) */
@@ -98,12 +97,6 @@
 
 .sidebar__content.active {
   transform: translateX(0);
-}
-
-/* Ajustar posición del botón cuando el sidebar está abierto */
-.sidebar__content.active + .sidebar__hamburger {
-  left: calc(min(280px, 85vw) + var(--space-md)); /* Botón se mueve con el sidebar */
-  z-index: 1001; /* Aumentado para que esté sobre el sidebar abierto */
 }
 
 .sidebar__content::before {

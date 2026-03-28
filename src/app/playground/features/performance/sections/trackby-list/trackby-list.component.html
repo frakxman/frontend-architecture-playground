@@ -53,15 +53,27 @@
 
   <div class="demo-content" *ngIf="isListVisible">
     <div class="item-list">
-      <div class="item" *ngFor="let item of items.slice(0, 50); trackBy: trackByFn">
-        {{ item.name }} - {{ item.value.toFixed(3) }}
-      </div>
-      <p class="item-count">Showing 50 of {{ items.length }} items (with trackBy)</p>
+      <!-- useTrackBy viene del padre: misma lista, pero solo una columna usa trackBy en *ngFor -->
+      <ng-container *ngIf="useTrackBy">
+        <div class="item" *ngFor="let item of items.slice(0, 50); trackBy: trackByFn">
+          {{ item.name }} - {{ item.value.toFixed(3) }}
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!useTrackBy">
+        <div class="item" *ngFor="let item of items.slice(0, 50)">
+          {{ item.name }} - {{ item.value.toFixed(3) }}
+        </div>
+      </ng-container>
+      <p class="item-count">
+        Showing 50 of {{ items.length }} items
+        <strong>({{ useTrackBy ? 'with trackBy' : 'without trackBy' }})</strong>
+      </p>
     </div>
   </div>
 
   <div class="demo-tip">
-    💡 <strong>Tip:</strong> Try shuffling multiple times. Notice how Angular only updates
-    changed items instead of recreating the entire list!
+    💡 <strong>Tip:</strong> After “Shuffle &amp; Update”, compare <strong>Updates</strong> above: without
+    <code>trackBy</code> Angular reconciles the whole slice (higher count); with
+    <code>trackBy: trackByFn</code> it keeps rows by <code>id</code> and updates less DOM.
   </div>
 </div>

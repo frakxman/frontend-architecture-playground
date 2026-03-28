@@ -1,16 +1,43 @@
-.signals-lab {
-  padding: 2rem;
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
+
+.signals-lab {
+  padding: 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+}
+
 .placeholder {
   background: rgba(136, 0, 255, 0.1);
   border: 1px dashed #8800ff;
   border-radius: 12px;
-  padding: 3rem;
+  padding: 1.5rem;
   text-align: center;
-  margin-top: 2rem;
-  color: #8800ff;
+  margin-top: 1rem;
+  color: #c4a5ff;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
+
 h2 {
-  color: #8800ff;
-  margin-bottom: 1rem;
+  color: #c4a5ff;
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+}
+
+@media (min-width: 769px) {
+  .signals-lab {
+    padding: 2rem;
+  }
+
+  .placeholder {
+    padding: 3rem;
+    margin-top: 2rem;
+  }
 }

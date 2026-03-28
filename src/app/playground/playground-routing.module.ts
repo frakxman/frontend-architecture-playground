@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlaygroundLayoutComponent } from './layout/containers/playground-layout/playground-layout.component';
+import { PLAYGROUND_FUTURE_ROUTES } from './playground-future-features.registry';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
         path: 'signals-vs-observables',
         loadChildren: () => import('./features/signals-lab/signals-lab.module').then(m => m.SignalsLabModule)
       },
+      ...PLAYGROUND_FUTURE_ROUTES,
       { path: '', redirectTo: 'concepts/overview', pathMatch: 'full' }
     ]
   }

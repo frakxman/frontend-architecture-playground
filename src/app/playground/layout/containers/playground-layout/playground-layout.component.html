@@ -5,13 +5,23 @@
   <button
     type="button"
     class="playground-hamburger"
+    [class.playground-hamburger--open]="mobileMenuOpen"
     (click)="toggleMobileMenu()"
     [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'"
     [attr.aria-expanded]="mobileMenuOpen"
   >
-    <span></span>
-    <span></span>
-    <span></span>
+    <svg
+      class="playground-hamburger__icon"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <line class="playground-hamburger__line" x1="4" y1="7" x2="20" y2="7" />
+      <line class="playground-hamburger__line" x1="4" y1="12" x2="20" y2="12" />
+      <line class="playground-hamburger__line" x1="4" y1="17" x2="20" y2="17" />
+    </svg>
   </button>
 
   <!-- Sidebar Component -->
@@ -89,6 +99,6 @@
 
   </main>
 
+  </div>
 </div>
-
 

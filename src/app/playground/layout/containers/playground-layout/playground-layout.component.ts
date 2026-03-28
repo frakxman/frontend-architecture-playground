@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd, Event, NavigationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { PLAYGROUND_FUTURE_FEATURES } from '../../../playground-future-features.registry';
 
 @Component({
   selector: 'app-playground-layout',
@@ -64,7 +65,15 @@ export class PlaygroundLayoutComponent implements OnInit {
     }
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    for (const f of PLAYGROUND_FUTURE_FEATURES) {
+      this.routeTitles[`/playground/${f.path}`] = {
+        title: f.title,
+        subtitle: f.subtitle,
+        isLab: false
+      };
+    }
+  }
 
   ngOnInit() {
     // Detectar redirecciones
@@ -87,14 +96,41 @@ export class PlaygroundLayoutComponent implements OnInit {
     this.updatePageInfo(this.router.url);
   }
 
+  ngOnDestroy(): void {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+  }
+
+  /** Coincidencia por prefijo (rutas hijas) cuando no hay clave exacta en routeTitles */
+  private matchRouteByPrefix(
+    url: string
+  ): { title: string; subtitle: string; isLab?: boolean } | undefined {
+    const entries = Object.entries(this.routeTitles)
+      .filter(([key]) => key !== '/playground')
+      .sort(([a], [b]) => b.length - a.length);
+
+    for (const [key, info] of entries) {
+      if (url === key || url.startsWith(`${key}/`)) {
+        return info;
+      }
+    }
+    return undefined;
+  }
+
   private updatePageInfo(url: string) {
+    const path = url.replace(/\/$/, '') || '/';
     // Check if we're on dashboard (and not redirecting)
-    const isDashboard = (url === '/playground' || url === '/playground/') && !this.isRedirecting;
+    const isDashboard =
+      (path === '/playground' || path === '/playground/') && !this.isRedirecting;
 
     this.routerOutletActive = !isDashboard;
 
-    // Get route info
-    const routeInfo = this.routeTitles[url] || this.routeTitles['/playground'];
+    // Get route info (exact match; trailing slash normalized above)
+    const routeInfo =
+      this.routeTitles[path] ||
+      this.matchRouteByPrefix(path) ||
+      this.routeTitles['/playground'];
     this.currentTitle = routeInfo.title;
     this.currentSubtitle = routeInfo.subtitle;
 
@@ -104,10 +140,20 @@ export class PlaygroundLayoutComponent implements OnInit {
 
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
+    this.syncBodyScrollLock();
   }
 
   closeMobileMenu() {
     this.mobileMenuOpen = false;
+    this.syncBodyScrollLock();
+  }
+
+  /** Evita scroll del documento detrás del drawer en móvil */
+  private syncBodyScrollLock(): void {
+    if (typeof document === 'undefined') {
+      return;
+    }
+    document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
   }
 
   onNavClick(event: MouseEvent) {

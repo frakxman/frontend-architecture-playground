@@ -103,14 +103,14 @@
   align-items: center;
 }
 
-/* BOTÓN CORREGIDO - Ahora es consistente con el diseño */
-.primary-btn {
+/* Mismo CTA que src/styles.css: texto oscuro sobre acento sólido (legible + hover global) */
+:host .primary-btn {
   padding: 12px 20px;
   min-height: 44px;
   min-width: 44px;
   border-radius: var(--radius-md);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
   text-decoration: none;
@@ -118,25 +118,22 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  background: rgba(0, 255, 136, 0.15);
-  background-color: rgba(0, 255, 136, 0.15);
-  color: var(--color-accent);
-  -webkit-text-fill-color: var(--color-accent);
-  border: 1px solid rgba(0, 255, 136, 0.3);
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--color-accent);
+  color: #0a0a0a;
+  -webkit-text-fill-color: #0a0a0a;
+  border: 1px solid var(--color-accent);
+  box-shadow: var(--shadow-glow);
 }
 
-.primary-btn:hover {
-  background: rgba(0, 255, 136, 0.25);
-  background-color: rgba(0, 255, 136, 0.25);
-  color: var(--color-accent);
-  -webkit-text-fill-color: var(--color-accent);
-  border-color: rgba(0, 255, 136, 0.5);
+:host .primary-btn:hover {
+  background: #00ffaa;
+  color: #0a0a0a;
+  -webkit-text-fill-color: #0a0a0a;
+  border-color: #00ffaa;
   transform: translateY(-2px);
   box-shadow:
-    0 8px 24px rgba(0, 255, 136, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.2);
+    0 0 32px var(--color-accent-glow),
+    0 0 48px rgba(0, 255, 136, 0.15);
 }
 
 .social-icon {
@@ -220,7 +217,7 @@
     font-size: 1rem;
   }
 
-  .primary-btn {
+  :host .primary-btn {
     padding: 14px 24px;
     font-size: 1.05rem;
   }
@@ -236,7 +233,7 @@
     max-width: 720px;
   }
 
-  .primary-btn {
+  :host .primary-btn {
     padding: 16px 28px;
   }
 }

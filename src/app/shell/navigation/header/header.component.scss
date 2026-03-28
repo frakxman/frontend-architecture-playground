@@ -51,7 +51,7 @@
     }
   }
 
-  &__logo-text {
+  &__logo-mark {
     font-size: 1.25rem;
     font-weight: 700;
     background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-secondary) 100%);
@@ -59,12 +59,14 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-    display: inline;
+  }
 
-    &::after {
-      content: 'man';
-      display: none;
-    }
+  &__logo-mark--short {
+    display: inline;
+  }
+
+  &__logo-mark--full {
+    display: none;
   }
 
   &__nav {
@@ -183,7 +185,7 @@
       padding: 0 1.5rem;
     }
 
-    &__logo-text {
+    &__logo-mark {
       font-size: 1.5rem;
     }
 
@@ -211,12 +213,16 @@
       padding: 0 2rem;
     }
 
-    &__logo-text {
+    &__logo-mark {
       font-size: 1.75rem;
+    }
 
-      &::after {
-        display: inline;
-      }
+    &__logo-mark--short {
+      display: none;
+    }
+
+    &__logo-mark--full {
+      display: inline;
     }
 
     &__nav-link {
