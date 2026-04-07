@@ -43,58 +43,9 @@
   <!-- Main Content Area -->
   <main class="playground-content">
 
-    <!-- Content Header -->
-    <header class="content-header surface-card glass-panel" *ngIf="showHeader">
-      <div class="content-header__main">
-        <h1 class="content-title">{{ currentTitle }}</h1>
-        <p class="content-subtitle">{{ currentSubtitle }}</p>
-      </div>
-      <div class="content-header__actions">
-        <button class="header-action" (click)="toggleImplementation()">
-          <span class="header-action__icon">🔄</span>
-          <span>Switch Implementation</span>
-        </button>
-        <button class="header-action header-action--primary" (click)="resetDemo()">
-          <span class="header-action__icon">🔄</span>
-          <span>Reset Demo</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- Router Outlet for Dynamic Content -->
+    <!-- Router Outlet -->
     <div class="content-router">
       <router-outlet />
-    </div>
-
-    <!-- Dynamic Content Area (for topic-specific content) -->
-    <div class="dynamic-content" *ngIf="!routerOutletActive">
-      <!-- This shows when no specific route is active (dashboard view) -->
-      <div class="dashboard-placeholder">
-        <div class="placeholder-icon">🏗️</div>
-        <h2 class="placeholder-title">Architecture Playground</h2>
-        <p class="placeholder-desc">
-          Select a topic from the sidebar to explore different Angular architectural patterns.
-          Each lab demonstrates the same feature built multiple ways.
-        </p>
-
-        <div class="placeholder-grid">
-          <div class="placeholder-card">
-            <div class="placeholder-card__icon">📊</div>
-            <h3>Performance Lab</h3>
-            <p>Compare change detection strategies</p>
-          </div>
-          <div class="placeholder-card">
-            <div class="placeholder-card__icon">🔄</div>
-            <h3>State Management</h3>
-            <p>Different approaches to state</p>
-          </div>
-          <div class="placeholder-card">
-            <div class="placeholder-card__icon">⚡</div>
-            <h3>Signals vs RxJS</h3>
-            <p>Compare reactivity models</p>
-          </div>
-        </div>
-      </div>
     </div>
 
   </main>

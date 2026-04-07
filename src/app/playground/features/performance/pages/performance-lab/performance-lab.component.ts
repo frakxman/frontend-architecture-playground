@@ -1,13 +1,39 @@
-// performance-lab.component.ts
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, interval, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { MockDataService } from '../../services/mock-data.service';
-import { PerformanceService } from '../../services/performance-service.service';
-import { FpsService } from '../../services/fps-service.service';
-
 import { ComponentMetric, Item } from '../../models/performance.types';
+
+const STRATEGY_INFO: Record<string, { title: string; description: string; bullets: string[] }> = {
+  default: {
+    title: 'Default Strategy',
+    description: 'Angular checks every component in the tree on each event (click, timer, XHR). Simple but can be costly for large apps.',
+    bullets: [
+      'Checks all components on every event',
+      'Easy to use — works out of the box',
+      'Can cause unnecessary renders in large trees',
+    ],
+  },
+  onpush: {
+    title: 'OnPush Strategy',
+    description: 'Angular skips the component unless an @Input() changes by reference, an internal event fires, or an Observable emits.',
+    bullets: [
+      'Only checks when @Input() reference changes',
+      'Requires immutable data patterns',
+      'Reduces unnecessary renders by up to 95%',
+    ],
+  },
+  zoneless: {
+    title: 'Zoneless (Angular 18+)',
+    description: 'Removes Zone.js entirely. You control when change detection runs via signals or markForCheck().',
+    bullets: [
+      'No Zone.js — ~25% smaller bundle',
+      'Maximum performance, full control',
+      'Requires explicit change detection triggers',
+    ],
+  },
+};
 
 @Component({
   selector: 'app-performance-lab',
@@ -15,156 +41,116 @@ import { ComponentMetric, Item } from '../../models/performance.types';
   styleUrls: ['./performance-lab.component.css'],
 })
 export class PerformanceLabComponent implements OnInit, OnDestroy {
-  // Estrategia seleccionada
+
+  // Strategy
   selectedStrategy: 'default' | 'onpush' | 'zoneless' = 'default';
+  strategyInfo = STRATEGY_INFO['default'];
 
-  // Métricas en vivo
-  fps: number = 60;
+  // Live metrics
+  fps = 60;
   fpsHistory: number[] = Array(20).fill(60);
-  frameDrop: number = 0;
-  renderTime: number = 4.2;
-  cpuUsage: number = 23;
-  memoryUsage: number = 42;
-  heapSize: number = 128;
-  changeDetectionCount: number = 0;
-  totalRenders: number = 1248;
-  unnecessaryRenders: number = 978;
-  unnecessaryRendersPercent: number = 78;
+  frameDrop = 0;
+  renderTime = 4.2;
+  cpuUsage = 23;
+  memoryUsage = 42;
+  heapSize = 128;
+  changeDetectionCount = 0;
+  totalRenders = 0;
+  unnecessaryRenders = 0;
 
-  // Valores para demostraciones
-  defaultValue: number = 0;
-  onPushValue: number = 0;
-  zonelessValue: string = 'Esperando acción...';
+  get unnecessaryRendersPercent(): number {
+    if (this.totalRenders === 0) return 0;
+    return Math.round((this.unnecessaryRenders / this.totalRenders) * 100);
+  }
 
-  // Contadores de renders
-  defaultRenders: number = 0;
-  onPushRenders: number = 0;
+  // Demo values
+  defaultValue = 0;
+  onPushValue = 0;
+  zonelessValue = 'Waiting for action...';
+  defaultRenders = 0;
+  onPushRenders = 0;
 
-  // Métricas de comparación
-  baselineRenders: number = 0;
-  baselineRenderTime: number = 12;
-  onpushRenders: number = 0;
-  onpushRenderTime: number = 3;
-  performanceGain: number = 75;
+  // Comparison metrics
+  baselineRenders = 0;
+  baselineRenderTime = 12;
+  onpushRenders = 0;
+  onpushRenderTime = 3;
+  performanceGain = 75;
 
   // TrackBy demo
-  withoutTrackByOps: number = 0;
-  withTrackByOps: number = 0;
+  withoutTrackByOps = 0;
+  withTrackByOps = 0;
 
-  // Items para las listas
-  items$: Observable<Item[]>;
+  // Items
+  items$!: Observable<Item[]>;
   items: Item[] = [];
 
-  // Heat map data
+  // Heat map
   componentMetrics: ComponentMetric[] = [
-    { name: 'Header', renderCount: 124, lastRenderTime: 2, colorIntensity: 20 },
-    { name: 'FPS Counter', renderCount: 856, lastRenderTime: 1, colorIntensity: 85 },
-    { name: 'Default List', renderCount: 1250, lastRenderTime: 12, colorIntensity: 100 },
-    { name: 'OnPush List', renderCount: 42, lastRenderTime: 3, colorIntensity: 10 },
-    { name: 'TrackBy Demo', renderCount: 312, lastRenderTime: 5, colorIntensity: 45 },
-    { name: 'Controls', renderCount: 18, lastRenderTime: 1, colorIntensity: 5 },
+    { name: 'Header',       renderCount: 12,  lastRenderTime: 2,  colorIntensity: 5  },
+    { name: 'FPS Counter',  renderCount: 60,  lastRenderTime: 1,  colorIntensity: 30 },
+    { name: 'Default List', renderCount: 100, lastRenderTime: 12, colorIntensity: 50 },
+    { name: 'OnPush List',  renderCount: 4,   lastRenderTime: 3,  colorIntensity: 5  },
+    { name: 'TrackBy Demo', renderCount: 20,  lastRenderTime: 5,  colorIntensity: 15 },
+    { name: 'Controls',     renderCount: 2,   lastRenderTime: 1,  colorIntensity: 2  },
   ];
 
-  // Controles
-  autoUpdate: boolean = true;
-  updateInterval: number = 500;
-  performanceScore: number = 78;
-  performanceScoreColor: string = 'conic-gradient(#00ff88 0deg 280deg, #444 280deg 360deg)';
-  performanceMessage: string = 'Bueno, pero puedes optimizar más con OnPush';
+  // Controls
+  autoUpdate = true;
+  updateInterval = 500;
+  performanceScore = 0;
+  performanceScoreColor = '';
+  performanceMessage = '';
 
-  // Score mapping
-  private scoreMessages = {
-    low: 'Necesita optimización urgente',
-    medium: 'Rendimiento aceptable, puede mejorar',
-    high: '¡Excelente! Uso óptimo de detección de cambios',
-  };
-
-  private subscriptions: Subscription = new Subscription();
+  private subscriptions = new Subscription();
+  private autoUpdateSub?: Subscription;
 
   constructor(
-    private performanceService: PerformanceService,
-    private fpsService: FpsService,
     private mockDataService: MockDataService,
     private cdr: ChangeDetectorRef
   ) {
-    // Inicializar items
     this.items$ = this.mockDataService.getItems().pipe(
-      map(items => this.items = items)
+      tap(items => this.items = items)
     );
   }
 
   ngOnInit(): void {
     this.startMetricsSimulation();
     this.startFpsMonitoring();
-    this.startAutoUpdate();
+    this.restartAutoUpdate();
     this.calculatePerformanceScore();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.autoUpdateSub?.unsubscribe();
   }
 
-  // ========================================
-  // MÉTODOS DE ESTRATEGIA
-  // ========================================
+  // ── Strategy ────────────────────────────────────────────────────────────
 
   selectStrategy(strategy: 'default' | 'onpush' | 'zoneless'): void {
     this.selectedStrategy = strategy;
-
-    // Explicación didáctica que se muestra en consola (podrías mostrarla en UI)
-    const explanations = {
-      default: `🔄 Default Strategy: Angular verifica TODOS los componentes cuando:
-• Cualquier evento ocurre (click, timer, XHR)
-• Cualquier @Input() cambia (incluso si es la misma referencia)
-• Ideal para apps pequeñas, pero puede ser ineficiente en listas grandes`,
-
-      onpush: `⚡ OnPush Strategy: Angular verifica SOLO cuando:
-• @Input() cambia por NUEVA REFERENCIA (inmutabilidad)
-• Eventos del componente (click, etc.)
-• Observables emiten (con async pipe)
-• markForCheck() se llama manualmente
-• Reduce renders innecesarios hasta 95%`,
-
-      zoneless: `🚀 Zoneless (Experimental): Angular 18+ sin Zone.js
-• Tú controlas manualmente la detección con ChangeDetectorRef
-• Bundle size -25%
-• Máxima performance pero más código
-• Ideal para apps críticas de rendimiento`
-    };
-
-    console.log(explanations[strategy]);
-
-    // Aquí podrías mostrar un tooltip o modal con la explicación
-    this.showStrategyExplanation(strategy);
+    this.strategyInfo = STRATEGY_INFO[strategy];
+    this.calculatePerformanceScore();
   }
 
-  private showStrategyExplanation(strategy: string): void {
-    // Implementar si quieres mostrar un modal/toast
-  }
-
-  // ========================================
-  // MÉTODOS DE DEMOSTRACIÓN
-  // ========================================
+  // ── Demo actions ─────────────────────────────────────────────────────────
 
   incrementDefault(): void {
     this.defaultValue++;
     this.defaultRenders++;
     this.totalRenders++;
+    this.unnecessaryRenders++;
     this.updateHeatMap('Default List', 1);
   }
 
   incrementOnPush(): void {
-    // Esto NO debería actualizar la vista si estamos en OnPush
-    // porque estamos mutando el valor, no creando una nueva referencia
     this.onPushValue++;
     this.onPushRenders++;
-
-    // En un componente OnPush real, esto no actualizaría la vista
-    // Pero aquí lo contamos para demostración
+    // Mutation: in a real OnPush child this would NOT trigger re-render
   }
 
   updateOnPushWithNewRef(): void {
-    // Esto SÍ actualiza la vista porque creamos una nueva referencia
     this.onPushValue = this.onPushValue + 1;
     this.onPushRenders++;
     this.totalRenders++;
@@ -172,190 +158,142 @@ export class PerformanceLabComponent implements OnInit, OnDestroy {
   }
 
   updateZoneless(): void {
-    this.zonelessValue = `Actualizado sin detección: ${new Date().toLocaleTimeString()}`;
-    // En modo zoneless, esto no actualiza la vista automáticamente
+    this.zonelessValue = `Updated without detection: ${new Date().toLocaleTimeString()}`;
+    // In real zoneless mode this would NOT update the view automatically
   }
 
   updateZonelessAndDetect(): void {
-    this.zonelessValue = `✅ Con detección: ${new Date().toLocaleTimeString()}`;
-    // Forzar detección de cambios (simula markForCheck)
+    this.zonelessValue = `✅ Detected: ${new Date().toLocaleTimeString()}`;
     this.cdr.detectChanges();
     this.totalRenders++;
   }
 
-  // ========================================
-  // MÉTODOS DE LISTAS
-  // ========================================
+  // ── List actions ─────────────────────────────────────────────────────────
 
   addRandomItem(): void {
-
-     const newId = this.items.length > 0
-    ? Math.max(...this.items.map(i => i.id)) + 1
-    : 0;
+    const newId = this.items.length > 0
+      ? Math.max(...this.items.map(i => i.id)) + 1
+      : 0;
 
     const newItem: Item = {
       id: newId,
       name: `Item ${this.items.length + 1}`,
       value: Math.floor(Math.random() * 100),
-      category: ['A', 'B', 'C'][Math.floor(Math.random() * 3)] as 'A' | 'B' | 'C',
+      category: (['A', 'B', 'C'] as const)[Math.floor(Math.random() * 3)],
       timestamp: new Date(),
       isActive: true,
-      metadata: {
-        created: new Date(),
-        updated: new Date(),
-        version: 1
-      }
+      metadata: { created: new Date(), updated: new Date(), version: 1 },
     };
 
-    this.items = [...this.items, newItem]; // Nueva referencia para OnPush
+    this.items = [...this.items, newItem];
     this.mockDataService.updateItems(this.items);
-
-    // Actualizar métricas
-    this.withoutTrackByOps += 101; // Simula recreación de todos los items
-    this.withTrackByOps += 1; // Simula solo el nuevo item
+    this.withoutTrackByOps += this.items.length;
+    this.withTrackByOps += 1;
   }
 
   updateRandomItem(): void {
     if (this.items.length === 0) return;
-
     const index = Math.floor(Math.random() * this.items.length);
-    const updatedItem = {
-      ...this.items[index],
-      value: Math.floor(Math.random() * 100),
-    };
-
-    // Crear nueva lista con el item actualizado (inmutabilidad)
     this.items = [
       ...this.items.slice(0, index),
-      updatedItem,
-      ...this.items.slice(index + 1)
+      { ...this.items[index], value: Math.floor(Math.random() * 100) },
+      ...this.items.slice(index + 1),
     ];
-
     this.mockDataService.updateItems(this.items);
-
-    // Actualizar métricas
-    this.withoutTrackByOps += 100; // Recrea todo
-    this.withTrackByOps += 1; // Solo actualiza el item modificado
+    this.withoutTrackByOps += this.items.length;
+    this.withTrackByOps += 1;
   }
 
-  // ========================================
-  // MÉTODOS DE MÉTRICAS
-  // ========================================
+  // ── Interval control ─────────────────────────────────────────────────────
+
+  onIntervalChange(): void {
+    this.restartAutoUpdate();
+  }
+
+  private restartAutoUpdate(): void {
+    this.autoUpdateSub?.unsubscribe();
+    this.autoUpdateSub = interval(this.updateInterval).subscribe(() => {
+      if (!this.autoUpdate) return;
+
+      this.updateRandomItem();
+      this.baselineRenders += this.items.length || 100;
+      this.onpushRenders += 1;
+
+      if (this.baselineRenders > 0) {
+        const totalBaseline = this.baselineRenders * this.baselineRenderTime;
+        const totalOnpush = this.onpushRenders * this.onpushRenderTime;
+        this.performanceGain = Math.min(99, Math.floor(100 - (totalOnpush / totalBaseline) * 100));
+      }
+    });
+  }
+
+  // ── Metrics ──────────────────────────────────────────────────────────────
 
   private startMetricsSimulation(): void {
-    const metricsSub = interval(1000).subscribe(() => {
-      // Simular cambios en las métricas
+    const sub = interval(1000).subscribe(() => {
       this.cpuUsage = Math.floor(20 + Math.random() * 30);
       this.memoryUsage = Math.floor(35 + Math.random() * 20);
       this.changeDetectionCount = Math.floor(40 + Math.random() * 60);
       this.renderTime = +(3 + Math.random() * 8).toFixed(1);
-
-      // Calcular frame drop basado en CPU
       this.frameDrop = this.cpuUsage > 70 ? 15 : this.cpuUsage > 50 ? 8 : 2;
-
-      // Actualizar heat map basado en renders
       this.updateHeatMapsFromUsage();
+      this.calculatePerformanceScore();
     });
-
-    this.subscriptions.add(metricsSub);
+    this.subscriptions.add(sub);
   }
 
   private startFpsMonitoring(): void {
-    const fpsSub = interval(100).subscribe(() => {
-      // Simular FPS que varía según CPU y estrategia
-      let baseFps = 60;
+    const sub = interval(100).subscribe(() => {
+      let base = this.selectedStrategy === 'default'  ? 45 + Math.floor(Math.random() * 15)
+               : this.selectedStrategy === 'onpush'   ? 55 + Math.floor(Math.random() * 10)
+               :                                        58 + Math.floor(Math.random() * 7);
 
-      if (this.selectedStrategy === 'default') {
-        baseFps = 45 + Math.floor(Math.random() * 15);
-      } else if (this.selectedStrategy === 'onpush') {
-        baseFps = 55 + Math.floor(Math.random() * 10);
-      } else {
-        baseFps = 58 + Math.floor(Math.random() * 7);
-      }
+      if (this.cpuUsage > 80) base = Math.max(20, base - 15);
+      else if (this.cpuUsage > 60) base = Math.max(30, base - 8);
 
-      // Reducir FPS si CPU está alto
-      if (this.cpuUsage > 80) baseFps = Math.max(20, baseFps - 15);
-      else if (this.cpuUsage > 60) baseFps = Math.max(30, baseFps - 8);
-
-      this.fps = baseFps;
-
-      // Actualizar historial
-      this.fpsHistory = [...this.fpsHistory.slice(1), baseFps];
+      this.fps = base;
+      this.fpsHistory = [...this.fpsHistory.slice(1), base];
     });
-
-    this.subscriptions.add(fpsSub);
+    this.subscriptions.add(sub);
   }
 
-  private startAutoUpdate(): void {
-    const autoSub = interval(this.updateInterval).subscribe(() => {
-      if (this.autoUpdate) {
-        this.updateRandomItem();
-
-        // Incrementar contadores de baseline/onpush para la comparación
-        this.baselineRenders += 100; // Simula render de todos los items
-        this.onpushRenders += 1; // Simula render solo del item cambiado
-
-        // Calcular gain
-        const totalBaseline = this.baselineRenders * this.baselineRenderTime;
-        const totalOnpush = this.onpushRenders * this.onpushRenderTime;
-        this.performanceGain = Math.floor(100 - (totalOnpush / totalBaseline) * 100);
-      }
-    });
-
-    this.subscriptions.add(autoSub);
-  }
-
-  private updateHeatMap(componentName: string, increment: number): void {
-    const component = this.componentMetrics.find(c => c.name === componentName);
-    if (component) {
-      component.renderCount += increment;
-      component.colorIntensity = Math.min(100, component.colorIntensity + increment);
+  private updateHeatMap(name: string, increment: number): void {
+    const comp = this.componentMetrics.find(c => c.name === name);
+    if (comp) {
+      comp.renderCount += increment;
+      comp.colorIntensity = Math.min(100, comp.colorIntensity + increment * 2);
     }
   }
 
   private updateHeatMapsFromUsage(): void {
-    // Actualizar intensidades basadas en uso
     this.componentMetrics.forEach(comp => {
       if (comp.name === 'FPS Counter') {
-        comp.colorIntensity = Math.min(100, Math.floor(this.fps / 60 * 100));
+        comp.colorIntensity = Math.min(100, Math.floor((this.fps / 60) * 100));
       } else if (comp.name === 'Default List') {
-        comp.colorIntensity = Math.min(100, this.baselineRenders / 10);
+        comp.colorIntensity = Math.min(100, Math.floor(this.baselineRenders / 20));
       } else if (comp.name === 'OnPush List') {
-        comp.colorIntensity = Math.min(100, this.onpushRenders / 10);
+        comp.colorIntensity = Math.min(100, Math.floor(this.onpushRenders / 5));
       }
     });
   }
 
   private calculatePerformanceScore(): void {
-    // Fórmula simple para puntuación
     let score = 100;
-
-    // Penalizar por renders innecesarios
-    score -= this.unnecessaryRenders / 50;
-
-    // Penalizar por FPS bajo
+    score -= Math.min(30, this.unnecessaryRenders / 10);
     if (this.fps < 30) score -= 20;
     else if (this.fps < 45) score -= 10;
-
-    // Bonus por estrategia óptima
-    if (this.selectedStrategy === 'onpush') score += 10;
+    if (this.selectedStrategy === 'onpush')   score += 10;
     if (this.selectedStrategy === 'zoneless') score += 15;
 
-    // Asegurar rango 0-100
     this.performanceScore = Math.max(0, Math.min(100, Math.floor(score)));
 
-    // Color para círculo (gradiente)
     const degrees = (this.performanceScore / 100) * 360;
     this.performanceScoreColor = `conic-gradient(#00ff88 0deg ${degrees}deg, #444 ${degrees}deg 360deg)`;
 
-    // Mensaje
-    if (this.performanceScore < 40) {
-      this.performanceMessage = this.scoreMessages.low;
-    } else if (this.performanceScore < 70) {
-      this.performanceMessage = this.scoreMessages.medium;
-    } else {
-      this.performanceMessage = this.scoreMessages.high;
-    }
+    this.performanceMessage =
+      this.performanceScore < 40 ? 'Needs urgent optimization' :
+      this.performanceScore < 70 ? 'Acceptable — can be improved with OnPush' :
+                                   'Excellent! Optimal change detection usage';
   }
 
   resetMetrics(): void {
@@ -367,28 +305,17 @@ export class PerformanceLabComponent implements OnInit, OnDestroy {
     this.unnecessaryRenders = 0;
     this.withoutTrackByOps = 0;
     this.withTrackByOps = 0;
-
-    this.componentMetrics.forEach(c => {
-      c.renderCount = 0;
-      c.colorIntensity = 0;
-    });
-
+    this.componentMetrics.forEach(c => { c.renderCount = 0; c.colorIntensity = 0; });
     this.calculatePerformanceScore();
   }
 
-  // ========================================
-  // GETTERS PARA EL TEMPLATE
-  // ========================================
+  // ── Getters ──────────────────────────────────────────────────────────────
 
   get fpsStatus(): string {
-    if (this.fps >= 50) return 'Smooth';
-    if (this.fps >= 30) return 'Okay';
-    return 'Laggy';
+    return this.fps >= 50 ? 'Smooth' : this.fps >= 30 ? 'Okay' : 'Laggy';
   }
 
   get fpsStatusClass(): string {
-    if (this.fps >= 50) return 'good';
-    if (this.fps >= 30) return 'warning';
-    return 'bad';
+    return this.fps >= 50 ? 'good' : this.fps >= 30 ? 'warning' : 'bad';
   }
 }

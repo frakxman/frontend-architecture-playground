@@ -1,17 +1,29 @@
-<div class="baseline-list">
-  <h4>Default Strategy List</h4>
-  <div class="list-container">
-    <div *ngFor="let item of items; trackBy: trackByFn"
-         class="list-item"
-         [style.background]="getIntensity(item.value)">
-      <span class="item-id">#{{item.id}}</span>
-      <span class="item-name">{{item.name}}</span>
-      <span class="item-value">{{item.value | number:'1.2-2'}}</span>
-      <span class="item-category" [class]="item.category">{{item.category}}</span>
+<div class="comparison-widget comparison-widget--default">
+
+  <div class="widget-header">
+    <div class="widget-label widget-label--default">
+      <span>🔄 Default</span>
     </div>
+    <span class="render-counter" [class.render-counter--active]="renderCount > 0">
+      {{ renderCount }} renders
+    </span>
   </div>
-  <div class="list-footer">
-    <small>Total items: {{items.length}}</small>
-    <small class="render-badge">Renders: {{renderCount}}</small>
+
+  <div class="widget-code">
+    <code ngNonBindable>changeDetection: ChangeDetectionStrategy.<span class="highlight">Default</span></code>
   </div>
+
+  <div class="widget-list">
+    <div class="list-item" *ngFor="let item of items.slice(0, 20)"
+         [style.background]="getIntensity(item.value)">
+      <span class="item-id">#{{ item.id }}</span>
+      <span class="item-name">{{ item.name }}</span>
+      <span class="item-value">{{ item.value }}</span>
+    </div>
+    <p class="list-footer" *ngIf="items.length > 0">
+      Showing 20 of {{ items.length }} — <strong>no trackBy</strong>
+    </p>
+    <p class="list-empty" *ngIf="items.length === 0">No items yet</p>
+  </div>
+
 </div>

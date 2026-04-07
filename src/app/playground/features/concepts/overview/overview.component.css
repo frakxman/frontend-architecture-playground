@@ -294,6 +294,21 @@
   color: #9333ea;
 }
 
+.lab-badge.badge-coming-soon {
+  background: rgba(100, 116, 139, 0.2);
+  color: #94a3b8;
+}
+
+.lab-card--coming-soon {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(0.3);
+}
+
+.lab-card--coming-soon .lab-cta {
+  color: #94a3b8;
+}
+
 .lab-card__content {
   padding: var(--space-lg);
   flex: 1;

@@ -1,15 +1,50 @@
-<div class="heat-map">
-  <h4>🔥 Heat Map - Render Frequency</h4>
-  <div class="heat-map-container">
-    <div *ngFor="let component of components"
-         class="heat-item"
-         [style.background]="getHeatColor(component.colorIntensity)"
-         [class]="getIntensityClass(component.colorIntensity)">
-      <span class="component-name">{{component.name}}</span>
-      <span class="render-count">{{component.renderCount}}</span>
-      <div class="intensity-bar">
-        <div class="intensity-fill" [style.width.%]="component.colorIntensity"></div>
+<div class="heatmap">
+
+  <div class="heatmap-grid">
+    <div
+      *ngFor="let c of sorted; trackBy: trackByName"
+      class="heat-cell"
+      [class.heat-cell--hot]="c.colorIntensity >= 70"
+      [class.heat-cell--critical]="c.colorIntensity >= 90"
+      [style.background]="getHeatColor(c.colorIntensity)"
+      [style.border-color]="getBorderColor(c.colorIntensity)"
+    >
+      <div class="heat-cell__top">
+        <span class="heat-cell__name">{{ c.name }}</span>
+        <span class="heat-cell__badge" [ngClass]="getLabel(c.colorIntensity).cls">
+          {{ getLabel(c.colorIntensity).text }}
+        </span>
+      </div>
+
+      <div class="heat-cell__metrics">
+        <div class="heat-metric">
+          <span class="heat-metric__value">{{ c.renderCount }}</span>
+          <span class="heat-metric__label">renders</span>
+        </div>
+        <div class="heat-metric">
+          <span class="heat-metric__value">{{ c.lastRenderTime }}ms</span>
+          <span class="heat-metric__label">last render</span>
+        </div>
+        <div class="heat-metric">
+          <span class="heat-metric__value">{{ c.colorIntensity }}%</span>
+          <span class="heat-metric__label">intensity</span>
+        </div>
+      </div>
+
+      <div class="heat-cell__bar-track">
+        <div
+          class="heat-cell__bar-fill"
+          [style.width.%]="c.colorIntensity"
+          [style.background]="getBarColor(c.colorIntensity)"
+        ></div>
       </div>
     </div>
   </div>
+
+  <div class="heatmap-legend">
+    <span class="legend-item legend-item--cool">Cool &lt;30%</span>
+    <div class="legend-gradient"></div>
+    <span class="legend-item legend-item--hot">Critical &gt;90%</span>
+  </div>
+
 </div>

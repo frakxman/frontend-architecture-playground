@@ -31,6 +31,14 @@
         <span class="strategy-badge">Experimental</span>
       </button>
     </div>
+
+    <!-- Strategy Info Banner -->
+    <div class="strategy-info">
+      <p class="strategy-info__desc">{{ strategyInfo.description }}</p>
+      <ul class="strategy-info__bullets">
+        <li *ngFor="let bullet of strategyInfo.bullets">{{ bullet }}</li>
+      </ul>
+    </div>
   </header>
 
   <!-- Live Metrics Dashboard -->
@@ -216,23 +224,24 @@ provideExperimentalZonelessChangeDetection()
 
     <div class="comparison-container">
       <div class="comparison-column">
-        <h3>📋 Baseline List (Default)</h3>
-        <p>100 items, actualización cada 500ms</p>
-        <div class="stats">
-          <app-baseline-list [items]="(items$ | async ) || []"></app-baseline-list>
-          <span>Renders: {{ baselineRenders }}</span>
-          <span>⏱️ {{ baselineRenderTime }}ms</span>
-        </div>
+        <app-baseline-list [items]="(items$ | async) || []"></app-baseline-list>
       </div>
-
       <div class="comparison-column">
-        <h3>⚡ Optimized List (OnPush)</h3>
-        <p>100 items, actualización cada 500ms</p>
         <app-onpush-list [items]="(items$ | async) || []"></app-onpush-list>
-        <div class="stats">
-          <span>Renders: {{ onpushRenders }}</span>
-          <span>⏱️ {{ onpushRenderTime }}ms</span>
-        </div>
+      </div>
+    </div>
+
+    <div class="comparison-stats-row">
+      <div class="cstat cstat--default">
+        <span class="cstat__value">{{ baselineRenders }}</span>
+        <span class="cstat__label">auto renders (Default)</span>
+        <span class="cstat__sub">~{{ baselineRenderTime }}ms each</span>
+      </div>
+      <div class="cstat__divider">vs</div>
+      <div class="cstat cstat--onpush">
+        <span class="cstat__value">{{ onpushRenders }}</span>
+        <span class="cstat__label">auto renders (OnPush)</span>
+        <span class="cstat__sub">~{{ onpushRenderTime }}ms each</span>
       </div>
     </div>
 
@@ -260,19 +269,22 @@ provideExperimentalZonelessChangeDetection()
 
       <div class="trackby-demo">
         <div class="demo-column">
-          <h4>❌ Sin trackBy</h4>
           <app-trackby-list [items]="(items$ | async) || []" [useTrackBy]="false"></app-trackby-list>
-          <div class="demo-stats">
-            <span>DOM operations: {{ withoutTrackByOps }}</span>
-          </div>
         </div>
-
         <div class="demo-column">
-          <h4>✅ Con trackBy</h4>
           <app-trackby-list [items]="(items$ | async) || []" [useTrackBy]="true"></app-trackby-list>
-          <div class="demo-stats">
-            <span>DOM operations: {{ withTrackByOps }}</span>
-          </div>
+        </div>
+      </div>
+
+      <div class="trackby-stats-row">
+        <div class="cstat cstat--default">
+          <span class="cstat__value">{{ withoutTrackByOps }}</span>
+          <span class="cstat__label">DOM operations (no trackBy)</span>
+        </div>
+        <div class="cstat__divider">vs</div>
+        <div class="cstat cstat--onpush">
+          <span class="cstat__value">{{ withTrackByOps }}</span>
+          <span class="cstat__label">DOM operations (trackBy)</span>
         </div>
       </div>
 
@@ -310,8 +322,8 @@ trackByFn(index: number, item: Item) {{ '{' }}
       </label>
 
       <label>
-        Velocidad de actualización:
-        <input type="range" min="100" max="2000" [(ngModel)]="updateInterval">
+        Update speed:
+        <input type="range" min="100" max="2000" [(ngModel)]="updateInterval" (ngModelChange)="onIntervalChange()">
         {{ updateInterval }}ms
       </label>
 

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SignalsLabComponent } from './pages/signals-lab/signals-lab.component';
@@ -10,6 +11,7 @@ import { SignalsLabComponent } from './pages/signals-lab/signals-lab.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       {
         path: '',

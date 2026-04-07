@@ -1,0 +1,145 @@
+:host { display: block; }
+
+/* ── Grid ────────────────────────────────────────────────────────────────── */
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Cell ────────────────────────────────────────────────────────────────── */
+.heat-cell {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.15s ease;
+  cursor: default;
+}
+
+.heat-cell:hover {
+  transform: translateY(-2px);
+}
+
+.heat-cell--hot {
+  animation: heatPulse 2s ease-in-out infinite;
+}
+
+.heat-cell--critical {
+  animation: heatPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes heatPulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%       { box-shadow: 0 0 12px 2px rgba(239, 68, 68, 0.2); }
+}
+
+/* ── Cell top row ────────────────────────────────────────────────────────── */
+.heat-cell__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.heat-cell__name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.heat-cell__badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.label--cool     { background: rgba(59,130,246,0.15); color: #93c5fd; }
+.label--warm     { background: rgba(245,158,11,0.15); color: #fcd34d; }
+.label--hot      { background: rgba(239,68,68,0.15);  color: #fca5a5; }
+.label--critical { background: rgba(239,68,68,0.3);   color: #ff6b6b; }
+
+/* ── Metrics row ─────────────────────────────────────────────────────────── */
+.heat-cell__metrics {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.heat-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex: 1;
+}
+
+.heat-metric__value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.heat-metric__label {
+  font-size: 0.62rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ── Bar ─────────────────────────────────────────────────────────────────── */
+.heat-cell__bar-track {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.heat-cell__bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+/* ── Legend ──────────────────────────────────────────────────────────────── */
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.legend-gradient {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg,
+    #3b82f6 0%,
+    #10b981 25%,
+    #f59e0b 60%,
+    #ef4444 100%
+  );
+  opacity: 0.6;
+}
+
+.legend-item {
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.legend-item--cool { color: #93c5fd; }
+.legend-item--hot  { color: #fca5a5; }

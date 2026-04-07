@@ -1,8 +1,428 @@
 <div class="signals-lab">
-  <h2>Signals vs Observables</h2>
-  <p>Compare Angular Signals with RxJS Observables</p>
-  <div class="placeholder">
-    <p>Signals lab content coming soon...</p>
-    <p>Route: /playground/signals-vs-observables</p>
-  </div>
+
+  <!-- Header -->
+  <header class="lab-header">
+    <div class="lab-header__badge">Angular 17+</div>
+    <h1 class="lab-header__title">Signals <span class="vs">vs</span> Observables</h1>
+    <p class="lab-header__subtitle">
+      Interact with both APIs side by side and see how each handles reactivity,
+      derived state, and lifecycle cleanup.
+    </p>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" role="tablist">
+    <button
+      role="tab"
+      class="tab-nav__btn"
+      [class.tab-nav__btn--active]="activeTab === 'counter'"
+      (click)="activeTab = 'counter'"
+    >
+      <span class="tab-icon">🔢</span> Counter
+    </button>
+    <button
+      role="tab"
+      class="tab-nav__btn"
+      [class.tab-nav__btn--active]="activeTab === 'derived'"
+      (click)="activeTab = 'derived'"
+    >
+      <span class="tab-icon">⛓️</span> Derived State
+    </button>
+    <button
+      role="tab"
+      class="tab-nav__btn"
+      [class.tab-nav__btn--active]="activeTab === 'cleanup'"
+      (click)="activeTab = 'cleanup'"
+    >
+      <span class="tab-icon">🧹</span> Cleanup
+    </button>
+  </nav>
+
+  <!-- ── TAB 1: Counter ─────────────────────────────────────────────────── -->
+  <section class="tab-content" *ngIf="activeTab === 'counter'">
+    <p class="tab-intro">
+      Both counters do the same thing. Notice how Signals use synchronous reads
+      with <code>signal()</code>, while Observables require the <code>async</code> pipe.
+    </p>
+
+    <div class="comparison-grid">
+
+      <!-- SIGNAL side -->
+      <div class="side side--signal">
+        <div class="side__header">
+          <span class="side__icon">⚡</span>
+          <h2 class="side__title">Signal</h2>
+          <span class="side__render-badge">{{ sigRenders() }} renders</span>
+        </div>
+
+        <div class="counter-display">{{ sigCount() }}</div>
+
+        <div class="counter-controls">
+          <div class="counter-controls__main">
+            <button class="counter-btn counter-btn--dec" (click)="sigDecrement()" aria-label="Decrement">
+              <span class="counter-btn__icon">−</span>
+            </button>
+            <button class="counter-btn counter-btn--inc" (click)="sigIncrement()" aria-label="Increment">
+              <span class="counter-btn__icon">+</span>
+            </button>
+          </div>
+          <button class="counter-btn counter-btn--reset" (click)="sigReset()">
+            ↺ Reset
+          </button>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>count = signal(0);
+
+increment() &#123;
+  this.count.update(n => n + 1);
+&#125;
+
+// Template:
+&#123;&#123; count() &#125;&#125;</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">Synchronous read — no pipe needed</li>
+          <li class="trait trait--good">Fine-grained change detection</li>
+          <li class="trait trait--good">No subscription management</li>
+        </ul>
+      </div>
+
+      <!-- OBSERVABLE side -->
+      <div class="side side--observable">
+        <div class="side__header">
+          <span class="side__icon">🔄</span>
+          <h2 class="side__title">Observable</h2>
+          <span class="side__render-badge">{{ obsRenders }} renders</span>
+        </div>
+
+        <div class="counter-display">{{ obsCount$ | async }}</div>
+
+        <div class="counter-controls">
+          <div class="counter-controls__main">
+            <button class="counter-btn counter-btn--dec" (click)="obsDecrement()" aria-label="Decrement">
+              <span class="counter-btn__icon">−</span>
+            </button>
+            <button class="counter-btn counter-btn--inc" (click)="obsIncrement()" aria-label="Increment">
+              <span class="counter-btn__icon">+</span>
+            </button>
+          </div>
+          <button class="counter-btn counter-btn--reset" (click)="obsReset()">
+            ↺ Reset
+          </button>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>count$ = new BehaviorSubject(0);
+
+increment() &#123;
+  this.count$.next(
+    this.count$.value + 1
+  );
+&#125;
+
+// Template:
+&#123;&#123; count$ | async &#125;&#125;</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--neutral">Requires <code>async</code> pipe or manual subscribe</li>
+          <li class="trait trait--good">Powerful operators (debounce, switchMap…)</li>
+          <li class="trait trait--warn">Must unsubscribe to avoid leaks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <span class="insight-icon">💡</span>
+      <p>
+        Signals trigger <strong>targeted re-renders</strong> — only the components that
+        read the signal update. Observables with the <code>async</code> pipe trigger
+        Zone.js change detection on the whole subtree.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TAB 2: Derived State ──────────────────────────────────────────── -->
+  <section class="tab-content" *ngIf="activeTab === 'derived'">
+    <p class="tab-intro">
+      Derived state stays in sync automatically. <code>computed()</code> is lazy and
+      memoized — it only recalculates when its dependencies change.
+    </p>
+
+    <div class="comparison-grid">
+
+      <!-- SIGNAL side -->
+      <div class="side side--signal">
+        <div class="side__header">
+          <span class="side__icon">⚡</span>
+          <h2 class="side__title">Signal + computed()</h2>
+        </div>
+
+        <div class="derived-demo">
+          <label class="input-label">Name</label>
+          <input
+            class="demo-input"
+            [ngModel]="sigName()"
+            (ngModelChange)="sigSetName($event)"
+            placeholder="Type a name…"
+          />
+          <label class="input-label">Count</label>
+          <div class="btn-row">
+            <button class="btn btn--secondary" (click)="sigDecrement()">−</button>
+            <span class="inline-value">{{ sigCount() }}</span>
+            <button class="btn btn--primary" (click)="sigIncrement()">+</button>
+          </div>
+
+          <div class="derived-outputs">
+            <div class="derived-item">
+              <span class="derived-label">double</span>
+              <span class="derived-value">{{ sigDouble() }}</span>
+            </div>
+            <div class="derived-item">
+              <span class="derived-label">message</span>
+              <span class="derived-value">{{ sigMessage() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>count  = signal(0);
+name   = signal('Angular');
+
+double  = computed(() =>
+  this.count() * 2
+);
+message = computed(() =>
+  `Hello, $&#123;this.name()&#125;!
+   Count: $&#123;this.count()&#125;`
+);</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">Lazy — computed only when read</li>
+          <li class="trait trait--good">Memoized — skips equal values</li>
+          <li class="trait trait--good">Tracks dependencies automatically</li>
+        </ul>
+      </div>
+
+      <!-- OBSERVABLE side -->
+      <div class="side side--observable">
+        <div class="side__header">
+          <span class="side__icon">🔄</span>
+          <h2 class="side__title">BehaviorSubject + pipe()</h2>
+        </div>
+
+        <div class="derived-demo">
+          <label class="input-label">Name</label>
+          <input
+            class="demo-input"
+            [ngModel]="name$ | async"
+            (ngModelChange)="obsSetName($event)"
+            placeholder="Type a name…"
+          />
+          <label class="input-label">Count</label>
+          <div class="btn-row">
+            <button class="btn btn--secondary" (click)="obsDecrement()">−</button>
+            <span class="inline-value">{{ obsCount$ | async }}</span>
+            <button class="btn btn--primary" (click)="obsIncrement()">+</button>
+          </div>
+
+          <div class="derived-outputs">
+            <div class="derived-item">
+              <span class="derived-label">double</span>
+              <span class="derived-value">{{ obsDouble$ | async }}</span>
+            </div>
+            <div class="derived-item">
+              <span class="derived-label">message</span>
+              <span class="derived-value">{{ obsMessage$ | async }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>count$ = new BehaviorSubject(0);
+name$  = new BehaviorSubject('Angular');
+
+double$  = this.count$.pipe(
+  map(n => n * 2)
+);
+message$ = combineLatest([
+  this.count$, this.name$
+]).pipe(
+  map(([c, n]) =>
+    `Hello, $&#123;n&#125;! Count: $&#123;c&#125;`
+  )
+);</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--neutral">Requires <code>combineLatest</code> for multiple sources</li>
+          <li class="trait trait--good">Rich operator library (RxJS)</li>
+          <li class="trait trait--warn">Each pipe creates a new subscription</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <span class="insight-icon">💡</span>
+      <p>
+        <code>computed()</code> automatically tracks which signals it reads.
+        With Observables you have to explicitly combine sources using
+        <code>combineLatest</code>, <code>withLatestFrom</code>, etc.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TAB 3: Cleanup ────────────────────────────────────────────────── -->
+  <section class="tab-content" *ngIf="activeTab === 'cleanup'">
+    <p class="tab-intro">
+      One of the biggest ergonomic wins with Signals is automatic cleanup.
+      Effects tear themselves down when the component is destroyed.
+    </p>
+
+    <div class="comparison-grid">
+
+      <!-- SIGNAL side -->
+      <div class="side side--signal">
+        <div class="side__header">
+          <span class="side__icon">⚡</span>
+          <h2 class="side__title">effect() — auto cleanup</h2>
+        </div>
+
+        <div class="code-block code-block--tall">
+          <pre><code ngNonBindable>export class MyComponent &#123;
+  count = signal(0);
+
+  constructor() &#123;
+    // Automatically destroyed
+    // with the component.
+    // No OnDestroy needed.
+    effect(() => &#123;
+      console.log(
+        'count changed:',
+        this.count()
+      );
+    &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">No <code>OnDestroy</code> needed</li>
+          <li class="trait trait--good">No risk of memory leaks</li>
+          <li class="trait trait--good">Cleanup is implicit and guaranteed</li>
+        </ul>
+
+        <div class="verdict verdict--good">
+          <span class="verdict-icon">✅</span>
+          Zero boilerplate cleanup
+        </div>
+      </div>
+
+      <!-- OBSERVABLE side -->
+      <div class="side side--observable">
+        <div class="side__header">
+          <span class="side__icon">🔄</span>
+          <h2 class="side__title">subscribe() — manual cleanup</h2>
+        </div>
+
+        <div class="code-block code-block--tall">
+          <pre><code ngNonBindable>export class MyComponent
+  implements OnDestroy &#123;
+
+  private sub = new Subscription();
+
+  constructor(private svc: DataService) &#123;
+    this.sub.add(
+      this.svc.data$.subscribe(val => &#123;
+        console.log('data:', val);
+      &#125;)
+    );
+  &#125;
+
+  ngOnDestroy() &#123;
+    // Forget this → memory leak
+    this.sub.unsubscribe();
+  &#125;
+&#125;</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--warn">Requires explicit <code>ngOnDestroy</code></li>
+          <li class="trait trait--warn">Forgetting causes memory leaks</li>
+          <li class="trait trait--good">Alternatively use <code>takeUntilDestroyed()</code></li>
+        </ul>
+
+        <div class="verdict verdict--warn">
+          <span class="verdict-icon">⚠️</span>
+          Manual unsubscribe required
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <span class="insight-icon">💡</span>
+      <p>
+        Angular 16+ introduced <code>takeUntilDestroyed()</code> to simplify
+        Observable cleanup, but Signals still have the edge — the cleanup contract
+        is enforced by the framework, not by the developer.
+      </p>
+    </div>
+  </section>
+
+  <!-- Summary Table -->
+  <section class="summary-section">
+    <h2 class="summary-title">Quick Reference</h2>
+    <div class="summary-table-wrapper">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="col-signal">⚡ Signals</th>
+            <th class="col-obs">🔄 Observables</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Read syntax</td>
+            <td class="col-signal"><code>count()</code></td>
+            <td class="col-obs"><code>count$ | async</code></td>
+          </tr>
+          <tr>
+            <td>Derived state</td>
+            <td class="col-signal"><code>computed()</code></td>
+            <td class="col-obs"><code>pipe(map(…))</code></td>
+          </tr>
+          <tr>
+            <td>Side effects</td>
+            <td class="col-signal"><code>effect()</code></td>
+            <td class="col-obs"><code>subscribe()</code></td>
+          </tr>
+          <tr>
+            <td>Cleanup</td>
+            <td class="col-signal">Automatic</td>
+            <td class="col-obs">Manual (<code>unsubscribe</code>)</td>
+          </tr>
+          <tr>
+            <td>Async streams</td>
+            <td class="col-signal">Limited</td>
+            <td class="col-obs">Native strength</td>
+          </tr>
+          <tr>
+            <td>Change detection</td>
+            <td class="col-signal">Fine-grained</td>
+            <td class="col-obs">Zone.js (default)</td>
+          </tr>
+          <tr>
+            <td>Learning curve</td>
+            <td class="col-signal">Low</td>
+            <td class="col-obs">Medium–High</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
 </div>

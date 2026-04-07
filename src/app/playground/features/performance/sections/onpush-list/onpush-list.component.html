@@ -1,65 +1,51 @@
-<div class="demo-container">
-  <div class="demo-header">
-    <h2>⚡ OnPush - Optimized Change Detection</h2>
-    <span class="render-badge render-badge-success">Renders: {{ renderCount }}</span>
-  </div>
+<div class="comparison-widget comparison-widget--onpush">
 
-  <div class="demo-explanation">
-    <h3>What is this?</h3>
-    <p>
-      Uses <strong>OnPush change detection strategy</strong>. Angular only checks
-      this component when:
-    </p>
-    <ul>
-      <li>Input references change (immutable pattern)</li>
-      <li>Events originate from the component</li>
-      <li>Observables emit (with async pipe)</li>
-      <li>Manual <code>markForCheck()</code> is called</li>
-    </ul>
-
-    <h3>Why is it better?</h3>
-    <ul>
-      <li>Drastically reduces change detection cycles</li>
-      <li>Encourages immutable data patterns</li>
-      <li>Scales better with large applications</li>
-      <li>Predictable performance characteristics</li>
-    </ul>
-
-    <div class="code-example">
-      <code>
-        &#64;Component({{'{'}}
-        <br>&nbsp;&nbsp;selector: 'app-onpush-list',
-        <br>&nbsp;&nbsp;<span class="highlight">changeDetection: ChangeDetectionStrategy.OnPush</span>
-        <br>{{'}}'}}
-      </code>
+  <div class="widget-header">
+    <div class="widget-label widget-label--onpush">
+      <span>⚡ OnPush</span>
     </div>
+    <span class="render-counter" [class.render-counter--active]="renderCount > 0">
+      {{ renderCount }} renders
+    </span>
   </div>
 
-  <div class="demo-actions">
-    <button class="btn btn-primary" (click)="loadItems()" [disabled]="isListVisible">
-      Load 1000 Items
+  <div class="widget-code">
+    <code ngNonBindable>changeDetection: ChangeDetectionStrategy.<span class="highlight">OnPush</span></code>
+  </div>
+
+  <div class="widget-actions">
+    <button class="widget-btn widget-btn--primary" (click)="loadItems()" [disabled]="isListVisible">
+      Load items
     </button>
-    <button class="btn btn-warning" (click)="triggerChangeWrong()" [disabled]="!isListVisible">
-      ❌ Mutate (Won't Work)
+    <button class="widget-btn widget-btn--warn" (click)="triggerChangeWrong()" [disabled]="!isListVisible"
+            title="Mutates in place — OnPush won't re-render">
+      ❌ Mutate
     </button>
-    <button class="btn btn-success" (click)="triggerChangeCorrect()" [disabled]="!isListVisible">
-      ✅ New Reference (Works)
+    <button class="widget-btn widget-btn--good" (click)="triggerChangeCorrect()" [disabled]="!isListVisible"
+            title="New reference — OnPush will re-render">
+      ✅ New ref
     </button>
-    <button class="btn btn-danger" (click)="reset()" [disabled]="!isListVisible">
+    <button class="widget-btn widget-btn--ghost" (click)="reset()" [disabled]="!isListVisible">
       Reset
     </button>
   </div>
 
-  <div class="demo-content" *ngIf="isListVisible">
-    <div class="item-list">
-      <div class="item" *ngFor="let item of items.slice(0, 50)">
-        {{ item.name }} - {{ item.value.toFixed(3) }}
-      </div>
-      <p class="item-count">Showing 50 of {{ items.length }} items</p>
+  <div class="widget-list" *ngIf="isListVisible">
+    <div class="list-item" *ngFor="let item of items.slice(0, 20); trackBy: trackByFn"
+         [style.background]="getIntensity(item.value)">
+      <span class="item-id">#{{ item.id }}</span>
+      <span class="item-name">{{ item.name }}</span>
+      <span class="item-value">{{ item.value.toFixed(2) }}</span>
     </div>
+    <p class="list-footer">Showing 20 of {{ items.length }}</p>
   </div>
 
-  <div class="demo-tip">
-    💡 <strong>Tip:</strong> Notice how the render count stays much lower compared to Baseline!
+  <div class="widget-empty" *ngIf="!isListVisible">
+    <span>Click "Load items" to start</span>
   </div>
+
+  <div class="widget-hint">
+    💡 <strong>❌ Mutate</strong> won't update the view — <strong>✅ New ref</strong> will
+  </div>
+
 </div>

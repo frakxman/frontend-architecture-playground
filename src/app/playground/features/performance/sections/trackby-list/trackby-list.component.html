@@ -1,79 +1,57 @@
-<div class="demo-container">
-  <div class="demo-header">
-    <h2>🔍 TrackBy - Efficient List Rendering</h2>
-    <div class="badges">
-      <span class="render-badge">Renders: {{ renderCount }}</span>
-      <span class="render-badge render-badge-info">Updates: {{ domUpdateCount }}</span>
+<div class="trackby-widget" [class.trackby-widget--active]="isListVisible">
+
+  <div class="widget-header">
+    <div class="widget-label" [class.widget-label--good]="useTrackBy" [class.widget-label--bad]="!useTrackBy">
+      <span class="widget-label__icon">{{ useTrackBy ? '✅' : '❌' }}</span>
+      <span class="widget-label__text">{{ useTrackBy ? 'With trackBy' : 'Without trackBy' }}</span>
+    </div>
+    <div class="widget-stats" *ngIf="isListVisible">
+      <span class="stat-pill">{{ renderCount }} renders</span>
+      <span class="stat-pill" [class.stat-pill--warn]="!useTrackBy && domUpdateCount > 5">
+        {{ domUpdateCount }} DOM ops
+      </span>
     </div>
   </div>
 
-  <div class="demo-explanation">
-    <h3>What is this?</h3>
-    <p>
-      The <strong>trackBy function</strong> helps Angular identify which items in a list
-      have changed, been added, or been removed. Without it, Angular recreates the entire
-      DOM for the list on every change.
-    </p>
-
-    <h3>Why is it important?</h3>
-    <ul>
-      <li>Prevents unnecessary DOM recreation</li>
-      <li>Preserves component state in list items</li>
-      <li>Dramatically improves performance for large lists</li>
-      <li>Reduces memory churn and garbage collection</li>
-    </ul>
-
-    <div class="code-example">
-      <code>
-        <span class="comment">// Without trackBy (slow):</span>
-        <br>&lt;div *ngFor="let item of items"&gt;
-        <br><br>
-        <span class="comment">// With trackBy (fast):</span>
-        <br>&lt;div *ngFor="let item of items; <span class="highlight">trackBy: trackByFn</span>"&gt;
-        <br><br>
-        <span class="comment">// Track function:</span>
-        <br>trackByFn(index: number, item: any) {{'{'}}
-        <br>&nbsp;&nbsp;return item.id; <span class="comment">// unique identifier</span>
-        <br>{{'}'}}
-      </code>
-    </div>
+  <div class="widget-code">
+    <code *ngIf="!useTrackBy">&lt;div *ngFor="let item of items"&gt;</code>
+    <code *ngIf="useTrackBy">&lt;div *ngFor="let item of items; <span class="highlight">trackBy: trackByFn</span>"&gt;</code>
   </div>
 
-  <div class="demo-actions">
-    <button class="btn btn-primary" (click)="loadItems()" [disabled]="isListVisible">
-      Load 1000 Items
+  <div class="widget-actions">
+    <button class="widget-btn widget-btn--primary" (click)="loadItems()" [disabled]="isListVisible">
+      Load items
     </button>
-    <button class="btn btn-secondary" (click)="shuffleItems()" [disabled]="!isListVisible">
-      🔀 Shuffle & Update
+    <button class="widget-btn widget-btn--secondary" (click)="shuffleItems()" [disabled]="!isListVisible">
+      🔀 Shuffle
     </button>
-    <button class="btn btn-danger" (click)="reset()" [disabled]="!isListVisible">
+    <button class="widget-btn widget-btn--ghost" (click)="reset()" [disabled]="!isListVisible">
       Reset
     </button>
   </div>
 
-  <div class="demo-content" *ngIf="isListVisible">
-    <div class="item-list">
-      <!-- useTrackBy viene del padre: misma lista, pero solo una columna usa trackBy en *ngFor -->
-      <ng-container *ngIf="useTrackBy">
-        <div class="item" *ngFor="let item of items.slice(0, 50); trackBy: trackByFn">
-          {{ item.name }} - {{ item.value.toFixed(3) }}
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!useTrackBy">
-        <div class="item" *ngFor="let item of items.slice(0, 50)">
-          {{ item.name }} - {{ item.value.toFixed(3) }}
-        </div>
-      </ng-container>
-      <p class="item-count">
-        Showing 50 of {{ items.length }} items
-        <strong>({{ useTrackBy ? 'with trackBy' : 'without trackBy' }})</strong>
-      </p>
-    </div>
+  <div class="widget-list" *ngIf="isListVisible">
+    <ng-container *ngIf="useTrackBy">
+      <div class="list-item" *ngFor="let item of items.slice(0, 20); trackBy: trackByFn"
+           [style.background]="getIntensity(item.value / 100)">
+        <span class="list-item__id">#{{ item.id }}</span>
+        <span class="list-item__name">{{ item.name }}</span>
+        <span class="list-item__value">{{ item.value }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!useTrackBy">
+      <div class="list-item" *ngFor="let item of items.slice(0, 20)"
+           [style.background]="getIntensity(item.value / 100)">
+        <span class="list-item__id">#{{ item.id }}</span>
+        <span class="list-item__name">{{ item.name }}</span>
+        <span class="list-item__value">{{ item.value }}</span>
+      </div>
+    </ng-container>
+    <p class="list-footer">Showing 20 of {{ items.length }} items</p>
   </div>
 
-  <div class="demo-tip">
-    💡 <strong>Tip:</strong> After “Shuffle &amp; Update”, compare <strong>Updates</strong> above: without
-    <code>trackBy</code> Angular reconciles the whole slice (higher count); with
-    <code>trackBy: trackByFn</code> it keeps rows by <code>id</code> and updates less DOM.
+  <div class="widget-empty" *ngIf="!isListVisible">
+    <span>Click "Load items" to start</span>
   </div>
+
 </div>
