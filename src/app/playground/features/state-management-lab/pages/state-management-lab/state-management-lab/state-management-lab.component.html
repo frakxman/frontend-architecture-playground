@@ -1,1 +1,474 @@
-<p>state-management-lab works!</p>
+<div class="state-lab">
+
+  <!-- Header -->
+  <header class="lab-header">
+    <div class="lab-header__badge">Angular 17+</div>
+    <h1 class="lab-header__title">State Management Patterns</h1>
+    <p class="lab-header__subtitle">
+      Compare Services + RxJS vs modern Signal State. See how each manages data,
+      derived state, and reactivity.
+    </p>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" role="tablist">
+    <button
+      role="tab"
+      class="tab-nav__btn"
+      [class.tab-nav__btn--active]="activeTab === 'basic'"
+      (click)="activeTab = 'basic'"
+    >
+      <span class="tab-icon">📦</span> Basic State
+    </button>
+    <button
+      role="tab"
+      class="tab-nav__btn"
+      [class.tab-nav__btn--active]="activeTab === 'multiple'"
+      (click)="activeTab = 'multiple'"
+    >
+      <span class="tab-icon">🔗</span> Multiple Values
+    </button>
+    <button
+      role="tab"
+      class="tab-nav__btn"
+      [class.tab-nav__btn--active]="activeTab === 'selectors'"
+      (click)="activeTab = 'selectors'"
+    >
+      <span class="tab-icon">⛓️</span> Selectors
+    </button>
+  </nav>
+
+  <!-- ── TAB 1: Basic State ─────────────────────────────────────────────── -->
+  <section class="tab-content" *ngIf="activeTab === 'basic'">
+    <p class="tab-intro">
+      Both approaches manage a simple counter. RxJS requires the <code>async</code> pipe
+      for template binding; Signals are read synchronously.
+    </p>
+
+    <div class="comparison-grid">
+
+      <!-- SERVICE + RXJS side -->
+      <div class="side side--rxjs">
+        <div class="side__header">
+          <span class="side__icon">🔄</span>
+          <h2 class="side__title">Service + RxJS</h2>
+          <span class="side__render-badge">{{ obsRenders }} renders</span>
+        </div>
+
+        <div class="state-display">
+          <div class="state-value">{{ counterObs$ | async }}</div>
+          <p class="state-hint">via BehaviorSubject + async pipe</p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn--secondary" (click)="obsCounterDec()">−</button>
+          <button class="btn btn--primary" (click)="obsCounterInc()">+</button>
+          <button class="btn btn--reset" (click)="obsCounterReset()">↺ Reset</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>// service.ts
+export class StateService &#123;
+  private counter = new BehaviorSubject(0);
+  counter$ = this.counter.asObservable();
+
+  increment() &#123;
+    this.counter.next(
+      this.counter.value + 1
+    );
+  &#125;
+&#125;
+
+// component.ts
+counter$ = this.svc.counter$;
+
+// template
+&#123;&#123; counter$ | async &#125;&#125;</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">Centralized in a service</li>
+          <li class="trait trait--good">RxJS operators available</li>
+          <li class="trait trait--neutral">Requires observable injection</li>
+          <li class="trait trait--warn">Async pipe on every binding</li>
+        </ul>
+      </div>
+
+      <!-- SIGNAL STATE side -->
+      <div class="side side--signal">
+        <div class="side__header">
+          <span class="side__icon">⚡</span>
+          <h2 class="side__title">Signal State</h2>
+          <span class="side__render-badge">{{ sigRenders() }} renders</span>
+        </div>
+
+        <div class="state-display">
+          <div class="state-value">{{ sigCounter() }}</div>
+          <p class="state-hint">synchronous read — no pipe</p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn--secondary" (click)="sigCounterDec()">−</button>
+          <button class="btn btn--primary" (click)="sigCounterInc()">+</button>
+          <button class="btn btn--reset" (click)="sigCounterReset()">↺ Reset</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>// component.ts
+export class MyComponent &#123;
+  counter = signal(0);
+
+  increment() &#123;
+    this.counter.update(n => n + 1);
+  &#125;
+&#125;
+
+// template
+&#123;&#123; counter() &#125;&#125;</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">Direct component access</li>
+          <li class="trait trait--good">No service needed for simple state</li>
+          <li class="trait trait--good">Synchronous — easier to test</li>
+          <li class="trait trait--good">Fine-grained change detection</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <span class="insight-icon">💡</span>
+      <p>
+        Signals are <strong>colocated</strong> with the component, making simple state
+        management straightforward. Services + RxJS are better for <strong>cross-component communication</strong>
+        and when you need powerful stream operators.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TAB 2: Multiple Values ────────────────────────────────────────── -->
+  <section class="tab-content" *ngIf="activeTab === 'multiple'">
+    <p class="tab-intro">
+      Managing multiple related pieces of state. RxJS requires explicit combination;
+      Signals use separate instances and auto-track dependencies.
+    </p>
+
+    <div class="comparison-grid">
+
+      <!-- SERVICE + RXJS side -->
+      <div class="side side--rxjs">
+        <div class="side__header">
+          <span class="side__icon">🔄</span>
+          <h2 class="side__title">combineLatest</h2>
+        </div>
+
+        <div class="form-block">
+          <label class="form-label">Counter</label>
+          <div class="input-row">
+            <button class="btn btn--secondary" (click)="obsCounterDec()">−</button>
+            <span class="value-display">{{ counterObs$ | async }}</span>
+            <button class="btn btn--primary" (click)="obsCounterInc()">+</button>
+          </div>
+
+          <label class="form-label">Name</label>
+          <input
+            class="form-input"
+            [ngModel]="nameObs$ | async"
+            (ngModelChange)="obsSetName($event)"
+            placeholder="Your name…"
+          />
+
+          <label class="form-label">Email</label>
+          <input
+            class="form-input"
+            [ngModel]="emailObs$ | async"
+            (ngModelChange)="obsSetEmail($event)"
+            placeholder="Your email…"
+          />
+
+          <button class="btn btn--reset" (click)="obsCounterReset()">↺ Reset All</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>counter$ = new BehaviorSubject(0);
+name$ = new BehaviorSubject('Angular');
+email$ = new BehaviorSubject('...');
+
+profile$ = combineLatest([
+  this.counter$,
+  this.name$,
+  this.email$
+]).pipe(
+  map(([c, n, e]) => &#123;
+    c, n, e
+  &#125;)
+);</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--neutral">Use <code>combineLatest</code>, <code>withLatestFrom</code>, <code>merge</code></li>
+          <li class="trait trait--good">Explicit dependency management</li>
+          <li class="trait trait--warn">Boilerplate for each combo</li>
+        </ul>
+      </div>
+
+      <!-- SIGNAL STATE side -->
+      <div class="side side--signal">
+        <div class="side__header">
+          <span class="side__icon">⚡</span>
+          <h2 class="side__title">Separate Signals</h2>
+        </div>
+
+        <div class="form-block">
+          <label class="form-label">Counter</label>
+          <div class="input-row">
+            <button class="btn btn--secondary" (click)="sigCounterDec()">−</button>
+            <span class="value-display">{{ sigCounter() }}</span>
+            <button class="btn btn--primary" (click)="sigCounterInc()">+</button>
+          </div>
+
+          <label class="form-label">Name</label>
+          <input
+            class="form-input"
+            [ngModel]="sigName()"
+            (ngModelChange)="sigSetName($event)"
+            placeholder="Your name…"
+          />
+
+          <label class="form-label">Email</label>
+          <input
+            class="form-input"
+            [ngModel]="sigEmail()"
+            (ngModelChange)="sigSetEmail($event)"
+            placeholder="Your email…"
+          />
+
+          <button class="btn btn--reset" (click)="sigCounterReset()">↺ Reset All</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>counter = signal(0);
+name = signal('Angular');
+email = signal('...');
+
+profile = computed(() => &#123;
+  return &#123;
+    count: this.counter(),
+    name: this.name(),
+    email: this.email()
+  &#125;;
+&#125;);</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">Create signals as needed</li>
+          <li class="trait trait--good">Computed auto-tracks dependencies</li>
+          <li class="trait trait--good">No explicit combining required</li>
+          <li class="trait trait--good">Minimal boilerplate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <span class="insight-icon">💡</span>
+      <p>
+        Signals don't require ceremony to combine multiple pieces. Each signal is independent,
+        and <code>computed()</code> automatically knows which ones it reads. RxJS demands explicit
+        channel merging via operators.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TAB 3: Selectors / Derived State ───────────────────────────── -->
+  <section class="tab-content" *ngIf="activeTab === 'selectors'">
+    <p class="tab-intro">
+      Deriving new state from sources. RxJS uses <code>map</code>/<code>combineLatest</code>;
+      Signals use <code>computed</code> which is lazy, memoized, and auto-tracked.
+    </p>
+
+    <div class="comparison-grid">
+
+      <!-- SERVICE + RXJS side -->
+      <div class="side side--rxjs">
+        <div class="side__header">
+          <span class="side__icon">🔄</span>
+          <h2 class="side__title">Selectors via pipe()</h2>
+        </div>
+
+        <div class="derived-block">
+          <div class="derived-item">
+            <span class="derived-label">counter</span>
+            <span class="derived-value">{{ (counterObs$ | async) ?? 0 }}</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">double</span>
+            <span class="derived-value">{{ (doubleObs$ | async) ?? 0 }}</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">message</span>
+            <span class="derived-value">{{ (messageObs$ | async) ?? '' }}</span>
+          </div>
+        </div>
+
+        <div class="profile-box">
+          <h4 class="profile-title">Profile Object</h4>
+          <div *ngIf="profileObs$ | async as profile" class="profile-content">
+            <p><strong>Name:</strong> {{ profile.name }}</p>
+            <p><strong>Email:</strong> {{ profile.email }}</p>
+            <p><strong>Count:</strong> {{ profile.count }}</p>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>double$ = counter$.pipe(
+  map(n => n * 2)
+);
+
+message$ = name$.pipe(
+  map(n => `Hello, $&#123;n&#125;!`)
+);
+
+profile$ = combineLatest([
+  counter$, name$, email$
+]).pipe(
+  map(([c, n, e]) =>
+    &#123; count: c, name: n, email: e &#125;
+  )
+);</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--neutral">Each selector runs on every emission</li>
+          <li class="trait trait--good">Can add operators (debounce, throttle…)</li>
+          <li class="trait trait--warn">Manual memoization needed (shareReplay)</li>
+        </ul>
+      </div>
+
+      <!-- SIGNAL STATE side -->
+      <div class="side side--signal">
+        <div class="side__header">
+          <span class="side__icon">⚡</span>
+          <h2 class="side__title">Selectors via computed()</h2>
+        </div>
+
+        <div class="derived-block">
+          <div class="derived-item">
+            <span class="derived-label">counter</span>
+            <span class="derived-value">{{ sigCounter() }}</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">double</span>
+            <span class="derived-value">{{ sigDouble() }}</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">message</span>
+            <span class="derived-value">{{ sigMessage() }}</span>
+          </div>
+        </div>
+
+        <div class="profile-box">
+          <h4 class="profile-title">Profile Object</h4>
+          <div class="profile-content">
+            <p><strong>Name:</strong> {{ sigProfile().name }}</p>
+            <p><strong>Email:</strong> {{ sigProfile().email }}</p>
+            <p><strong>Count:</strong> {{ sigProfile().count }}</p>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <pre><code ngNonBindable>double = computed(() =>
+  this.counter() * 2
+);
+
+message = computed(() =>
+  `Hello, $&#123;this.name()&#125;!`
+);
+
+profile = computed(() => &#123;
+  return &#123;
+    count: this.counter(),
+    name: this.name(),
+    email: this.email()
+  &#125;;
+&#125;);</code></pre>
+        </div>
+
+        <ul class="trait-list">
+          <li class="trait trait--good">Lazy — only runs when read</li>
+          <li class="trait trait--good">Memoized — skips equal values</li>
+          <li class="trait trait--good">Dependencies auto-tracked</li>
+          <li class="trait trait--good">No boilerplate operators</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <span class="insight-icon">💡</span>
+      <p>
+        <code>computed()</code> is <strong>lazy and memoized</strong> by default.
+        It only recalculates when accessed and only if its dependencies changed.
+        With RxJS, you must use <code>shareReplay()</code> for similar behavior.
+      </p>
+    </div>
+  </section>
+
+  <!-- Summary Table -->
+  <section class="summary-section">
+    <h2 class="summary-title">Quick Reference</h2>
+    <div class="summary-table-wrapper">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th class="col-rxjs">🔄 Service + RxJS</th>
+            <th class="col-signal">⚡ Signal State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Create state</td>
+            <td class="col-rxjs"><code>new BehaviorSubject()</code></td>
+            <td class="col-signal"><code>signal()</code></td>
+          </tr>
+          <tr>
+            <td>Read in template</td>
+            <td class="col-rxjs"><code>obs$ | async</code></td>
+            <td class="col-signal"><code>sig()</code></td>
+          </tr>
+          <tr>
+            <td>Update state</td>
+            <td class="col-rxjs"><code>.next(value)</code></td>
+            <td class="col-signal"><code>.set() / .update()</code></td>
+          </tr>
+          <tr>
+            <td>Combine values</td>
+            <td class="col-rxjs"><code>combineLatest</code></td>
+            <td class="col-signal">Separate signals</td>
+          </tr>
+          <tr>
+            <td>Derived state</td>
+            <td class="col-rxjs"><code>pipe(map())</code></td>
+            <td class="col-signal"><code>computed()</code></td>
+          </tr>
+          <tr>
+            <td>Memoization</td>
+            <td class="col-rxjs">Requires <code>shareReplay()</code></td>
+            <td class="col-signal">Built-in</td>
+          </tr>
+          <tr>
+            <td>Learning curve</td>
+            <td class="col-rxjs">High (operators, subscriptions)</td>
+            <td class="col-signal">Low — imperative</td>
+          </tr>
+          <tr>
+            <td>Cross-component</td>
+            <td class="col-rxjs">Native (via service injection)</td>
+            <td class="col-signal">Requires service wrapper</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
