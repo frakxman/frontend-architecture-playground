@@ -12,40 +12,33 @@ import { ProjectCardComponent } from '../project-card/project-card.component';
 export class ProjectsGridComponent {
   projects = [
     {
-      title: 'SaaS POS Platform',
-      description: 'Multi-tenant POS system with modular frontend architecture.',
-      stack: ['Angular', 'Vue', 'TypeScript', 'PostgreSQL'],
-      highlight: 'Scaled to support SaaS model',
-      link: ''
-    },
-    {
-      title: 'E-commerce Platform',
-      description: 'Fullstack e-commerce solution.',
-      stack: ['Angular', 'NestJS', 'REST'],
-      highlight: 'Delivered production-ready features',
-      link: ''
-    },
-    {
-      title: 'Frontend Architecture Playground',
-      description: 'Architecture comparison and experimentation platform.',
-      stack: ['Angular', 'Standalone', 'Modules'],
-      highlight: 'Demonstrates architectural decision-making',
+      title: 'Angular Architecture Playground',
+      description: 'Interactive platform for exploring Angular internals — performance benchmarks with real-time FPS monitoring, Signals vs Observables side-by-side, and state management pattern comparisons. Built as a live portfolio of architecture decisions.',
+      stack: ['Angular 17', 'Signals', 'RxJS', 'TypeScript', 'Lazy Loading'],
+      highlight: '3 interactive labs · change detection · state management · signals',
       link: '/playground/concepts/overview',
       isInternal: true
     },
     {
-      title: 'Amyules Landing Page',
-      description: 'Modern, responsive landing page with smooth animations and interactive elements.',
-      stack: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
-      highlight: 'Clean UI/UX with engaging visual storytelling',
-      link: 'https://frakxman.github.io/Amyules/'
+      title: 'SaaS POS Platform',
+      description: 'Multi-tenant point-of-sale system serving hundreds of merchants. Led the frontend architecture — designed a modular Angular + Vue component library shared across multiple product surfaces, with strict separation of concerns and OnPush change detection throughout.',
+      stack: ['Angular', 'Vue', 'TypeScript', 'RxJS', 'PostgreSQL'],
+      highlight: '60% reduction in component duplication · multi-tenant architecture',
+      link: ''
     },
     {
-      title: 'Frikerx.dev Portfolio',
-      description: 'Personal portfolio showcasing multimedia and development work.',
-      stack: ['HTML', 'CSS', 'JavaScript'],
-      highlight: 'Creative portfolio with multimedia integration',
-      link: 'https://frakxman.github.io/frikerx.dev/'
+      title: 'E-commerce Platform',
+      description: 'Fullstack e-commerce solution built from scratch. Angular SPA with a NestJS REST API and PostgreSQL backend. Owned the complete delivery cycle — from database schema design to production deployment — including checkout flow, product catalog, and order management.',
+      stack: ['Angular', 'NestJS', 'PostgreSQL', 'REST API', 'TypeScript'],
+      highlight: 'Full ownership · delivered end-to-end in 6 months',
+      link: ''
+    },
+    {
+      title: 'Amyules Landing Page',
+      description: 'Modern, responsive landing page with smooth CSS animations and interactive elements. Focus on visual storytelling and mobile-first responsive design.',
+      stack: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+      highlight: 'Clean UI/UX · engaging visual storytelling',
+      link: 'https://frakxman.github.io/Amyules/'
     }
   ];
 }
