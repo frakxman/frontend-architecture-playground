@@ -21,9 +21,9 @@ export class ProjectsGridComponent {
     },
     {
       title: 'SaaS POS Platform',
-      description: 'Multi-tenant point-of-sale system serving hundreds of merchants. Led the frontend architecture — designed a modular Angular + Vue component library shared across multiple product surfaces, with strict separation of concerns and OnPush change detection throughout.',
+      description: 'Multi-tenant point-of-sale system at Syscomp de Colombia. Led frontend architecture — modular Angular + Vue component library shared across multiple product surfaces, with OnPush change detection and a strategic migration from MySQL to PostgreSQL.',
       stack: ['Angular', 'Vue', 'TypeScript', 'RxJS', 'PostgreSQL'],
-      highlight: '60% reduction in component duplication · multi-tenant architecture',
+      highlight: 'Improved maintainability · faster feature delivery · 15% engagement increase',
       link: ''
     },
     {
@@ -32,13 +32,6 @@ export class ProjectsGridComponent {
       stack: ['Angular', 'NestJS', 'PostgreSQL', 'REST API', 'TypeScript'],
       highlight: 'Full ownership · delivered end-to-end in 6 months',
       link: ''
-    },
-    {
-      title: 'Amyules Landing Page',
-      description: 'Modern, responsive landing page with smooth CSS animations and interactive elements. Focus on visual storytelling and mobile-first responsive design.',
-      stack: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
-      highlight: 'Clean UI/UX · engaging visual storytelling',
-      link: 'https://frakxman.github.io/Amyules/'
     }
   ];
 }
