@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 
 @Component({
   selector: 'app-overview',
@@ -7,6 +7,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class OverviewComponent implements OnInit, OnDestroy {
   private fpsInterval?: ReturnType<typeof setInterval>;
+
+  architectureTopics = signal<string[]>([
+    'CD',
+    'Signals',
+    'RxJS',
+    'SSR',
+    'DI',
+    'State'
+  ]);
 
   fpsBars = [
     { height: 100, critical: false },

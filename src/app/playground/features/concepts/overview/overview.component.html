@@ -3,20 +3,23 @@
   <!-- Hero Section -->
   <section class="overview-hero">
     <div class="hero-content">
-      <h1 class="hero-title">Angular Architecture Observatory</h1>
+      <h1 class="hero-title">Frontend Architecture Playground</h1>
+
       <p class="hero-subtitle">
-        Visualize performance, state, and change detection decisions in
-        <br>
-        <span class="highlight">real-time</span>
+        An interactive playground for mastering production-ready Angular architecture.
+      </p>
+
+      <p class="hero-description">
+        Explore modern frontend architecture using Angular as the primary framework through interactive laboratories inspired by real enterprise applications. Compare architectural patterns, analyze performance, understand design decisions, and discover the trade-offs behind production-ready frontend systems.
       </p>
       <div class="hero-stats">
         <div class="stat">
           <span class="stat-value">4</span>
-          <span class="stat-label">Interactive Labs</span>
+          <span class="stat-label">Engineering Labs</span>
         </div>
         <div class="stat">
           <span class="stat-value">12+</span>
-          <span class="stat-label">Architecture Patterns</span>
+          <span class="stat-label">Architecture Decisions</span>
         </div>
         <div class="stat">
           <span class="stat-value">Real-time</span>
@@ -27,9 +30,9 @@
     <div class="hero-visual">
       <div class="pulse-animation"></div>
       <div class="component-grid">
-        <div class="component" *ngFor="let i of [1,2,3,4,5,6]"
-             [style.animation-delay]="i * 0.2 + 's'">
-          C{{i}}
+        <div class="component" *ngFor="let item of architectureTopics(); let i = index"
+            [style.animation-delay]="i * 0.2 + 's'">
+          {{ item }}
         </div>
       </div>
     </div>
