@@ -20,17 +20,18 @@ export class ProjectsGridComponent {
       isInternal: true
     },
     {
+      title: 'E-commerce Platform',
+      description: 'Fullstack e-commerce solution built from scratch. Angular SPA with a NestJS REST API and MongoDB backend. Owned the complete delivery cycle — from database schema design to production deployment — including checkout flow, product catalog, and order management.',
+      stack: ['Angular', 'NestJS', 'MongoDB', 'REST API', 'TypeScript'],
+      highlight: 'Full ownership · delivered end-to-end in 6 months',
+      link: 'https://frakx-services-store.onrender.com/',
+      isInternal: false
+    },
+    {
       title: 'SaaS POS Platform',
       description: 'Multi-tenant point-of-sale system at Syscomp de Colombia. Led frontend architecture — modular Angular + Vue component library shared across multiple product surfaces, with OnPush change detection and a strategic migration from MySQL to PostgreSQL.',
       stack: ['Angular', 'Vue', 'TypeScript', 'RxJS', 'PostgreSQL'],
       highlight: 'Improved maintainability · faster feature delivery · 15% engagement increase',
-      link: ''
-    },
-    {
-      title: 'E-commerce Platform',
-      description: 'Fullstack e-commerce solution built from scratch. Angular SPA with a NestJS REST API and PostgreSQL backend. Owned the complete delivery cycle — from database schema design to production deployment — including checkout flow, product catalog, and order management.',
-      stack: ['Angular', 'NestJS', 'PostgreSQL', 'REST API', 'TypeScript'],
-      highlight: 'Full ownership · delivered end-to-end in 6 months',
       link: ''
     }
   ];
